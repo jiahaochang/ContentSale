@@ -54,7 +54,8 @@ class BasicLayout extends Component {
           </Header>
           <Content style={{paddingTop: '15px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
             <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
-              <TabPane tab="所有内容" key="1">{ children }</TabPane>
+              <TabPane tab={"所有内容"} key={1}>{ children[3] }</TabPane>
+              <TabPane tab={"未购买的内容"} key={2}>{ children[2] }</TabPane>
             </Tabs>
           </Content>
         </Layout>

@@ -34,13 +34,14 @@ class CardsPage extends Component {
         <Row gutter={24}>
         {cardsList.map(v =>
           <Col span={8}>
-          <Card
-          key={v.id}
-          title={v.name}
-          cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-          style={{ width: 220, marginBottom: '16px' }}
-          extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)} />}
-        >{v.desc}</Card>
+            <Card
+              hoverable
+              key={v.id}
+              title={v.name}
+              cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+              style={{ width: 220, marginBottom: '16px' }}
+              extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)} />}
+            >{v.desc}</Card>
           </Col>
         )}
         </Row>
