@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 // import Link from 'umi/link';
-import { Card, Icon, message } from 'antd';
+import { Card, Icon, message, Row, Col } from 'antd';
 
 class CardsPage extends Component {
   componentDidMount() {
@@ -31,13 +31,19 @@ class CardsPage extends Component {
 
     return (
       <div>
-        {cardsList.map(v => <Card
+        <Row gutter={24}>
+        {cardsList.map(v =>
+          <Col span={8}>
+          <Card
           key={v.id}
           title={v.name}
           cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
           style={{ width: 220, marginBottom: '16px' }}
           extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)} />}
-        >{v.desc}</Card>)}
+        >{v.desc}</Card>
+          </Col>
+        )}
+        </Row>
       </div>
     );
   }
