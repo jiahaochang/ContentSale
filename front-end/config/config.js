@@ -13,7 +13,6 @@ export default {
     {
       path: '/',
       component: '../layout',
-      // component: './list',
       routes: [
         {
           path: '/',
@@ -33,7 +32,10 @@ export default {
         { path: 'puzzlecards', component: './puzzlecards' },
         { path: 'list', component: './list' },
         { path: 'typescript', component: './tsdemo' },
-        { path: 'locale', component: './locale' }
+        { path: 'locale', component: './locale' },
+        {
+          path: 'detail', component: './detail/index'
+        }
       ]
     }
   ],

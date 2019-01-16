@@ -4,6 +4,7 @@ import SiderMenu from "../component/SiderMenu/SiderMenu";
 import { getMenuData } from '../common/menu';
 import logo from '../assets/logo.svg';
 import GlobalHeader from "../component/GlobalHeader";
+import CardsPage from "../page/cards"
 
 const { Content, Header } = Layout;
 const TabPane = Tabs.TabPane;
@@ -52,10 +53,11 @@ class BasicLayout extends Component {
               onCollapse={this.handleMenuCollapse}
             />
           </Header>
-          <Content style={{paddingTop: '15px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
+          <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
             <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
-              <TabPane tab={"所有内容"} key={1}>{ children[3] }</TabPane>
-              <TabPane tab={"未购买的内容"} key={2}>{ children[2] }</TabPane>
+
+              <TabPane tab={"所有内容"} key={1}><CardsPage /></TabPane>
+              <TabPane tab={"未购买的内容"} key={2}>{ children }</TabPane>
             </Tabs>
           </Content>
         </Layout>

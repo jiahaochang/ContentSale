@@ -3,7 +3,7 @@ import { connect } from 'dva';
 // import Link from 'umi/link';
 import { Card, Icon, message, Row, Col } from 'antd';
 
-class CardsPage extends Component {
+export class CardsPage extends Component {
   componentDidMount() {
     this.queryList();
   }
