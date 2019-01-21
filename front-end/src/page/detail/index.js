@@ -1,15 +1,12 @@
 import React from 'react';
 import { Button, Form, Input, Card, Row, Col, Divider } from 'antd';
 import { connect } from 'dva';
+import {CardsPage} from "../cards";
 
-class Detail extends React.Component {
+export class Details extends React.Component {
   state = {
 
   };
-
-  componentDidMount() {
-    this.getDetailInfo(1);
-  }
 
   getDetailInfo = (id) => {
     this.props.dispatch({
@@ -18,9 +15,14 @@ class Detail extends React.Component {
     })
   };
 
+  componentDidMount() {
+    //this.getDetailInfo(this.props.id);
+  }
+
   render() {
-    const { visible, statisticVisible, id } = this.state;
+    const { id } = this.props;
     const { detail } = this.props;
+    this.getDetailInfo(id);
 
     return (
       <div style={{padding: '30px'}}>
@@ -47,11 +49,15 @@ class Detail extends React.Component {
   }
 }
 
+
+// export default connect(mapStateToProps)(Detail);
+
 function mapStateToProps(state) {
-  const detail = state.details;
+  console.log('state');
+  console.log(state);
   return {
-    detail,
+    cardsList: state.detail,
   };
 }
 
-export default connect(mapStateToProps)(Form.create()(Detail));
+export default connect(mapStateToProps)(Details);

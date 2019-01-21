@@ -1,10 +1,13 @@
 import * as detailService from '../service/detail';
 
 export default {
+
   namespace: 'details',
+
   state: {
     detail: {},
   },
+
   effects: {
     *getDetail({ payload }, { call, put }) {
       const rsp = yield call(detailService.getDetailById, payload);
@@ -18,6 +21,7 @@ export default {
       return rsp;
     },
   },
+
   reducers: {
     saveDetail(state, { payload: { id, data } }) {
       return {

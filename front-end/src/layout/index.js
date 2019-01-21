@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import { Layout, Tabs } from 'antd';
-import SiderMenu from "../component/SiderMenu/SiderMenu";
-import { getMenuData } from '../common/menu';
+/*import SiderMenu from "../component/SiderMenu/SiderMenu";
+import { getMenuData } from '../common/menu';*/
 import logo from '../assets/logo.svg';
 import GlobalHeader from "../component/GlobalHeader";
 import CardsPage from "../page/cards"
+import {Details} from "../page/detail";
 
 const { Content, Header } = Layout;
 const TabPane = Tabs.TabPane;
@@ -18,6 +19,8 @@ class BasicLayout extends Component {
     super(props);
     this.state = {
       collapsed: false,
+      showDetail: false,
+      detailId: '',
     };
   }
 
@@ -27,18 +30,25 @@ class BasicLayout extends Component {
     });
   };
 
+  handleShowDetail = (id) => {
+    console.log(id);
+    this.setState({
+      showDetail: !this.state.showDetail,
+      detailId: id,
+    });
+  };
+
+  getDetailId = (id) => {
+    this.setState({
+      detailId: id,
+    });
+  };
+
   render() {
     const { children, location } = this.props;
     const { collapsed } = this.state;
     return (
       <Layout>
-        {/*<SiderMenu
-          logo={logo}
-          collapsed={collapsed}
-          menuData={getMenuData()}
-          location={location}
-          onCollapse={this.handleMenuCollapse}
-        />*/}
         <Layout>
           <Header style={{ padding: 0 }}>
             <GlobalHeader
@@ -54,11 +64,17 @@ class BasicLayout extends Component {
             />
           </Header>
           <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
+            {!this.state.showDetail &&
             <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
-
-              <TabPane tab={"所有内容"} key={1}><CardsPage /></TabPane>
-              <TabPane tab={"未购买的内容"} key={2}>{ children }</TabPane>
+              <TabPane tab={"所有内容"} key={1}>
+                <CardsPage handleShowDetail={this.handleShowDetail}/>
+              </TabPane>
+              <TabPane tab={"未购买的内容"} key={2}>{children}</TabPane>
             </Tabs>
+            }
+            {this.state.showDetail &&
+              <Details detailId={this.state.id}/>
+            }
           </Content>
         </Layout>
       </Layout>

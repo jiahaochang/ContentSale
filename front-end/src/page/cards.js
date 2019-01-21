@@ -40,7 +40,8 @@ export class CardsPage extends Component {
               title={v.name}
               cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
               style={{ width: 220, marginBottom: '16px' }}
-              extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)} />}
+              extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
+              onClick={()=>this.props.handleShowDetail(v.id)}
             >{v.desc}</Card>
           </Col>
         )}
