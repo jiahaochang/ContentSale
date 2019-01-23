@@ -5,7 +5,7 @@ import { getMenuData } from '../common/menu';*/
 import logo from '../assets/logo.svg';
 import GlobalHeader from "../component/GlobalHeader";
 import CardsPage from "../page/cards"
-import {Details} from "../page/detail";
+import CardsPage2 from "../page/detailContent"
 
 const { Content, Header } = Layout;
 const TabPane = Tabs.TabPane;
@@ -70,10 +70,11 @@ class BasicLayout extends Component {
                 <CardsPage handleShowDetail={this.handleShowDetail}/>
               </TabPane>
               <TabPane tab={"未购买的内容"} key={2}>{children}</TabPane>
+              <TabPane tab={"详细内容"} key={3}><CardsPage2 /></TabPane>
             </Tabs>
             }
             {this.state.showDetail &&
-              <Details detailId={this.state.id}/>
+              <CardsPage2 detailId={this.state.detailId}/>
             }
           </Content>
         </Layout>

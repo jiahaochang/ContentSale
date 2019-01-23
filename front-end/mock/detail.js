@@ -1,6 +1,6 @@
 
 export default {
-  '/api/detail/${id}': function (req, res, next) {
+  'get /api/detail/:id': function (req, res, next) {
     res.json({
       result: {
         title:"书",

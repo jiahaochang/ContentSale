@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Row, Col, Divider } from 'antd';
 
-export class Details extends Component {
+export class CardsPage2 extends Component {
   componentDidMount() {
-    this.props.dispatch({
-      type: 'details/getDetail',
-      payload: this.props.detailId,
-    })
+    this.getDetailInfo(this.props.detailId)
   }
 
   getDetailInfo = (id) => {
@@ -21,7 +18,7 @@ export class Details extends Component {
   render() {
     const { detailId } = this.props;
     console.log(detailId);
-    this.getDetailInfo(detailId);
+    //this.getDetailInfo(detailId);
 
     return (
       <div style={{padding: '30px'}}>
@@ -30,7 +27,7 @@ export class Details extends Component {
             <Card
               hoverable
               key={1}
-              title={"goods"}
+              title={this.props.detail.title}
               cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
               style={{ width: 220, marginBottom: '16px' }}
             >介绍内容</Card>
@@ -50,13 +47,12 @@ export class Details extends Component {
 
 function mapStateToProps(state) {
   console.log('state');
-  console.log(state);
+  console.log(state.details.detail);
   return {
-    details: state.detail,
+    detail: state.details.detail,
   };
 }
 
-export default connect(mapStateToProps)(Details);
+export default connect(mapStateToProps)(CardsPage2);
 
 // TODO replace antd Card with own Card.
-

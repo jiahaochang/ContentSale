@@ -24,10 +24,19 @@ export class CardsPage extends Component {
     });
   };
 
+  getDetailInfo = (id) => {
+    console.log(id);
+    this.props.dispatch({
+      type: 'details/getDetail',
+      payload: id,
+    })
+  };
+
   render() {
     const { cardsList = [] } = this.props;
     console.log('cardsList');
     console.log(cardsList);
+    //this.getDetailInfo(1);
 
     return (
       <div>

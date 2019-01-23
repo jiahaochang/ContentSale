@@ -21,20 +21,20 @@ export default {
         {
           path: 'dashboard',
           routes: [
-            { path: 'analysis', component: './dashboard/analysis' }
+            {path: 'analysis', component: './dashboard/analysis'}
           ]
         },
         {
           path: 'helloworld',
           component: './HelloWorld'
         },
-        { path: 'cards', component: './cards' },
-        { path: 'puzzlecards', component: './puzzlecards' },
-        { path: 'list', component: './list' },
-        { path: 'typescript', component: './tsdemo' },
-        { path: 'locale', component: './locale' },
+        {path: 'cards', component: './cards'},
+        {path: 'puzzlecards', component: './puzzlecards'},
+        {path: 'list', component: './list'},
+        {path: 'typescript', component: './tsdemo'},
+        {path: 'locale', component: './locale'},
         {
-          path: 'detail', component: './detail/index'
+          path: 'details', component: './details'
         }
       ]
     }
