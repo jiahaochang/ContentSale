@@ -26,10 +26,7 @@ export default {
     saveDetail(state, { payload: { id, data } }) {
       return {
         ...state,
-        detail: {
-          ...state.detail,
-          [id]: data,
-        },
+        data,
       }
     },
   },

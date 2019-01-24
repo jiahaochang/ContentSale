@@ -33,9 +33,7 @@ export default {
         {path: 'list', component: './list'},
         {path: 'typescript', component: './tsdemo'},
         {path: 'locale', component: './locale'},
-        {
-          path: 'details', component: './details'
-        }
+        
       ]
     }
   ],

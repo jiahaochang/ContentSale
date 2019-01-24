@@ -17,6 +17,7 @@ export class CardsPage2 extends Component {
 
   render() {
     const { detailId } = this.props;
+    const {title, content, intro} = this.props.detail;
     console.log(detailId);
     //this.getDetailInfo(detailId);
 
@@ -27,17 +28,17 @@ export class CardsPage2 extends Component {
             <Card
               hoverable
               key={1}
-              title={this.props.detail.title}
+              title={title}
               cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
               style={{ width: 220, marginBottom: '16px' }}
-            >介绍内容</Card>
+            >{content}</Card>
           </Col>
         </Row>
 
         <div>
           <Divider type="horizontal" orientation="left">详细信息</Divider>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
+            {intro}
           </p>
         </div>
       </div>
@@ -47,9 +48,9 @@ export class CardsPage2 extends Component {
 
 function mapStateToProps(state) {
   console.log('state');
-  console.log(state.details.detail);
+  console.log(state.details.data);
   return {
-    detail: state.details.detail,
+    detail: state.details.data,
   };
 }
 
