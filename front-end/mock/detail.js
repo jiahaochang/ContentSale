@@ -6,6 +6,7 @@ export default {
         title:"书",
         content:"这是一本书",
         intro: "介绍的内容",
+        price: 1000
       }
     });
   },

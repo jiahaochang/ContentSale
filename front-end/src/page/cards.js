@@ -36,7 +36,6 @@ export class CardsPage extends Component {
     const { cardsList = [] } = this.props;
     console.log('cardsList');
     console.log(cardsList);
-    //this.getDetailInfo(1);
 
     return (
       <div>

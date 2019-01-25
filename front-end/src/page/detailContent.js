@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Row, Col, Divider } from 'antd';
+import { Card, Row, Col, Divider, InputNumber } from 'antd';
 
 export class CardsPage2 extends Component {
   componentDidMount() {
+    // console.log(this.props.detailId);
+    // this.getDetailInfo(this.props.detailId)
+  }
+
+  componentWillMount() {
+    console.log(this.props.detailId);
     this.getDetailInfo(this.props.detailId)
   }
 
@@ -15,11 +21,12 @@ export class CardsPage2 extends Component {
     })
   };
 
+  onChange = (value) => {
+    console.log('changed', value);
+  };
+
   render() {
-    const { detailId } = this.props;
-    const {title, content, intro} = this.props.detail;
-    console.log(detailId);
-    //this.getDetailInfo(detailId);
+    const { detail={} } = this.props;
 
     return (
       <div style={{padding: '30px'}}>
@@ -28,17 +35,24 @@ export class CardsPage2 extends Component {
             <Card
               hoverable
               key={1}
-              title={title}
+              title={detail.title}
               cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
               style={{ width: 220, marginBottom: '16px' }}
-            >{content}</Card>
+            >{detail.content}</Card>
+          </Col>
+          <Col span={8}>
+            <div style={{padding: '30px', margin: 'auto'}}>
+              <h3>{detail.title}</h3>
+              <h3>¥:{detail.price}</h3>
+              <h3>购买数量:<InputNumber min={1} max={10} onChange={this.onChange} /></h3>
+            </div>
           </Col>
         </Row>
 
         <div>
           <Divider type="horizontal" orientation="left">详细信息</Divider>
           <p>
-            {intro}
+            {detail.intro}
           </p>
         </div>
       </div>

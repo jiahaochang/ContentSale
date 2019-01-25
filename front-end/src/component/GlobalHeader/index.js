@@ -113,7 +113,11 @@ export default class GlobalHeader extends PureComponent {
         />*/}
         <div className={styles.middle}>
           <div className={styles.left}>
-            <Button>首页</Button>
+            <Link to="/" >
+              <Button onClick={this.props.handleShowIndexPage}>首页</Button>
+            </Link>
+            <Button onClick={this.props.handleShowBill}>账务</Button>
+            <Button>购物车</Button>
           </div>
           <div className={styles.right}>
             <HeaderSearch
