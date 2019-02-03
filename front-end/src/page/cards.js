@@ -41,7 +41,7 @@ export class CardsPage extends Component {
       <div>
         <Row gutter={24}>
         {cardsList.map(v =>
-          <Col span={8}>
+          <Col span={8} key={v.id}>
             <Card
               hoverable
               key={v.id}

@@ -17,6 +17,7 @@ export class Bills extends Component {
     {
       title: '内容图片',
       dataIndex: 'contentPicture',
+      render: (text) => <img src={text} width={60}/>//这里放后台返回的图片的路径或者整个<img/>
     },
     {
       title: '内容名称',

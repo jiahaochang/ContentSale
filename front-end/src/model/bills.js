@@ -1,4 +1,6 @@
 import * as billService from '../service/bill';
+// import * as cardsService from "../service/cards";
+import request from '../util/request';
 
 export default {
   namespace: 'bills',
@@ -9,24 +11,26 @@ export default {
 
   effects: {
 
-    *getBillList({ _ }, { call, put }) {
-      const rsp = yield call(billService.queryBillsList());
-      console.log(rsp);
-      yield put({
-        type: 'saveBill',
-        payload: { billList: rsp.result }
-      });
+    *getBillList({ payload }, { call, put }) {
+      console.log(payload);
+      const rsp = yield call(billService.getBillList);
+
+      yield put({ type: 'saveBill', payload: { billList: rsp.result } });
+
+      return rsp;
     },
     
   },
 
   reducers: {
+
     saveBill(state, { payload: { billList } }) {
       return {
         ...state,
         billList,
       }
     },
+
   },
 
 };

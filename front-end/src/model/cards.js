@@ -1,4 +1,5 @@
 import * as cardsService from '../service/cards';
+import * as billService from "../service/bill";
 
 export default {
 
@@ -7,6 +8,7 @@ export default {
   state: {
     cardsList: [],
     statistic: {},
+    billList: [],
   },
 
   effects: {
@@ -16,6 +18,7 @@ export default {
       console.log(rsp);
       yield put({ type: 'saveList', payload: { cardsList: rsp.result } });
     },
+
     *deleteOne({ payload }, { call, put }) {
       const rsp = yield call(cardsService.deleteOne, payload);
       console.log('deleteOne');
@@ -56,5 +59,7 @@ export default {
         },
       }
     },
+
   },
+
 };

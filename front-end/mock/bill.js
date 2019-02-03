@@ -2,30 +2,34 @@ let data = [
   {
     id: 1,
     name: 'umi',
-    buyTime: '极快的类 Next.js 的 React 应用框架。',
+    buyTime: 1549201949,
     count: 123,
-    price: 1000
+    price: 1000,
+    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
   {
-    id: 1,
+    id: 2,
     name: 'umi',
-    buyTime: '极快的类 Next.js 的 React 应用框架。',
+    buyTime: 1549201949,
     count: 123,
-    price: 1000
+    price: 1000,
+    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
   {
-    id: 1,
+    id: 3,
     name: 'umi',
-    buyTime: '极快的类 Next.js 的 React 应用框架。',
+    buyTime: 1549201949,
     count: 123,
-    price: 1000
+    price: 1000,
+    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
   {
-    id: 1,
+    id: 4,
     name: 'umi',
-    buyTime: '极快的类 Next.js 的 React 应用框架。',
+    buyTime: 1549201949,
     count: 123,
-    price: 1000
+    price: 1000,
+    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
 ];
 
