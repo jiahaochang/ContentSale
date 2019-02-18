@@ -7,6 +7,8 @@ import GlobalHeader from "../component/GlobalHeader";
 import CardsPage from "../page/cards"
 import CardsPage2 from "../page/detailContent"
 import Bills from '../page/bill/billInfo'
+import ShoppingCart from '../page/shoppingCart/shoppingCart'
+import UnpurchasedContent from '../page/unpurchasedContent/unpurchasedContent'
 
 const { Content, Header } = Layout;
 const TabPane = Tabs.TabPane;
@@ -51,6 +53,12 @@ class BasicLayout extends Component {
     });
   };
 
+  handleShowShoppingCart=()=>{
+    this.setState({
+      showContent: 'shoppingCart'
+    });
+  };
+
   render() {
     const { children, location } = this.props;
     const { collapsed } = this.state;
@@ -70,6 +78,7 @@ class BasicLayout extends Component {
               onCollapse={this.handleMenuCollapse}
               handleShowIndexPage={this.handleShowIndexPage}
               handleShowBill={this.handleShowBill}
+              handleShowShoppingCart={this.handleShowShoppingCart}
             />
           </Header>
           <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
@@ -79,16 +88,22 @@ class BasicLayout extends Component {
                 <CardsPage handleShowDetail={this.handleShowDetail}/>
               </TabPane>
               <TabPane tab={"未购买的内容"} key={2}>
-                {children}
+                {/*children*/}
+                <UnpurchasedContent handleShowDetail={this.handleShowDetail}/>
               </TabPane>
             </Tabs>
             }
-            {this.state.showContent === 'detail' &&
+            {
+              this.state.showContent === 'detail' &&
               <CardsPage2 detailId={this.state.detailId}/>
             }
             {
               this.state.showContent === 'bill' &&
-                <Bills></Bills>
+              <Bills></Bills>
+            }
+            {
+              this.state.showContent === 'shoppingCart' &&
+              <ShoppingCart></ShoppingCart>
             }
           </Content>
         </Layout>

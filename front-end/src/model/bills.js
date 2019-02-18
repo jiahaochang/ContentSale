@@ -1,6 +1,4 @@
 import * as billService from '../service/bill';
-// import * as cardsService from "../service/cards";
-import request from '../util/request';
 
 export default {
   namespace: 'bills',

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Row, Col, Divider, InputNumber } from 'antd';
+import { Card, Row, Col, Divider, InputNumber, Button } from 'antd';
 
 export class CardsPage2 extends Component {
   componentDidMount() {
@@ -45,6 +45,16 @@ export class CardsPage2 extends Component {
               <h3>{detail.title}</h3>
               <h3>¥:{detail.price}</h3>
               <h3>购买数量:<InputNumber min={1} max={10} onChange={this.onChange} /></h3>
+              <h3>
+                {
+                  detail.purchaseStatus === 'alreadyPurchased' &&
+                    <Button disabled={true} type={"primary"}>已购买</Button>
+                }
+                {
+                  detail.purchaseStatus === 'notPurchased' &&
+                  <Button type={"primary"}>购买</Button>
+                }
+              </h3>
             </div>
           </Col>
         </Row>
