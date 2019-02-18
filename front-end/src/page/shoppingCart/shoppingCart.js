@@ -17,6 +17,10 @@ export class ShoppingCartContent extends Component {
     console.log('changed', value);
   };
 
+  buy = () => {
+    this.props.handleShowBill();
+  };
+
   columns = [
     {
       title: '内容名称',
@@ -34,15 +38,22 @@ export class ShoppingCartContent extends Component {
   ];
 
   render() {
-    const { shoppingCartContent = [] } = this.props;
+    const { shoppingCartContent = [], total=0 } = this.props;
     console.log('shoppingCartContent');
     console.log(shoppingCartContent);
 
     return (
       <div>
         <Divider orientation="left">已经添加到购物车的内容</Divider>
-        <Table columns={this.columns} dataSource={shoppingCartContent}  rowKey="id" />
-        <Button type={"primary"}>购买</Button>
+        <Table
+          columns={this.columns}
+          dataSource={shoppingCartContent}
+          rowKey="id"
+          pagination={false}
+          footer={() => '总计:¥'+total}
+        />
+
+        <Button type={"primary"} onClick={this.buy}>购买</Button>
       </div>
     );
   }

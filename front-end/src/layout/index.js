@@ -99,11 +99,11 @@ class BasicLayout extends Component {
             }
             {
               this.state.showContent === 'bill' &&
-              <Bills></Bills>
+              <Bills handleShowDetail={this.handleShowDetail}></Bills>
             }
             {
               this.state.showContent === 'shoppingCart' &&
-              <ShoppingCart></ShoppingCart>
+              <ShoppingCart handleShowBill={this.handleShowBill}></ShoppingCart>
             }
           </Content>
         </Layout>

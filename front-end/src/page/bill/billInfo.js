@@ -17,7 +17,7 @@ export class Bills extends Component {
     {
       title: '内容图片',
       dataIndex: 'contentPicture',
-      render: (text) => <img src={text} width={60}/>//这里放后台返回的图片的路径或者整个<img/>
+      render: (text, record) => <img src={text} width={60} onClick={()=>this.props.handleShowDetail(record.id)}/>//这里放后台返回的图片的路径或者整个<img/>
     },
     {
       title: '内容名称',
@@ -55,7 +55,6 @@ function mapStateToProps(state) {
   console.log(state);
   return {
     billList: state.bills.billList,
-    // billLoading: state.loading.effects['bills/getBillList'],
   };
 }
 
