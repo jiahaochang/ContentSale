@@ -42,7 +42,7 @@ export class ShoppingCartContent extends Component {
       <div>
         <Divider orientation="left">已经添加到购物车的内容</Divider>
         <Table columns={this.columns} dataSource={shoppingCartContent}  rowKey="id" />
-        <Button>购买</Button>
+        <Button type={"primary"}>购买</Button>
       </div>
     );
   }

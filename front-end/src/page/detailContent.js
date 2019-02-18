@@ -52,7 +52,7 @@ export class CardsPage2 extends Component {
                 }
                 {
                   detail.purchaseStatus === 'notPurchased' &&
-                  <Button type={"primary"}>购买</Button>
+                  <Button type={"primary"}>加入购物车</Button>
                 }
               </h3>
             </div>

@@ -3,31 +3,36 @@ let data = [
     id: 1,
     name: 'umi',
     desc: '极快的类 Next.js 的 React 应用框架。',
-    url: 'https://umijs.org'
+    url: 'https://umijs.org',
+    purchaseStatus: 'alreadyPurchased',
   },
   {
     id: 2,
     name: 'antd',
     desc: '一个服务于企业级产品的设计体系。',
-    url: 'https://ant.design/index-cn'
+    url: 'https://ant.design/index-cn',
+    purchaseStatus: 'notPurchased',
   },
   {
     id: 3,
     name: 'antd-pro',
     desc: '一个服务于企业级产品的设计体系。',
-    url: 'https://ant.design/index-cn'
+    url: 'https://ant.design/index-cn',
+    purchaseStatus: 'alreadyPurchased',
   },
   {
     id: 4,
     name: 'antd-pro',
     desc: '一个服务于企业级产品的设计体系。',
-    url: 'https://ant.design/index-cn'
+    url: 'https://ant.design/index-cn',
+    purchaseStatus: 'alreadyPurchased',
   },
   {
     id: 5,
     name: 'antd',
     desc: '一个服务于企业级产品的设计体系。',
-    url: 'https://ant.design/index-cn'
+    url: 'https://ant.design/index-cn',
+    purchaseStatus: 'notPurchased',
   }
 ];
 

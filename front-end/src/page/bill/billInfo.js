@@ -32,7 +32,7 @@ export class Bills extends Component {
       dataIndex: 'count',
     },
     {
-      title: '购买价格',
+      title: '购买单价',
       dataIndex: 'price',
     },
   ];

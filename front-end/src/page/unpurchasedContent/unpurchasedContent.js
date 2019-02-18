@@ -62,7 +62,7 @@ function mapStateToProps(state) {
   console.log('state');
   console.log(state);
   return {
-    cardsList: state.cards.cardsList,
+    cardsList: state.unpurchased.cardsList,
   };
 }
 

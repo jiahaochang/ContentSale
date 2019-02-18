@@ -3,6 +3,8 @@ import { connect } from 'dva';
 // import Link from 'umi/link';
 import { Card, Icon, message, Row, Col } from 'antd';
 
+const { Meta } = Card;
+
 export class CardsPage extends Component {
   componentDidMount() {
     this.queryList();
@@ -50,7 +52,15 @@ export class CardsPage extends Component {
               style={{ width: 220, marginBottom: '16px' }}
               extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
               onClick={()=>this.props.handleShowDetail(v.id)}
-            >{v.desc}</Card>
+            >{v.desc}
+              {
+                v.purchaseStatus === 'alreadyPurchased' &&
+                <Meta
+                  description="已购买"
+                />
+              }
+
+              </Card>
           </Col>
         )}
         </Row>
