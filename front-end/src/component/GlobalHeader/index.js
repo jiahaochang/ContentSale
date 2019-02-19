@@ -112,84 +112,100 @@ export default class GlobalHeader extends PureComponent {
           onClick={this.toggle}
         />*/}
         <div className={styles.middle}>
-          <div className={styles.left}>
-            <Link to="/" >
-              <Button onClick={this.props.handleShowIndexPage}>首页</Button>
-            </Link>
-            <Button onClick={this.props.handleShowBill}>账务</Button>
-            <Button onClick={this.props.handleShowShoppingCart}>购物车</Button>
-          </div>
-          <div className={styles.right}>
-            <HeaderSearch
-              className={`${styles.action} ${styles.search}`}
-              placeholder="站内搜索"
-              dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
-              onSearch={value => {
-                console.log('input', value); // eslint-disable-line
-              }}
-              onPressEnter={value => {
-                console.log('enter', value); // eslint-disable-line
-              }}
-            />
-            <Tooltip title="使用文档">
-              <a
-                target="_blank"
-                href="http://pro.ant.design/docs/getting-started"
-                rel="noopener noreferrer"
+          {
+            //如果是购买者登录状态，则显示账务和购物车按钮
+            this.props.loginStatus === 'userLogged' &&
+            <div className={styles.left}>
+              <Link to="/" >
+                <Button onClick={this.props.handleShowIndexPage}>首页</Button>
+              </Link>
+              <Button onClick={this.props.handleShowBill}>账务</Button>
+              <Button onClick={this.props.handleShowShoppingCart}>购物车</Button>
+            </div>
+          }
+          {
+            //如果是未登录状态，则只显示首页按钮
+            this.props.loginStatus === 'notLoggedIn' &&
+            <div className={styles.left}>
+              <Link to="/" >
+                <Button onClick={this.props.handleShowIndexPage}>首页</Button>
+              </Link>
+            </div>
+          }
+          {
+            this.props.loginStatus === 'userLogged' &&
+            <div className={styles.right}>
+              <HeaderSearch
+                className={`${styles.action} ${styles.search}`}
+                placeholder="站内搜索"
+                dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
+                onSearch={value => {
+                  console.log('input', value); // eslint-disable-line
+                }}
+                onPressEnter={value => {
+                  console.log('enter', value); // eslint-disable-line
+                }}
+              />
+              <Tooltip title="使用文档">
+                <a
+                  target="_blank"
+                  href="http://pro.ant.design/docs/getting-started"
+                  rel="noopener noreferrer"
+                  className={styles.action}
+                >
+                  <Icon type="question-circle-o" />
+                </a>
+              </Tooltip>
+              <NoticeIcon
                 className={styles.action}
+                count={currentUser.notifyCount}
+                onItemClick={(item, tabProps) => {
+                  console.log(item, tabProps); // eslint-disable-line
+                }}
+                onClear={onNoticeClear}
+                onPopupVisibleChange={onNoticeVisibleChange}
+                loading={fetchingNotices}
+                popupAlign={{ offset: [20, -16] }}
               >
-                <Icon type="question-circle-o" />
-              </a>
-            </Tooltip>
-            <NoticeIcon
-              className={styles.action}
-              count={currentUser.notifyCount}
-              onItemClick={(item, tabProps) => {
-                console.log(item, tabProps); // eslint-disable-line
-              }}
-              onClear={onNoticeClear}
-              onPopupVisibleChange={onNoticeVisibleChange}
-              loading={fetchingNotices}
-              popupAlign={{ offset: [20, -16] }}
-            >
-              <NoticeIcon.Tab
-                list={noticeData['通知']}
-                title="通知"
-                emptyText="你已查看所有通知"
-                emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
-              />
-              <NoticeIcon.Tab
-                list={noticeData['消息']}
-                title="消息"
-                emptyText="您已读完所有消息"
-                emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
-              />
-              <NoticeIcon.Tab
-                list={noticeData['待办']}
-                title="待办"
-                emptyText="你已完成所有待办"
-                emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
-              />
-            </NoticeIcon>
-            {currentUser.name ? (
-              <Dropdown overlay={menu}>
+                <NoticeIcon.Tab
+                  list={noticeData['通知']}
+                  title="通知"
+                  emptyText="你已查看所有通知"
+                  emptyImage="https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg"
+                />
+                <NoticeIcon.Tab
+                  list={noticeData['消息']}
+                  title="消息"
+                  emptyText="您已读完所有消息"
+                  emptyImage="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
+                />
+                <NoticeIcon.Tab
+                  list={noticeData['待办']}
+                  title="待办"
+                  emptyText="你已完成所有待办"
+                  emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
+                />
+              </NoticeIcon>
+              {currentUser.name ? (
+                <Dropdown overlay={menu}>
                 <span className={`${styles.action} ${styles.account}`}>
                   <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
                   <span className={styles.name}>{currentUser.name}</span>
                 </span>
-              </Dropdown>
-            ) : (
-              <Spin size="small" style={{ marginLeft: 8 }} />
-            )}
-            <Button
-              size="small"
-              onClick={() => {
-                this.changLang();
-              }}
-            >
-              <FormattedMessage id="lang" />
-            </Button>
-          </div>
+                </Dropdown>
+              ) : (
+                <Spin size="small" style={{ marginLeft: 8 }} />
+              )}
+              <Button
+                size="small"
+                onClick={() => {
+                  this.changLang();
+                }}
+              >
+                <FormattedMessage id="lang" />
+              </Button>
+            </div>
+          }
         </div>
       </div>
     );

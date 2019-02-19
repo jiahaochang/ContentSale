@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Layout, Tabs } from 'antd';
+import { connect } from 'dva';
 /*import SiderMenu from "../component/SiderMenu/SiderMenu";
 import { getMenuData } from '../common/menu';*/
 import logo from '../assets/logo.svg';
@@ -25,6 +26,12 @@ class BasicLayout extends Component {
       showContent: 'goodsList',
       detailId: '',
     };
+  }
+
+  componentWillMount() {
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    });
   }
 
   handleMenuCollapse = () => {
@@ -60,8 +67,9 @@ class BasicLayout extends Component {
   };
 
   render() {
-    const { children, location } = this.props;
+    const { children, location, loginStatus } = this.props;
     const { collapsed } = this.state;
+    console.log('loginStatus = '+loginStatus);
     return (
       <Layout>
         <Layout>
@@ -79,19 +87,31 @@ class BasicLayout extends Component {
               handleShowIndexPage={this.handleShowIndexPage}
               handleShowBill={this.handleShowBill}
               handleShowShoppingCart={this.handleShowShoppingCart}
+              loginStatus={loginStatus}
             />
           </Header>
           <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
-            {this.state.showContent === 'goodsList' &&
-            <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
-              <TabPane tab={"所有内容"} key={1}>
-                <CardsPage handleShowDetail={this.handleShowDetail}/>
-              </TabPane>
-              <TabPane tab={"未购买的内容"} key={2}>
-                {/*children*/}
-                <UnpurchasedContent handleShowDetail={this.handleShowDetail}/>
-              </TabPane>
-            </Tabs>
+            {
+              //如果是购买者登录，显示 所有内容 和 未购买内容
+              this.state.showContent === 'goodsList' && loginStatus === 'userLogged' &&
+              <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
+                <TabPane tab={"所有内容"} key={1}>
+                  <CardsPage handleShowDetail={this.handleShowDetail}/>
+                </TabPane>
+                <TabPane tab={"未购买的内容"} key={2}>
+                  {/*children*/}
+                  <UnpurchasedContent handleShowDetail={this.handleShowDetail}/>
+                </TabPane>
+              </Tabs>
+            }
+            {
+              //如果状态是未登录，则只显示商品列表
+              this.state.showContent === 'goodsList' && loginStatus === 'notLoggedIn' &&
+              <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
+                <TabPane tab={"所有内容"} key={1}>
+                  <CardsPage handleShowDetail={this.handleShowDetail}/>
+                </TabPane>
+              </Tabs>
             }
             {
               this.state.showContent === 'detail' &&
@@ -112,4 +132,14 @@ class BasicLayout extends Component {
   }
 }
 
-export default BasicLayout;
+// export default BasicLayout;
+
+function mapStateToProps(state) {
+  // console.log('state');
+  // console.log(state);
+  return {
+    loginStatus: state.loginStatus.loginStatus.loginStatus,
+  };
+}
+
+export default connect(mapStateToProps)(BasicLayout);

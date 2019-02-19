@@ -38,13 +38,18 @@ export class Bills extends Component {
   ];
 
   render() {
-    const { billList = [] } = this.props;
+    const { billList = [], total=0 } = this.props;
     console.log('billList');
     console.log(billList);
 
     return (
       <div>
-        <Table columns={this.columns} dataSource={billList}  rowKey="id" />
+        <Table
+          columns={this.columns}
+          dataSource={billList}
+          rowKey={'id'}
+          footer={() => '总计:¥'+total}
+        />
       </div>
     );
   }
