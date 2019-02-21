@@ -5,8 +5,18 @@ import { Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input } f
 const { Option } = Select;
 
 export class ReleaseProduct extends Component {
-  componentDidMount() {
+  state = {
+    uploadMethod: 1,
+  };
 
+  onChange = (e) => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      uploadMethod: e.target.value,
+    });
+  };
+
+  componentDidMount() {
   }
 
   handleSubmit = (e) => {
@@ -66,30 +76,43 @@ export class ReleaseProduct extends Component {
             label="Radio.Group"
           >
             {getFieldDecorator('radio-group')(
-              <Radio.Group>
-                <Radio value="a">item 1</Radio>
-                <Radio value="b">item 2</Radio>
-                <Radio value="c">item 3</Radio>
+              <Radio.Group onChange={this.onChange} defaultValue={1}>
+                <Radio value={1}>图片地址</Radio>
+                <Radio value={2}>本地上传</Radio>
               </Radio.Group>
             )}
           </Form.Item>
 
-          <Form.Item
-            {...formItemLayout}
-            label="Upload"
-            extra="longgggggggggggggggggggggggggggggggggg"
-          >
-            {getFieldDecorator('upload', {
-              valuePropName: 'fileList',
-              getValueFromEvent: this.normFile,
-            })(
-              <Upload name="logo" action="/upload.do" listType="picture">
-                <Button>
-                  <Icon type="upload" /> Click to upload
-                </Button>
-              </Upload>
-            )}
-          </Form.Item>
+          {
+            this.state.uploadMethod === 2 &&
+            <Form.Item
+              {...formItemLayout}
+              label="Upload"
+              extra="longgggggggggggggggggggggggggggggggggg"
+            >
+              {getFieldDecorator('upload', {
+                valuePropName: 'fileList',
+                getValueFromEvent: this.normFile,
+              })(
+                <Upload name="logo" action="/upload.do" listType="picture">
+                  <Button>
+                    <Icon type="upload" /> Click to upload
+                  </Button>
+                </Upload>
+              )}
+            </Form.Item>
+          }
+          {
+            this.state.uploadMethod === 1 &&
+            <Form.Item
+              {...formItemLayout}
+              label="图片地址"
+            >
+              {getFieldDecorator('图片地址', {
+                rules: [{ required: true, message: '请输入图片地址!'}],
+              })(<Input placeholder="图片地址"/>)}
+            </Form.Item>
+          }
 
           <Form.Item
             {...formItemLayout}
