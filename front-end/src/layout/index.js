@@ -10,6 +10,8 @@ import CardsPage2 from "../page/detailContent"
 import Bills from '../page/bill/billInfo'
 import ShoppingCart from '../page/shoppingCart/shoppingCart'
 import UnpurchasedContent from '../page/unpurchasedContent/unpurchasedContent'
+import LoginPage from  '../page/loginPage/loginPage'
+import ReleaseProduct from '../page/releaseProduct/releaseProduct'
 
 const { Content, Header } = Layout;
 const TabPane = Tabs.TabPane;
@@ -66,6 +68,18 @@ class BasicLayout extends Component {
     });
   };
 
+  handleShowLoginPage=()=>{
+    this.setState({
+      showContent: 'loginPage'
+    });
+  };
+
+  handleRelease=()=>{
+    this.setState({
+      showContent: 'releasePage'
+    });
+  };
+
   render() {
     const { children, location, loginStatus } = this.props;
     const { collapsed } = this.state;
@@ -88,44 +102,64 @@ class BasicLayout extends Component {
               handleShowBill={this.handleShowBill}
               handleShowShoppingCart={this.handleShowShoppingCart}
               loginStatus={loginStatus}
+              handleShowLoginPage={this.handleShowLoginPage}
+              handleRelease={this.handleRelease}
             />
           </Header>
-          <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
-            {
-              //如果是购买者登录，显示 所有内容 和 未购买内容
-              this.state.showContent === 'goodsList' && loginStatus === 'userLogged' &&
-              <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
-                <TabPane tab={"所有内容"} key={1}>
-                  <CardsPage handleShowDetail={this.handleShowDetail}/>
-                </TabPane>
-                <TabPane tab={"未购买的内容"} key={2}>
-                  {/*children*/}
-                  <UnpurchasedContent handleShowDetail={this.handleShowDetail}/>
-                </TabPane>
-              </Tabs>
-            }
-            {
-              //如果状态是未登录，则只显示商品列表
-              this.state.showContent === 'goodsList' && loginStatus === 'notLoggedIn' &&
-              <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
-                <TabPane tab={"所有内容"} key={1}>
-                  <CardsPage handleShowDetail={this.handleShowDetail}/>
-                </TabPane>
-              </Tabs>
-            }
-            {
-              this.state.showContent === 'detail' &&
-              <CardsPage2 detailId={this.state.detailId}/>
-            }
-            {
-              this.state.showContent === 'bill' &&
-              <Bills handleShowDetail={this.handleShowDetail}></Bills>
-            }
-            {
-              this.state.showContent === 'shoppingCart' &&
-              <ShoppingCart handleShowBill={this.handleShowBill}></ShoppingCart>
-            }
-          </Content>
+          {
+            this.state.showContent === 'loginPage' &&
+            <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
+                <LoginPage/>
+            </Content>
+          }
+          {
+            this.state.showContent !== 'loginPage' &&
+            <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
+              {
+                //如果是购买者登录，显示 所有内容 和 未购买内容
+                this.state.showContent === 'goodsList' && loginStatus === 'userLogged' &&
+                <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
+                  <TabPane tab={"所有内容"} key={1}>
+                    <CardsPage handleShowDetail={this.handleShowDetail}/>
+                  </TabPane>
+                  <TabPane tab={"未购买的内容"} key={2}>
+                    {/*children*/}
+                    <UnpurchasedContent handleShowDetail={this.handleShowDetail}/>
+                  </TabPane>
+                </Tabs>
+              }
+              {
+                //如果状态是未登录状态或者seller登录，则只显示商品列表
+                this.state.showContent === 'goodsList' && (loginStatus === 'notLoggedIn'|| loginStatus === 'sellerLoggedIn') &&
+                <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
+                  <TabPane tab={"所有内容"} key={1}>
+                    <CardsPage handleShowDetail={this.handleShowDetail}/>
+                  </TabPane>
+                </Tabs>
+              }
+              {
+                //显示商品详情
+                this.state.showContent === 'detail' &&
+                <CardsPage2 detailId={this.state.detailId}/>
+              }
+              {
+                //显示账单页面
+                this.state.showContent === 'bill' &&
+                <Bills handleShowDetail={this.handleShowDetail}></Bills>
+              }
+              {
+                //显示购物车页面
+                this.state.showContent === 'shoppingCart' &&
+                <ShoppingCart handleShowBill={this.handleShowBill}></ShoppingCart>
+              }
+              {
+                //显示发布商品页面
+                this.state.showContent === 'releasePage' &&
+                <ReleaseProduct/>
+              }
+            </Content>
+          }
+
         </Layout>
       </Layout>
     );

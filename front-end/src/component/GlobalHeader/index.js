@@ -113,6 +113,16 @@ export default class GlobalHeader extends PureComponent {
         />*/}
         <div className={styles.middle}>
           {
+            //如果是seller登录状态，则显示“首页”按钮和“发布”按钮
+            this.props.loginStatus === 'sellerLoggedIn' &&
+            <div className={styles.left}>
+              <Link to="/" >
+                <Button onClick={this.props.handleShowIndexPage}>首页</Button>
+              </Link>
+              <Button onClick={this.props.handleRelease}>发布</Button>
+            </div>
+          }
+          {
             //如果是购买者登录状态，则显示账务和购物车按钮
             this.props.loginStatus === 'userLogged' &&
             <div className={styles.left}>
@@ -133,7 +143,14 @@ export default class GlobalHeader extends PureComponent {
             </div>
           }
           {
-            this.props.loginStatus === 'userLogged' &&
+            //如果是未登录状态，则显示登录超链接
+            this.props.loginStatus === 'notLoggedIn' &&
+            <div className={styles.right}>
+              请<Button onClick={this.props.handleShowLoginPage}>登录</Button>
+            </div>
+          }
+          {
+            this.props.loginStatus === 'userLogged'|| this.props.loginStatus === 'sellerLoggedIn' &&
             <div className={styles.right}>
               <HeaderSearch
                 className={`${styles.action} ${styles.search}`}
