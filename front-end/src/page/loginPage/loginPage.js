@@ -49,8 +49,8 @@ export class NormalLoginForm extends Component {
 
 
 function mapStateToProps(state) {
-  console.log('state');
-  console.log(state);
+  // console.log('state');
+  // console.log(state);
   return {
     //cardsList: state.unpurchased.cardsList,
   };

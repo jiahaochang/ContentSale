@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input } from 'antd';
 
-const { Option } = Select;
+const RadioGroup = Radio.Group;
+const { TextArea } = Input;
 
 export class ReleaseProduct extends Component {
   state = {
@@ -34,7 +35,7 @@ export class ReleaseProduct extends Component {
       return e;
     }
     return e && e.fileList;
-  }
+  };
 
   render() {
 
@@ -73,14 +74,12 @@ export class ReleaseProduct extends Component {
 
           <Form.Item
             {...formItemLayout}
-            label="Radio.Group"
+            label="图片"
           >
-            {getFieldDecorator('radio-group')(
-              <Radio.Group onChange={this.onChange} defaultValue={1}>
-                <Radio value={1}>图片地址</Radio>
-                <Radio value={2}>本地上传</Radio>
-              </Radio.Group>
-            )}
+            <RadioGroup name="图片" defaultValue={1} onChange={this.onChange}>
+              <Radio value={1}>图片地址</Radio>
+              <Radio value={2}>本地上传</Radio>
+            </RadioGroup>
           </Form.Item>
 
           {
@@ -116,22 +115,20 @@ export class ReleaseProduct extends Component {
 
           <Form.Item
             {...formItemLayout}
-            label="Dragger"
+            label="正文"
           >
-            <div className="dropbox">
-              {getFieldDecorator('dragger', {
-                valuePropName: 'fileList',
-                getValueFromEvent: this.normFile,
-              })(
-                <Upload.Dragger name="files" action="/upload.do">
-                  <p className="ant-upload-drag-icon">
-                    <Icon type="inbox" />
-                  </p>
-                  <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                  <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-                </Upload.Dragger>
-              )}
-            </div>
+            {getFieldDecorator('正文', {
+              rules: [{ required: true, message: '请输入正文!'}],
+            })(<TextArea rows={4} placeholder="2-500个字符"/>)}
+          </Form.Item>
+
+          <Form.Item
+            {...formItemLayout}
+            label="价格"
+          >
+            {getFieldDecorator('价格', {
+              rules: [{ required: true, message: '请输入价格!'}],
+            })(<Input placeholder="数字" style={{ width: '30%' }}/>)}元
           </Form.Item>
 
           <Form.Item
@@ -140,6 +137,8 @@ export class ReleaseProduct extends Component {
             <Button type="primary" htmlType="submit">Submit</Button>
           </Form.Item>
         </Form>
+
+
 
         <Row gutter={16}>
           <Col span={8}>

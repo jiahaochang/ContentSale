@@ -36,8 +36,8 @@ export class CardsPage extends Component {
 
   render() {
     const { cardsList = [] } = this.props;
-    console.log('cardsList');
-    console.log(cardsList);
+    // console.log('cardsList');
+    // console.log(cardsList);
 
     return (
       <div>
@@ -70,8 +70,8 @@ export class CardsPage extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state');
-  console.log(state);
+  // console.log('state');
+  // console.log(state);
   return {
     cardsList: state.cards.cardsList,
   };

@@ -31,10 +31,16 @@ class BasicLayout extends Component {
   }
 
   componentWillMount() {
+    /*this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    });*/
+  }
+
+  checkLoginStatus =()=>{
     this.props.dispatch({
       type: 'loginStatus/getLoginStatus',
     });
-  }
+  };
 
   handleMenuCollapse = () => {
     this.setState({
@@ -81,7 +87,9 @@ class BasicLayout extends Component {
   };
 
   render() {
-    const { children, location, loginStatus } = this.props;
+    this.checkLoginStatus();
+    // const { children, location, loginStatus } = this.props;
+    const { loginStatus } = this.props;
     const { collapsed } = this.state;
     console.log('loginStatus = '+loginStatus);
     return (
