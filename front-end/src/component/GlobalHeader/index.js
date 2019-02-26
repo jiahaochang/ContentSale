@@ -150,7 +150,7 @@ export default class GlobalHeader extends PureComponent {
             </div>
           }
           {
-            this.props.loginStatus === 'userLogged'|| this.props.loginStatus === 'sellerLoggedIn' &&
+            (this.props.loginStatus === 'userLogged'|| this.props.loginStatus === 'sellerLoggedIn') &&
             <div className={styles.right}>
               <HeaderSearch
                 className={`${styles.action} ${styles.search}`}

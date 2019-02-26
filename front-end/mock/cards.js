@@ -4,7 +4,8 @@ let data = [
     name: 'umi',
     desc: '极快的类 Next.js 的 React 应用框架。',
     url: 'https://umijs.org',
-    purchaseStatus: 'alreadyPurchased',
+    // purchaseStatus: 'alreadyPurchased',
+    purchaseStatus:'alreadySold',
   },
   {
     id: 2,
@@ -18,14 +19,15 @@ let data = [
     name: 'antd-pro',
     desc: '一个服务于企业级产品的设计体系。',
     url: 'https://ant.design/index-cn',
-    purchaseStatus: 'alreadyPurchased',
+    // purchaseStatus: 'alreadyPurchased',
+    purchaseStatus:'alreadySold',
   },
   {
     id: 4,
     name: 'antd-pro',
     desc: '一个服务于企业级产品的设计体系。',
     url: 'https://ant.design/index-cn',
-    purchaseStatus: 'alreadyPurchased',
+    // purchaseStatus: 'alreadyPurchased',
   },
   {
     id: 5,

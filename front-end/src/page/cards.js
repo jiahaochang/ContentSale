@@ -59,6 +59,12 @@ export class CardsPage extends Component {
                   description="已购买"
                 />
               }
+              {
+                v.purchaseStatus === 'alreadySold' &&
+                <Meta
+                  description="已出售"
+                />
+              }
 
               </Card>
           </Col>
