@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Form, Icon, Input, Button, Row, Col } from 'antd';
+import { Form, Icon, Input, Button, Row, Col, message } from 'antd';
 
 export class NormalLoginForm extends Component {
   handleSubmit = (e) => {
@@ -8,9 +8,17 @@ export class NormalLoginForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+
+        this.props.dispatch({
+          type: 'loginStatus/loginIn',
+          payload:  values,
+        }).then(() => {
+          message.success('登录成功');
+        });
+
       }
     });
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
