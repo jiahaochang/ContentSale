@@ -12,4 +12,5 @@ import java.util.Map;
 
 public interface CheckLoginService {
     Map<String, Object> checkLogin(LoginInfo loginInfo);
+    String validToken(String token);
 }

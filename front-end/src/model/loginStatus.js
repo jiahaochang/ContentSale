@@ -13,6 +13,7 @@ export default {
     *getLoginStatus({ payload }, { call, put }) {
       console.log(payload);
       const rsp = yield call(loginService.getLoginStatus);
+      console.log(rsp);
       yield put({ type: 'saveLoginStatus', payload: { loginStatus: rsp.result } });
       return rsp;
     },
@@ -23,7 +24,7 @@ export default {
       if(rsp.code==200){
         console.log("token");
         console.log(rsp.result.authToken);
-        //localStorage.setItem('token', rsp.result.authToken);
+        localStorage.setItem('token', rsp.result.authToken);
       }
       yield put({ type: 'getLoginStatus' });
       return rsp;

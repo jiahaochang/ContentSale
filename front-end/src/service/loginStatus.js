@@ -1,7 +1,13 @@
 import request from '../util/request';
 
 export function getLoginStatus() {
-  return request('/api/get/loginStatus');
+  var token = localStorage.getItem('token');
+  return request('/login/get/loginStatus', {
+    headers: {
+      'authToken': token,
+    },
+    method: 'GET',
+  });
 }
 
 export function postUserIdAndPwd(data) {

@@ -17,7 +17,7 @@ import java.util.Map;
  * Date 2019/2/27 11:13
  * Description
  */
-public class TokenUtil {
+public class TokenUtils {
     /**
      * 1.创建一个32-byte的密匙
      */
@@ -81,6 +81,8 @@ public class TokenUtil {
             if (jsonObject.containsKey("exp")) {
                 Long expTime = Long.valueOf(jsonObject.get("exp").toString());
                 Long nowTime = new Date().getTime();
+                System.out.println("过期时间 = " + new Date(expTime));
+                System.out.println("当前时间 = " + new Date(nowTime));
                 //判断是否过期
                 if (nowTime > expTime) {
                     //已经过期

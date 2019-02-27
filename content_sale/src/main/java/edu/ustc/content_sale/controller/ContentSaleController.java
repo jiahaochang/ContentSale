@@ -5,11 +5,9 @@ import edu.ustc.content_sale.commen.Result;
 import edu.ustc.content_sale.domain.LoginInfo;
 import edu.ustc.content_sale.service.CheckLoginService;
 import edu.ustc.content_sale.util.ResultUtil;
-import edu.ustc.content_sale.util.TokenUtil;
+import edu.ustc.content_sale.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,14 +23,24 @@ public class ContentSaleController {
     @Autowired
     private CheckLoginService checkLoginService;
 
+    //验证登录页面发过来的账号密码是否正确，返回token
     @PostMapping(value = "/login/post/userId/and/pwd")
     public Result checkLogin(@RequestBody LoginInfo loginInfo) throws JOSEException {
         System.out.println(loginInfo);
         Map<String, Object> tokenMap = checkLoginService.checkLogin(loginInfo);
-        String authToken = TokenUtil.creatToken(tokenMap);
+        String authToken = TokenUtils.creatToken(tokenMap);
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("authToken", authToken);
         return ResultUtil.success(resultMap);
     }
 
+    //根据前端发过来的token验证登录状态
+    @GetMapping(value = "/login/get/loginStatus")
+    public Result getLoginStatus(@RequestHeader(name = "authToken") String authToken){
+        String loginStatus = checkLoginService.validToken(authToken);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("loginStatus", loginStatus);
+
+        return ResultUtil.success(resultMap);
+    }
 }

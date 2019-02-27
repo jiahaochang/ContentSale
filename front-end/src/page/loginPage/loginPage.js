@@ -16,6 +16,7 @@ export class NormalLoginForm extends Component {
           message.success('登录成功');
         });
 
+        this.props.checkLoginStatus;
       }
     });
   };

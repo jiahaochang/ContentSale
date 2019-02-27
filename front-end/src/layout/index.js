@@ -117,7 +117,7 @@ class BasicLayout extends Component {
           {
             this.state.showContent === 'loginPage' &&
             <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
-                <LoginPage/>
+                <LoginPage checkLoginStatus={this.checkLoginStatus}/>
             </Content>
           }
           {
