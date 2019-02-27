@@ -4,6 +4,11 @@ package edu.ustc.content_sale.util;
 import edu.ustc.content_sale.commen.Result;
 import edu.ustc.content_sale.commen.ResultEnum;
 
+/**
+ * Created by Jiahao.Zhang
+ * Date 2019/2/27 11:13
+ * Description
+ */
 public class ResultUtil {
 
     /**

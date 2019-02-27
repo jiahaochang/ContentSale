@@ -1,1 +1,8 @@
 
+seller:
+  userName: seller
+  password: relles
+
+buyer:
+  userName: buyer
+  password: reyub

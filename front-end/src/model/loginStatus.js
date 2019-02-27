@@ -20,6 +20,11 @@ export default {
     *loginIn({ payload }, { call, put }) {
       console.log(payload);
       const rsp = yield call(loginService.postUserIdAndPwd, payload);
+      if(rsp.code==200){
+        console.log("token");
+        console.log(rsp.result.authToken);
+        //localStorage.setItem('token', rsp.result.authToken);
+      }
       yield put({ type: 'getLoginStatus' });
       return rsp;
     },

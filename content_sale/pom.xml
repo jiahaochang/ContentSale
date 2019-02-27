@@ -46,6 +46,13 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!--引入jwt依赖-->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>4.23</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

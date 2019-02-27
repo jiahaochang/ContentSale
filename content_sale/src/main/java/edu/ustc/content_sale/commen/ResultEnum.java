@@ -1,5 +1,10 @@
 package edu.ustc.content_sale.commen;
 
+/**
+ * Created by Jiahao.Zhang
+ * Date 2019/2/27 11:13
+ * Description
+ */
 public enum ResultEnum {
 
     CONTINUE(100, "Continue, 请继续发送请求的剩余部分"),
