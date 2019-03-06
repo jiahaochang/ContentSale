@@ -13,7 +13,7 @@ $ npm install -g npm
 ```
 $ npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```
-3. 安装前端代码依赖的包
+3. 安装前端代码依赖的包，由于网络原因，安装依赖经常会出错，此时只需要删除node_modules文件夹，重新执行安装依赖命令即可
 ```
 $ cnpm install
 ```
