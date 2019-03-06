@@ -4,7 +4,7 @@
 前端采用react+antDesign
 后端采用springBoot
 ## front-end文件夹内的是前端代码
-### 前端初始化项目过程
+### 前端初始化项目过程(要安装node)
 1. npm升级到最新版本 
 ```
 $ npm install -g npm
