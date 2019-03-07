@@ -14,3 +14,8 @@ web:
 multipart:
   maxRequestSize: 200Mb #设置所有文件最大内存
   maxFileSize: 10Mb #设置单个文件最大内存
+
+#热部署生效
+spring.devtools.restart.enabled: false
+#设置重启的目录
+spring.devtools.restart.additional-paths: src/main/java

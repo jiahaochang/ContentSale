@@ -33,9 +33,18 @@ export class ReleaseProduct extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+
+        this.props.dispatch({
+          type: 'release/releaseProduct',
+          payload:  values,
+        }).then((res) => {});
+
       }
     });
-  }
+
+
+
+  };
 
   normFile = (e) => {
     console.log('Upload event:', e);
@@ -75,7 +84,7 @@ export class ReleaseProduct extends Component {
             {...formItemLayout}
             label="摘要"
           >
-            {getFieldDecorator('abstract', {
+            {getFieldDecorator('summary', {
               rules: [{ required: true, message: '请输入摘要!'}],
             })(<Input placeholder="2-140个字符"/>)}
           </Form.Item>
@@ -101,7 +110,7 @@ export class ReleaseProduct extends Component {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
               })(
-                <Upload name="logo" action="/upload.do" listType="picture">
+                <Upload name="logo" action="/upload.do" listType="picture" accept=".png,.gif,.jpg,.jpeg">
                   <Button>
                     <Icon type="upload" /> Click to upload
                   </Button>
