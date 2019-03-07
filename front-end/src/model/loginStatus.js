@@ -1,5 +1,6 @@
 import * as loginService from '../service/loginStatus';
 // import * as cardsService from "../service/cards";
+import { message } from 'antd';
 
 export default {
   namespace: 'loginStatus',
@@ -11,10 +12,17 @@ export default {
   effects: {
 
     *getLoginStatus({ payload }, { call, put }) {
-      console.log(payload);
       const rsp = yield call(loginService.getLoginStatus);
       console.log(rsp);
       yield put({ type: 'saveLoginStatus', payload: { loginStatus: rsp.result } });
+      return rsp;
+    },
+
+    *getLoginInfo({ payload }, { call, put }) {
+      console.log(payload);
+      const rsp = yield call(loginService.getLoginInfo);
+      console.log(rsp);
+      yield put({ type: 'saveLoginInfo', payload: { loginInfo: rsp.result } });
       return rsp;
     },
 
@@ -22,11 +30,11 @@ export default {
       console.log(payload);
       const rsp = yield call(loginService.postUserIdAndPwd, payload);
       if(rsp.code==200){
-        console.log("token");
-        console.log(rsp.result.authToken);
-        localStorage.setItem('token', rsp.result.authToken);
+        //console.log("authToken");
+        //console.log(rsp.result.authToken);
+        localStorage.setItem('authToken', rsp.result.authToken);
       }
-      yield put({ type: 'getLoginStatus' });
+      // yield put({ type: 'getLoginStatus' });
       return rsp;
     },
 
@@ -38,6 +46,13 @@ export default {
       return {
         ...state,
         loginStatus,
+      }
+    },
+
+    saveLoginInfo(state, { payload: { loginInfo } }) {
+      return {
+        ...state,
+        loginInfo,
       }
     },
 

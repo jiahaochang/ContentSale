@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import net.minidev.json.JSONObject;
+import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -55,11 +56,11 @@ public class CheckLoginServiceImpl implements CheckLoginService {
     }
 
     @Override
-    public String validToken(String token) {
+    public Map<String, Object> validToken(String token) {
+        Map<String, Object> res = new HashMap<>();
         //解析token
         try {
-            if (token != null) {
-
+            if (!token.equals("null")) {
                 Map<String, Object> validMap = TokenUtils.valid(token);
                 int i = (int) validMap.get("Result");
                 if (i == 0) {
@@ -69,10 +70,16 @@ public class CheckLoginServiceImpl implements CheckLoginService {
                     log.info("sta是"+jsonObject.get("sta"));
                     log.info("exp是"+jsonObject.get("exp"));
                     String uid = (String) jsonObject.get("uid");
-                    if (uid.equals(buyerName)){
-                        return "userLogged";
-                    }else if (uid.equals(sellerName)){
-                        return "sellerLoggedIn";
+                    if (!StringUtils.isEmpty(uid)){
+                        if (uid.equals(buyerName)){
+                            res.put("uid", buyerName);
+                            res.put("loginStatus", "userLogged");
+                            return res;
+                        }else if (uid.equals(sellerName)){
+                            res.put("uid", sellerName);
+                            res.put("loginStatus", "sellerLoggedIn");
+                            return res;
+                        }
                     }
                 } else if (i == 2) {
                     System.out.println("token已经过期");
@@ -83,6 +90,19 @@ public class CheckLoginServiceImpl implements CheckLoginService {
         } catch (JOSEException e) {
             e.printStackTrace();
         }
-        return "notLoggedIn";
+        res.put("uid", "");
+        res.put("loginStatus", "notLoggedIn");
+        return res;
+    }
+
+    @Override
+    public Boolean verifyAccountAndPassword(LoginInfo loginInfo) {
+        if (loginInfo.getUserName().equals(sellerName) && loginInfo.getPassword().equals(sellerPwd)){
+            return true;
+        }
+        if (loginInfo.getUserName().equals(buyerName) && loginInfo.getPassword().equals(buyerPwd)){
+            return true;
+        }
+        return false;
     }
 }

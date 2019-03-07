@@ -27,19 +27,19 @@ class BasicLayout extends Component {
       collapsed: false,
       showContent: 'goodsList',
       detailId: '',
+      //loginStatus: 'notLoggedIn',
     };
   }
 
   componentWillMount() {
-    /*this.props.dispatch({
-      type: 'loginStatus/getLoginStatus',
-    });*/
+    this.checkLoginStatus();
   }
 
   checkLoginStatus =()=>{
     this.props.dispatch({
       type: 'loginStatus/getLoginStatus',
     });
+    console.log("检查登录状态 "+this.props.loginStatus)
   };
 
   handleMenuCollapse = () => {
@@ -80,6 +80,12 @@ class BasicLayout extends Component {
     });
   };
 
+  doNotShowLoginPage=()=>{
+    this.setState({
+      showContent: 'doNotShowLoginPage'
+    });
+  };
+
   handleRelease=()=>{
     this.setState({
       showContent: 'releasePage'
@@ -87,11 +93,11 @@ class BasicLayout extends Component {
   };
 
   render() {
-    this.checkLoginStatus();
-    // const { children, location, loginStatus } = this.props;
-    const { loginStatus } = this.props;
+    const { loginStatus, uid } = this.props;
     const { collapsed } = this.state;
-    console.log('loginStatus = '+loginStatus);
+    // console.log('登录状态 = '+this.props.loginStatus);
+    // console.log('显示的内容 = '+this.state.showContent);
+
     return (
       <Layout>
         <Layout>
@@ -100,10 +106,10 @@ class BasicLayout extends Component {
               logo={logo}
               collapsed={collapsed}
               currentUser={{
-                name: 'jiahao zhang',
+                name: uid,
                 avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
                 userid: '00000001',
-                notifyCount: 12,
+                // notifyCount: 12,
               }}
               onCollapse={this.handleMenuCollapse}
               handleShowIndexPage={this.handleShowIndexPage}
@@ -112,12 +118,17 @@ class BasicLayout extends Component {
               loginStatus={loginStatus}
               handleShowLoginPage={this.handleShowLoginPage}
               handleRelease={this.handleRelease}
+              checkLoginStatus={this.checkLoginStatus}
             />
           </Header>
           {
             this.state.showContent === 'loginPage' &&
             <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
-                <LoginPage checkLoginStatus={this.checkLoginStatus}/>
+                <LoginPage
+                  checkLoginStatus={this.checkLoginStatus}
+                  doNotShowLoginPage={this.doNotShowLoginPage}
+                  handleShowIndexPage={this.handleShowIndexPage}
+                />
             </Content>
           }
           {
@@ -181,6 +192,7 @@ function mapStateToProps(state) {
   // console.log(state);
   return {
     loginStatus: state.loginStatus.loginStatus.loginStatus,
+    uid: state.loginStatus.loginStatus.uid,
   };
 }
 

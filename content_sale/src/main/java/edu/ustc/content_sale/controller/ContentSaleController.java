@@ -27,6 +27,9 @@ public class ContentSaleController {
     @PostMapping(value = "/login/post/userId/and/pwd")
     public Result checkLogin(@RequestBody LoginInfo loginInfo) throws JOSEException {
         System.out.println(loginInfo);
+        if (!checkLoginService.verifyAccountAndPassword(loginInfo)){
+            return ResultUtil.error(401,"账号或密码错误");
+        }
         Map<String, Object> tokenMap = checkLoginService.checkLogin(loginInfo);
         String authToken = TokenUtils.creatToken(tokenMap);
         Map<String,Object> resultMap = new HashMap<>();
@@ -37,10 +40,9 @@ public class ContentSaleController {
     //根据前端发过来的token验证登录状态
     @GetMapping(value = "/login/get/loginStatus")
     public Result getLoginStatus(@RequestHeader(name = "authToken") String authToken){
-        String loginStatus = checkLoginService.validToken(authToken);
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("loginStatus", loginStatus);
-
-        return ResultUtil.success(resultMap);
+        System.out.println("authToken= "+authToken);
+        Map<String, Object> loginStatus = checkLoginService.validToken(authToken);
+        System.out.println(loginStatus);
+        return ResultUtil.success(loginStatus);
     }
 }

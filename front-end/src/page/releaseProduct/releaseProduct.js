@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input } from 'antd';
+import { Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input, Card } from 'antd';
 
 const RadioGroup = Radio.Group;
 const { TextArea } = Input;
@@ -8,6 +8,14 @@ const { TextArea } = Input;
 export class ReleaseProduct extends Component {
   state = {
     uploadMethod: 1,
+    pictureUrl:""
+  };
+
+  inputPictureUrl=(e)=>{
+    console.log(e.target.value);
+    this.setState({
+      pictureUrl: e.target.value,
+    });
   };
 
   onChange = (e) => {
@@ -58,7 +66,7 @@ export class ReleaseProduct extends Component {
             {...formItemLayout}
             label="标题"
           >
-            {getFieldDecorator('标题', {
+            {getFieldDecorator('title', {
               rules: [{ required: true, message: '请输入标题!'}],
             })(<Input placeholder="2-80个字符"/>)}
           </Form.Item>
@@ -67,7 +75,7 @@ export class ReleaseProduct extends Component {
             {...formItemLayout}
             label="摘要"
           >
-            {getFieldDecorator('摘要', {
+            {getFieldDecorator('abstract', {
               rules: [{ required: true, message: '请输入摘要!'}],
             })(<Input placeholder="2-140个字符"/>)}
           </Form.Item>
@@ -76,7 +84,7 @@ export class ReleaseProduct extends Component {
             {...formItemLayout}
             label="图片"
           >
-            <RadioGroup name="图片" defaultValue={1} onChange={this.onChange}>
+            <RadioGroup name="uploadType" defaultValue={1} onChange={this.onChange}>
               <Radio value={1}>图片地址</Radio>
               <Radio value={2}>本地上传</Radio>
             </RadioGroup>
@@ -87,7 +95,7 @@ export class ReleaseProduct extends Component {
             <Form.Item
               {...formItemLayout}
               label="Upload"
-              extra="longgggggggggggggggggggggggggggggggggg"
+              extra="上传图片"
             >
               {getFieldDecorator('upload', {
                 valuePropName: 'fileList',
@@ -107,9 +115,26 @@ export class ReleaseProduct extends Component {
               {...formItemLayout}
               label="图片地址"
             >
-              {getFieldDecorator('图片地址', {
+              {getFieldDecorator('picUrl', {
                 rules: [{ required: true, message: '请输入图片地址!'}],
-              })(<Input placeholder="图片地址"/>)}
+              })(
+                <Input placeholder="图片地址" onChange={this.inputPictureUrl}/>
+              )}
+            </Form.Item>
+          }
+          {
+            this.state.uploadMethod === 1 &&
+            <Form.Item
+              {...formItemLayout}
+              label="图片预览"
+            >
+              <Card
+                hoverable
+                style={{ width: 100 ,height:100}}
+                cover={<img alt="example" src={this.state.pictureUrl} />}
+              >
+              </Card>
+
             </Form.Item>
           }
 
@@ -117,7 +142,7 @@ export class ReleaseProduct extends Component {
             {...formItemLayout}
             label="正文"
           >
-            {getFieldDecorator('正文', {
+            {getFieldDecorator('text', {
               rules: [{ required: true, message: '请输入正文!'}],
             })(<TextArea rows={4} placeholder="2-500个字符"/>)}
           </Form.Item>
@@ -126,7 +151,7 @@ export class ReleaseProduct extends Component {
             {...formItemLayout}
             label="价格"
           >
-            {getFieldDecorator('价格', {
+            {getFieldDecorator('price', {
               rules: [{ required: true, message: '请输入价格!'}],
             })(<Input placeholder="数字" style={{ width: '30%' }}/>)}元
           </Form.Item>

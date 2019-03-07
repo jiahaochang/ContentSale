@@ -11,6 +11,10 @@ import java.util.Map;
  */
 
 public interface CheckLoginService {
+    //根据用户名和密码生成token
     Map<String, Object> checkLogin(LoginInfo loginInfo);
-    String validToken(String token);
+    //检验token信息是否正确，返回登录状态
+    Map<String, Object> validToken(String token);
+    //验证登录名和密码是否正确
+    Boolean verifyAccountAndPassword(LoginInfo loginInfo);
 }

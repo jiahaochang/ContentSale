@@ -69,6 +69,15 @@ export default class GlobalHeader extends PureComponent {
       setLocale('zh-CN');
     }
   }
+
+  handleClick = (e) => {
+    if (e.key==='logout'){
+      console.log('click ', e.key);
+      localStorage.removeItem("authToken");
+      this.props.checkLoginStatus();
+    }
+  };
+
   render() {
     const {
       currentUser = {},
@@ -80,8 +89,10 @@ export default class GlobalHeader extends PureComponent {
       onMenuClick,
       onNoticeClear,
     } = this.props;
+
+
     const menu = (
-      <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
+      <Menu className={styles.menu} selectedKeys={[]} onClick={this.handleClick}>
         <Menu.Item disabled>
           <Icon type="user" />个人中心
         </Menu.Item>
@@ -93,10 +104,11 @@ export default class GlobalHeader extends PureComponent {
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout">
-          <Icon type="logout" />退出登录
+          <Icon type="logout" key="logout" />退出登录
         </Menu.Item>
       </Menu>
     );
+
     const noticeData = this.getNoticeData();
     return (
       <div className={styles.header}>
@@ -173,7 +185,7 @@ export default class GlobalHeader extends PureComponent {
                   <Icon type="question-circle-o" />
                 </a>
               </Tooltip>*/}
-              <NoticeIcon
+              {/*<NoticeIcon
                 className={styles.action}
                 count={currentUser.notifyCount}
                 onItemClick={(item, tabProps) => {
@@ -202,7 +214,7 @@ export default class GlobalHeader extends PureComponent {
                   emptyText="你已完成所有待办"
                   emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
                 />
-              </NoticeIcon>
+              </NoticeIcon>*/}
               {currentUser.name ? (
                 <Dropdown overlay={menu}>
                 <span className={`${styles.action} ${styles.account}`}>

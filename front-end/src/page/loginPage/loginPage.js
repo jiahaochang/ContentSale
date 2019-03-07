@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Form, Icon, Input, Button, Row, Col, message } from 'antd';
 
 export class NormalLoginForm extends Component {
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -12,11 +13,26 @@ export class NormalLoginForm extends Component {
         this.props.dispatch({
           type: 'loginStatus/loginIn',
           payload:  values,
-        }).then(() => {
-          message.success('登录成功');
+        }).then((res) => {
+          console.log(res.code);
+
+
+          if (res.code===200){
+            //提示登录成功
+            message.success('登录成功！');
+            //检查登录状态
+            this.props.checkLoginStatus();
+            //不显示登录页面
+            this.props.doNotShowLoginPage();
+            //返回主页
+            this.props.handleShowIndexPage();
+          }else {
+            message.error('账号或密码错误，登录失败！');
+          }
+
         });
 
-        this.props.checkLoginStatus;
+
       }
     });
   };
@@ -58,10 +74,10 @@ export class NormalLoginForm extends Component {
 
 
 function mapStateToProps(state) {
-  // console.log('state');
+  // console.log('loginPage state');
   // console.log(state);
   return {
-    //cardsList: state.unpurchased.cardsList,
+
   };
 }
 
