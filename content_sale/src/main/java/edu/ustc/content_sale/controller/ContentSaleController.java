@@ -51,8 +51,8 @@ public class ContentSaleController {
 
     //接收发布商品的信息
     @RequestMapping(value="/login/post/upload/info", method=RequestMethod.POST )
-    public @ResponseBody Result releaseProduct(@RequestParam("title")String title){
-        System.out.println(title);
+    public @ResponseBody Result releaseProduct(@RequestBody ReleasedProduct releasedProduct){
+        System.out.println(releasedProduct.getTitle());
         return ResultUtil.success();
     }
 }

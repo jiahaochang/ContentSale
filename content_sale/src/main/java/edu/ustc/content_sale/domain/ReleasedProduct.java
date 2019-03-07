@@ -19,5 +19,6 @@ public class ReleasedProduct {
     private String summary;
     private String text;
     private double price;
-    private List<MultipartFile> upload;
+    private List<ImageInfo> upload;
+
 }

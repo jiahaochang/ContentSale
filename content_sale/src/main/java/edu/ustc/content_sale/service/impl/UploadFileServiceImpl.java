@@ -1,8 +1,8 @@
 package edu.ustc.content_sale.service.impl;
 
+import edu.ustc.content_sale.domain.ReleasedProduct;
 import edu.ustc.content_sale.service.UploadFileService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 /**
  * @Author: Jiahao.Zhang
@@ -16,8 +16,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     private String uploadFiltPath; // 保存上传文件的路径
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
+    public void addResourceHandlers(ReleasedProduct releasedProduct) {
 
     }
 }

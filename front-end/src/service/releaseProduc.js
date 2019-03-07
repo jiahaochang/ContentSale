@@ -10,6 +10,7 @@ export function postReleaseInfo(data) {
     },
     method: 'POST',
     body: JSON.stringify(data),
+    // body:data
   });
 }
 

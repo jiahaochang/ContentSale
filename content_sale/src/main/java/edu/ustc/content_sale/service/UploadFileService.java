@@ -1,5 +1,6 @@
 package edu.ustc.content_sale.service;
 
+import edu.ustc.content_sale.domain.ReleasedProduct;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 /**
@@ -10,5 +11,5 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 
 public interface UploadFileService {
-    void addResourceHandlers(ResourceHandlerRegistry registry);
+    void addResourceHandlers(ReleasedProduct releasedProduct);
 }
