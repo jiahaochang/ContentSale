@@ -80,11 +80,11 @@ class BasicLayout extends Component {
     });
   };
 
-  doNotShowLoginPage=()=>{
+  /*doNotShowLoginPage=()=>{
     this.setState({
       showContent: 'doNotShowLoginPage'
     });
-  };
+  };*/
 
   handleRelease=()=>{
     this.setState({
@@ -126,7 +126,7 @@ class BasicLayout extends Component {
             <Content style={{padding: '30px', margin: 'auto', height: '100%', width: '790px', background: '#fff' }}>
                 <LoginPage
                   checkLoginStatus={this.checkLoginStatus}
-                  doNotShowLoginPage={this.doNotShowLoginPage}
+                  //doNotShowLoginPage={this.doNotShowLoginPage}
                   handleShowIndexPage={this.handleShowIndexPage}
                 />
             </Content>
@@ -174,7 +174,7 @@ class BasicLayout extends Component {
               {
                 //显示发布商品页面
                 this.state.showContent === 'releasePage' &&
-                <ReleaseProduct/>
+                <ReleaseProduct handleShowIndexPage={this.handleShowIndexPage}/>
               }
             </Content>
           }

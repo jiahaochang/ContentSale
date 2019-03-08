@@ -13,9 +13,7 @@ export default {
     *releaseProduct({ payload }, { call, put }) {
       console.log(payload);
       const rsp = yield call(releaseService.postReleaseInfo, payload);
-      if(rsp.code==200){
-        message.success("发布商品成功");
-      }
+
       return rsp;
     },
 

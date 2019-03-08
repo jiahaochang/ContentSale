@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input, Card } from 'antd';
+import { Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input, Card, message } from 'antd';
 
 const RadioGroup = Radio.Group;
 const { TextArea } = Input;
@@ -37,7 +37,14 @@ export class ReleaseProduct extends Component {
         this.props.dispatch({
           type: 'release/releaseProduct',
           payload:  values,
-        }).then((res) => {});
+        }).then((res) => {
+          if(res.code==200){
+            message.success("发布商品成功");
+            this.props.handleShowIndexPage();
+          }else {
+            message.error(res.message);
+          }
+        });
 
       }
     });

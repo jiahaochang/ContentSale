@@ -23,7 +23,7 @@ export class NormalLoginForm extends Component {
             //检查登录状态
             this.props.checkLoginStatus();
             //不显示登录页面
-            this.props.doNotShowLoginPage();
+            //this.props.doNotShowLoginPage();
             //返回主页
             this.props.handleShowIndexPage();
           }else {

@@ -1,10 +1,14 @@
 package edu.ustc.content_sale.service.impl;
 
+import edu.ustc.content_sale.dao.CommodityDao;
+import edu.ustc.content_sale.domain.Commodity;
 import edu.ustc.content_sale.domain.ImageInfo;
 import edu.ustc.content_sale.domain.ReleasedProduct;
 import edu.ustc.content_sale.service.UploadFileService;
 import edu.ustc.content_sale.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +27,11 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Value("${web.upload-path}")
     private String saveFilePath; // 保存上传文件的路径
 
+    @Autowired
+    private CommodityDao commodityDao;
+
     @Override
-    public void parsendSaveImage(ReleasedProduct releasedProduct) {
+    public Boolean parsendSaveImage(ReleasedProduct releasedProduct) {
         List<ImageInfo> imageInfos = releasedProduct.getUpload();
         imageInfos.stream().forEach(imageInfo -> {
             String imgName = imageInfo.getUid()+ "." +(imageInfo.getType().split("/"))[1];
@@ -33,10 +40,18 @@ public class UploadFileServiceImpl implements UploadFileService {
             log.info("imgFileSavePath = "+imgFileSavePath);
             FileUtils.generateImage(imageInfo.getThumbUrl(), imgFileSavePath);
         });
+        return true;
     }
 
     @Override
     public Boolean saveCommodityToDB(ReleasedProduct releasedProduct) {
-        return null;
+        Commodity commodity = new Commodity();
+        BeanUtils.copyProperties(releasedProduct, commodity);
+        ImageInfo imageInfo = releasedProduct.getUpload().get(0);
+        commodity.setSaleStatus("notYetSold");
+        String imgSuffix = imageInfo.getType().split("/")[1];
+        commodity.setImageName(imageInfo.getUid()+"."+imgSuffix);
+        commodityDao.save(commodity);
+        return true;
     }
 }

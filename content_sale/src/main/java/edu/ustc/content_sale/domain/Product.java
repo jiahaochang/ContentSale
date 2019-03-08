@@ -17,10 +17,13 @@ public class Product {
 
     @Column
     private String title;
+
     @Column
     private String summary;
-    @Column
+
+    @Column(columnDefinition = "text")
     private String text;
+
     @Column
     private double price;
 
