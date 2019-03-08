@@ -1,8 +1,8 @@
 package edu.ustc.content_sale.util;
 
 
-import edu.ustc.content_sale.commen.Result;
-import edu.ustc.content_sale.commen.ResultEnum;
+import edu.ustc.content_sale.common.Result;
+import edu.ustc.content_sale.common.ResultEnum;
 
 /**
  * Created by Jiahao.Zhang

@@ -13,4 +13,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 public interface UploadFileService {
     //解析并保存上传的图片文件
     void parsendSaveImage(ReleasedProduct releasedProduct);
+    //将上传的商品保存到数据库
+    Boolean saveCommodityToDB(ReleasedProduct releasedProduct);
 }

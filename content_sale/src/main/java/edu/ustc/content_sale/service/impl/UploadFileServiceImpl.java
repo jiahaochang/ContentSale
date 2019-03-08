@@ -34,4 +34,9 @@ public class UploadFileServiceImpl implements UploadFileService {
             FileUtils.generateImage(imageInfo.getThumbUrl(), imgFileSavePath);
         });
     }
+
+    @Override
+    public Boolean saveCommodityToDB(ReleasedProduct releasedProduct) {
+        return null;
+    }
 }

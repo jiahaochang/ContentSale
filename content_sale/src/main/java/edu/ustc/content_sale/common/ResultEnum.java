@@ -1,4 +1,4 @@
-package edu.ustc.content_sale.commen;
+package edu.ustc.content_sale.common;
 
 /**
  * Created by Jiahao.Zhang

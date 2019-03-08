@@ -1,7 +1,7 @@
 package edu.ustc.content_sale.controller;
 
 import com.nimbusds.jose.JOSEException;
-import edu.ustc.content_sale.commen.Result;
+import edu.ustc.content_sale.common.Result;
 import edu.ustc.content_sale.domain.LoginInfo;
 import edu.ustc.content_sale.domain.ReleasedProduct;
 import edu.ustc.content_sale.service.CheckLoginService;
@@ -10,10 +10,8 @@ import edu.ustc.content_sale.util.ResultUtil;
 import edu.ustc.content_sale.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
