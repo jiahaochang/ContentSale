@@ -58,7 +58,7 @@ public class ContentSaleController {
     //接收并保存发布商品的信息
     @RequestMapping(value="/post/upload/info", method=RequestMethod.POST )
     public @ResponseBody Result releaseProduct(@RequestBody ReleasedProductByType2 releasedProduct){
-        uploadFileService.parsendSaveImage(releasedProduct);
+        uploadFileService.parseAndSaveImage(releasedProduct);
         Boolean saveResult = uploadFileService.saveCommodityToDB(releasedProduct);
         if (saveResult){
             return ResultUtil.success();
@@ -68,9 +68,11 @@ public class ContentSaleController {
 
     //通过上传url的方式获取远程图片
     @PostMapping(value = "/post/upload/picurl")
-    public Result releaseProductByUrl(@RequestBody ReleasedProductByType1 releasedProductByType1){
-        log.info("releasedProductByType1"+releasedProductByType1);
-        log.info(String.valueOf(System.currentTimeMillis()));
-        return ResultUtil.success();
+    public Result releaseProductByUrl(@RequestBody ReleasedProductByType1 releasedProductByType1) throws Exception {
+        Boolean saveRes = uploadFileService.saveCommodityToDBFromUrl(releasedProductByType1);
+        if (saveRes){
+            return ResultUtil.success();
+        }
+        return ResultUtil.error(304, "发布失败");
     }
 }

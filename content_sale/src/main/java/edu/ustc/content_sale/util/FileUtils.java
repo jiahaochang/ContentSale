@@ -80,7 +80,7 @@ public class FileUtils {
         }
     }
 
-    public static void DownloadOneFileByURL(String fileName, String imgUrl, String localPath) throws Exception {
+    public static Boolean downloadOneFileByURL(String fileName, String imgUrl, String localPath) throws Exception {
         //new一个URL对象
         URL url = new URL(imgUrl);
         //打开链接
@@ -94,19 +94,20 @@ public class FileUtils {
         //得到图片的二进制数据，以二进制封装得到数据，具有通用性
         byte[] data = readInputStream(inStream);
         //new一个文件对象用来保存图片，默认保存当前工程根目录
-        File imageFile = new File(localPath + imgUrl);
+        File imageFile = new File(localPath + fileName);
         //创建输出流
         FileOutputStream outStream = new FileOutputStream(imageFile);
         //写入数据
         outStream.write(data);
         //关闭输出流
         outStream.close();
+        return true;
     }
 
     public static byte[] readInputStream(InputStream inStream) throws Exception {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         //创建一个Buffer字符串
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[10240];
         //每次读取的字符串长度，如果为-1，代表全部读取完毕
         int len = 0;
         //使用一个输入流从buffer里把数据读取出来

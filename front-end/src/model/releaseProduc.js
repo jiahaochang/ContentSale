@@ -18,7 +18,7 @@ export default {
 
     *releaseProductByImgUrl({ payload }, { call, put }) {
       console.log(payload);
-      const rsp = yield call(releaseService.postReleaseInfo, payload);
+      const rsp = yield call(releaseService.postReleaseInfoByType1, payload);
       return rsp;
     },
 

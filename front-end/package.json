@@ -22,12 +22,14 @@
   },
   "scripts": {
     "dev": "umi dev",
-	"build": "umi build",
+    "build": "umi build",
     "lint": "eslint --ext .js src",
     "test": "umi test",
     "_sync": "sh tool/tobigfish.sh"
   },
   "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-defaults": "^9.0.0",
     "umi": "^2.3.2"
   }
 }

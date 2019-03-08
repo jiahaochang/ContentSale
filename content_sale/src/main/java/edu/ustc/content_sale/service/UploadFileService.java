@@ -1,5 +1,6 @@
 package edu.ustc.content_sale.service;
 
+import edu.ustc.content_sale.domain.ReleasedProductByType1;
 import edu.ustc.content_sale.domain.ReleasedProductByType2;
 
 /**
@@ -11,7 +12,9 @@ import edu.ustc.content_sale.domain.ReleasedProductByType2;
 
 public interface UploadFileService {
     //解析并保存上传的图片文件
-    Boolean parsendSaveImage(ReleasedProductByType2 releasedProduct);
+    Boolean parseAndSaveImage(ReleasedProductByType2 releasedProduct);
     //将上传的商品保存到数据库
     Boolean saveCommodityToDB(ReleasedProductByType2 releasedProduct);
+    //通过远程url的方式上传图片
+    Boolean saveCommodityToDBFromUrl(ReleasedProductByType1 releasedProductByType1) throws Exception;
 }

@@ -3,6 +3,7 @@ package edu.ustc.content_sale.service.impl;
 import edu.ustc.content_sale.dao.CommodityDao;
 import edu.ustc.content_sale.domain.Commodity;
 import edu.ustc.content_sale.domain.ImageInfo;
+import edu.ustc.content_sale.domain.ReleasedProductByType1;
 import edu.ustc.content_sale.domain.ReleasedProductByType2;
 import edu.ustc.content_sale.service.UploadFileService;
 import edu.ustc.content_sale.util.FileUtils;
@@ -31,7 +32,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     private CommodityDao commodityDao;
 
     @Override
-    public Boolean parsendSaveImage(ReleasedProductByType2 releasedProduct) {
+    public Boolean parseAndSaveImage(ReleasedProductByType2 releasedProduct) {
         List<ImageInfo> imageInfos = releasedProduct.getUpload();
         imageInfos.stream().forEach(imageInfo -> {
             String imgName = imageInfo.getUid()+ "." +(imageInfo.getType().split("/"))[1];
@@ -53,5 +54,23 @@ public class UploadFileServiceImpl implements UploadFileService {
         commodity.setImageName(imageInfo.getUid()+"."+imgSuffix);
         commodityDao.save(commodity);
         return true;
+    }
+
+    @Override
+    public Boolean saveCommodityToDBFromUrl(ReleasedProductByType1 releasedProductByType1) throws Exception {
+        String[] urlSplit = releasedProductByType1.getPicUrl().split("\\.");
+        String imgSuffix = urlSplit[urlSplit.length-1];
+        String imgName = "rc-upload-"+System.currentTimeMillis()+"."+imgSuffix;
+        String savePath = System.getProperty("user.dir") + saveFilePath;
+        Boolean saveRes = FileUtils.downloadOneFileByURL(imgName, releasedProductByType1.getPicUrl(), savePath);
+        if (saveRes){
+            Commodity commodity = new Commodity();
+            BeanUtils.copyProperties(releasedProductByType1, commodity);
+            commodity.setImageName(imgName);
+            commodity.setSaleStatus("notYetSold");
+            commodityDao.save(commodity);
+            return true;
+        }
+        return false;
     }
 }
