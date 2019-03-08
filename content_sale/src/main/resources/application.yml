@@ -9,7 +9,7 @@ buyer:
 
 
 web:
-  upload-path: classpath:/resources/imgs/ #自定义文件上传路径
+  upload-path: /src/main/resources/static/imgs/ #自定义文件上传路径
 
 multipart:
   maxRequestSize: 200Mb #设置所有文件最大内存
@@ -19,3 +19,11 @@ multipart:
 spring.devtools.restart.enabled: false
 #设置重启的目录
 spring.devtools.restart.additional-paths: src/main/java
+
+#数据库配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/content-sale?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123

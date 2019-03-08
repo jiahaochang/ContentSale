@@ -5,6 +5,7 @@ import edu.ustc.content_sale.commen.Result;
 import edu.ustc.content_sale.domain.LoginInfo;
 import edu.ustc.content_sale.domain.ReleasedProduct;
 import edu.ustc.content_sale.service.CheckLoginService;
+import edu.ustc.content_sale.service.UploadFileService;
 import edu.ustc.content_sale.util.ResultUtil;
 import edu.ustc.content_sale.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class ContentSaleController {
 
     @Autowired
     private CheckLoginService checkLoginService;
+    @Autowired
+    private UploadFileService uploadFileService;
 
     //验证登录页面发过来的账号密码是否正确，返回token
     @PostMapping(value = "/login/post/userId/and/pwd")
@@ -49,10 +52,10 @@ public class ContentSaleController {
         return ResultUtil.success(loginStatus);
     }
 
-    //接收发布商品的信息
+    //接收并保存发布商品的信息
     @RequestMapping(value="/login/post/upload/info", method=RequestMethod.POST )
     public @ResponseBody Result releaseProduct(@RequestBody ReleasedProduct releasedProduct){
-        System.out.println(releasedProduct.getTitle());
+        uploadFileService.parsendSaveImage(releasedProduct);
         return ResultUtil.success();
     }
 }

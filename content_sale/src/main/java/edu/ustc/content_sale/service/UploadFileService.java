@@ -11,5 +11,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 
 public interface UploadFileService {
-    void addResourceHandlers(ReleasedProduct releasedProduct);
+    //解析并保存上传的图片文件
+    void parsendSaveImage(ReleasedProduct releasedProduct);
 }

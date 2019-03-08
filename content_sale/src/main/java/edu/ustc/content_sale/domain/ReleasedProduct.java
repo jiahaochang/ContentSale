@@ -2,7 +2,6 @@ package edu.ustc.content_sale.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,11 +13,6 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class ReleasedProduct {
-    private String title;
-    private String summary;
-    private String text;
-    private double price;
+public class ReleasedProduct extends Product{
     private List<ImageInfo> upload;
-
 }

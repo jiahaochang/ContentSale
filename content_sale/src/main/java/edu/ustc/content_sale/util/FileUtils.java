@@ -10,10 +10,7 @@ package edu.ustc.content_sale.util;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * 文件上传工具包
@@ -51,12 +48,17 @@ public class FileUtils {
     }
 
     public static boolean generateImage(String imgStr, String imgFilePath) {
+
         if (imgStr == null) // 图像数据为空
             return false;
+        //base64格式规整
+        imgStr = imgStr.replaceAll(" ", "+");
+        imgStr = imgStr.split(",")[1];
+
         BASE64Decoder decoder = new BASE64Decoder();
         try {
             // Base64解码
-            byte[] bytes = decoder.decodeBuffer(imgStr);
+            byte[] bytes = decoder.decodeBuffer(imgStr.replace("data:image/png;base64,", ""));
             for (int i = 0; i < bytes.length; ++i) {
                 if (bytes[i] < 0) {// 调整异常数据
                     bytes[i] += 256;
