@@ -13,6 +13,6 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class ReleasedProduct extends Product{
+public class ReleasedProductByType2 extends Product{
     private List<ImageInfo> upload;
 }

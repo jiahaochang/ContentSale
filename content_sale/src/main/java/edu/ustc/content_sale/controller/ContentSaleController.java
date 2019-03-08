@@ -3,7 +3,8 @@ package edu.ustc.content_sale.controller;
 import com.nimbusds.jose.JOSEException;
 import edu.ustc.content_sale.common.Result;
 import edu.ustc.content_sale.domain.LoginInfo;
-import edu.ustc.content_sale.domain.ReleasedProduct;
+import edu.ustc.content_sale.domain.ReleasedProductByType1;
+import edu.ustc.content_sale.domain.ReleasedProductByType2;
 import edu.ustc.content_sale.service.CheckLoginService;
 import edu.ustc.content_sale.service.UploadFileService;
 import edu.ustc.content_sale.util.ResultUtil;
@@ -56,12 +57,20 @@ public class ContentSaleController {
 
     //接收并保存发布商品的信息
     @RequestMapping(value="/post/upload/info", method=RequestMethod.POST )
-    public @ResponseBody Result releaseProduct(@RequestBody ReleasedProduct releasedProduct){
+    public @ResponseBody Result releaseProduct(@RequestBody ReleasedProductByType2 releasedProduct){
         uploadFileService.parsendSaveImage(releasedProduct);
         Boolean saveResult = uploadFileService.saveCommodityToDB(releasedProduct);
         if (saveResult){
             return ResultUtil.success();
         }
         return ResultUtil.error(304, "发布失败");
+    }
+
+    //通过上传url的方式获取远程图片
+    @PostMapping(value = "/post/upload/picurl")
+    public Result releaseProductByUrl(@RequestBody ReleasedProductByType1 releasedProductByType1){
+        log.info("releasedProductByType1"+releasedProductByType1);
+        log.info(String.valueOf(System.currentTimeMillis()));
+        return ResultUtil.success();
     }
 }

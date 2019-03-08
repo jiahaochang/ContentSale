@@ -13,7 +13,12 @@ export default {
     *releaseProduct({ payload }, { call, put }) {
       console.log(payload);
       const rsp = yield call(releaseService.postReleaseInfo, payload);
+      return rsp;
+    },
 
+    *releaseProductByImgUrl({ payload }, { call, put }) {
+      console.log(payload);
+      const rsp = yield call(releaseService.postReleaseInfo, payload);
       return rsp;
     },
 

@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input, Card, message } from 'antd';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {Form, Select, Radio, Button, Upload, Icon, Row, Col, Divider, Input, Card, message} from 'antd';
 
 const RadioGroup = Radio.Group;
-const { TextArea } = Input;
+const {TextArea} = Input;
 
 export class ReleaseProduct extends Component {
   state = {
     uploadMethod: 1,
-    pictureUrl:""
+    pictureUrl: ""
   };
 
-  inputPictureUrl=(e)=>{
+  inputPictureUrl = (e) => {
     console.log(e.target.value);
     this.setState({
       pictureUrl: e.target.value,
@@ -25,8 +25,6 @@ export class ReleaseProduct extends Component {
     });
   };
 
-  componentDidMount() {
-  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -34,21 +32,41 @@ export class ReleaseProduct extends Component {
       if (!err) {
         console.log('Received values of form: ', values);
 
-        this.props.dispatch({
-          type: 'release/releaseProduct',
-          payload:  values,
-        }).then((res) => {
-          if(res.code==200){
-            message.success("发布商品成功");
-            this.props.handleShowIndexPage();
-          }else {
-            message.error(res.message);
-          }
-        });
+        //如果是通过远程url方式上传
+        if (this.state.uploadMethod == 1) {
+          console.log(values);
+          this.props.dispatch({
+            type: 'release/releaseProductByImgUrl',
+            payload: values,
+          }).then((res) => {
+            /*if (res.code == 200) {
+              message.success("发布商品成功");
+              this.props.handleShowIndexPage();
+            } else {
+              message.error(res.message);
+            }*/
+          });
+
+        }
+
+        //如果是通过点击上传本地图片的方式
+        if (this.state.uploadMethod == 2) {
+          this.props.dispatch({
+            type: 'release/releaseProduct',
+            payload: values,
+          }).then((res) => {
+            if (res.code == 200) {
+              message.success("发布商品成功");
+              this.props.handleShowIndexPage();
+            } else {
+              message.error(res.message);
+            }
+          });
+        }
+
 
       }
     });
-
 
 
   };
@@ -63,10 +81,10 @@ export class ReleaseProduct extends Component {
 
   render() {
 
-    const { getFieldDecorator } = this.props.form;
+    const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      labelCol: {span: 6},
+      wrapperCol: {span: 14},
     };
 
     return (
@@ -83,7 +101,7 @@ export class ReleaseProduct extends Component {
             label="标题"
           >
             {getFieldDecorator('title', {
-              rules: [{ required: true, message: '请输入标题!'}],
+              rules: [{required: true, message: '请输入标题!'}],
             })(<Input placeholder="2-80个字符"/>)}
           </Form.Item>
 
@@ -92,7 +110,7 @@ export class ReleaseProduct extends Component {
             label="摘要"
           >
             {getFieldDecorator('summary', {
-              rules: [{ required: true, message: '请输入摘要!'}],
+              rules: [{required: true, message: '请输入摘要!'}],
             })(<Input placeholder="2-140个字符"/>)}
           </Form.Item>
 
@@ -119,7 +137,7 @@ export class ReleaseProduct extends Component {
               })(
                 <Upload name="logo" action="/upload.do" listType="picture" accept=".png,.gif,.jpg,.jpeg">
                   <Button>
-                    <Icon type="upload" /> Click to upload
+                    <Icon type="upload"/> Click to upload
                   </Button>
                 </Upload>
               )}
@@ -132,7 +150,7 @@ export class ReleaseProduct extends Component {
               label="图片地址"
             >
               {getFieldDecorator('picUrl', {
-                rules: [{ required: true, message: '请输入图片地址!'}],
+                rules: [{required: true, message: '请输入图片地址!'}],
               })(
                 <Input placeholder="图片地址" onChange={this.inputPictureUrl}/>
               )}
@@ -146,8 +164,8 @@ export class ReleaseProduct extends Component {
             >
               <Card
                 hoverable
-                style={{ width: 100 ,height:100}}
-                cover={<img alt="example" src={this.state.pictureUrl} />}
+                style={{width: 100, height: 100}}
+                cover={<img alt="图片预览" src={this.state.pictureUrl}/>}
               >
               </Card>
 
@@ -159,7 +177,7 @@ export class ReleaseProduct extends Component {
             label="正文"
           >
             {getFieldDecorator('text', {
-              rules: [{ required: true, message: '请输入正文!'}],
+              rules: [{required: true, message: '请输入正文!'}],
             })(<TextArea rows={4} placeholder="2-500个字符"/>)}
           </Form.Item>
 
@@ -168,17 +186,16 @@ export class ReleaseProduct extends Component {
             label="价格"
           >
             {getFieldDecorator('price', {
-              rules: [{ required: true, message: '请输入价格!'}],
-            })(<Input placeholder="数字" style={{ width: '30%' }}/>)}元
+              rules: [{required: true, message: '请输入价格!'}],
+            })(<Input placeholder="数字" style={{width: '30%'}}/>)}元
           </Form.Item>
 
           <Form.Item
-            wrapperCol={{ span: 12, offset: 6 }}
+            wrapperCol={{span: 12, offset: 6}}
           >
             <Button type="primary" htmlType="submit">Submit</Button>
           </Form.Item>
         </Form>
-
 
 
         <Row gutter={16}>

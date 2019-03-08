@@ -1,7 +1,6 @@
 package edu.ustc.content_sale.service;
 
-import edu.ustc.content_sale.domain.ReleasedProduct;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import edu.ustc.content_sale.domain.ReleasedProductByType2;
 
 /**
  * @Author: Jiahao.Zhang
@@ -12,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 public interface UploadFileService {
     //解析并保存上传的图片文件
-    Boolean parsendSaveImage(ReleasedProduct releasedProduct);
+    Boolean parsendSaveImage(ReleasedProductByType2 releasedProduct);
     //将上传的商品保存到数据库
-    Boolean saveCommodityToDB(ReleasedProduct releasedProduct);
+    Boolean saveCommodityToDB(ReleasedProductByType2 releasedProduct);
 }

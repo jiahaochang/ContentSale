@@ -10,8 +10,16 @@ export function postReleaseInfo(data) {
     },
     method: 'POST',
     body: JSON.stringify(data),
-    // body:data
   });
 }
 
 
+export function postReleaseInfoByType1(data) {
+  return request('/login/post/upload/picurl', {
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}

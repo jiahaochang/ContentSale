@@ -3,7 +3,7 @@ package edu.ustc.content_sale.service.impl;
 import edu.ustc.content_sale.dao.CommodityDao;
 import edu.ustc.content_sale.domain.Commodity;
 import edu.ustc.content_sale.domain.ImageInfo;
-import edu.ustc.content_sale.domain.ReleasedProduct;
+import edu.ustc.content_sale.domain.ReleasedProductByType2;
 import edu.ustc.content_sale.service.UploadFileService;
 import edu.ustc.content_sale.util.FileUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     private CommodityDao commodityDao;
 
     @Override
-    public Boolean parsendSaveImage(ReleasedProduct releasedProduct) {
+    public Boolean parsendSaveImage(ReleasedProductByType2 releasedProduct) {
         List<ImageInfo> imageInfos = releasedProduct.getUpload();
         imageInfos.stream().forEach(imageInfo -> {
             String imgName = imageInfo.getUid()+ "." +(imageInfo.getType().split("/"))[1];
@@ -44,7 +44,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public Boolean saveCommodityToDB(ReleasedProduct releasedProduct) {
+    public Boolean saveCommodityToDB(ReleasedProductByType2 releasedProduct) {
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(releasedProduct, commodity);
         ImageInfo imageInfo = releasedProduct.getUpload().get(0);
