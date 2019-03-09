@@ -14,5 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class ReleasedProductByType2 extends Product{
+    private Long id;
     private List<ImageInfo> upload;
 }

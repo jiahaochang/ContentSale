@@ -10,5 +10,6 @@ import lombok.Data;
 
 @Data
 public class ReleasedProductByType1 extends Product {
+    private Long id;
     private String picUrl;
 }

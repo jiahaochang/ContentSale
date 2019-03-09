@@ -62,6 +62,7 @@ public class UploadFileServiceImpl implements UploadFileService {
         String[] urlSplit = releasedProductByType1.getPicUrl().split("\\.");
         String imgSuffix = urlSplit[urlSplit.length-1];
         String imgName = "rc-upload-"+System.currentTimeMillis()+"."+imgSuffix;
+        log.info("下载图片的名字 = "+imgName);
         String savePath = System.getProperty("user.dir") + saveFilePath;
         Boolean saveRes = FileUtils.downloadOneFileByURL(imgName, releasedProductByType1.getPicUrl(), savePath);
         if (saveRes){
@@ -74,4 +75,23 @@ public class UploadFileServiceImpl implements UploadFileService {
         }
         return false;
     }
+
+    @Override
+    public Boolean deleteOriginPic(Object releasedProduct) {
+        Long productId = null;
+        if (releasedProduct instanceof ReleasedProductByType1){
+            productId = ((ReleasedProductByType1) releasedProduct).getId();
+        }else if (releasedProduct instanceof ReleasedProductByType2){
+            productId = ((ReleasedProductByType2) releasedProduct).getId();
+        }
+        if (productId!=null){
+            Commodity commodity = commodityDao.getOne(productId);
+            String imgName = commodity.getImageName();
+            log.info("删除图片的名字 = "+imgName);
+            String imgPath = System.getProperty("user.dir") + saveFilePath + imgName;
+            return FileUtils.deleteFile(imgPath);
+        }
+        return false;
+    }
+
 }

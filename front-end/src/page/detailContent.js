@@ -9,8 +9,8 @@ export class CardsPage2 extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props.detailId);
-    console.log("详情组件里的登录状态"+this.props.loginStatus);
+    // console.log(this.props.detailId);
+    // console.log("详情组件里的登录状态"+this.props.loginStatus);
     this.getDetailInfo(this.props.detailId)
   }
 

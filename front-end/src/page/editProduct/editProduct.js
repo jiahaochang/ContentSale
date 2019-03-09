@@ -13,9 +13,9 @@ export class EditProduct extends React.Component {
   };
 
   componentWillMount() {
-    console.log(this.props.detailId);
+    // console.log(this.props.detailId);
     //console.log("详情组件里的登录状态"+this.props.loginStatus);
-    // this.getDetailInfo(this.props.detailId)
+    this.getDetailInfo(this.props.detailId)
   }
 
   getDetailInfo = (id) => {
@@ -41,42 +41,46 @@ export class EditProduct extends React.Component {
   };
 
 
-  handleSubmit = (e) => {
+  handleSave = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        values.id = this.props.detailId;
         console.log('Received values of form: ', values);
         this.setState({loading: true});
+
         //如果是通过远程url方式上传
         if (this.state.uploadMethod == 1) {
           console.log(values);
           this.props.dispatch({
-            type: 'release/releaseProductByImgUrl',
+            type: 'release/saveModifiedProductByImgUrl',
             payload: values,
           }).then((res) => {
 
             this.setState({loading: false});
 
             if (res.code == 200) {
-              message.success("发布商品成功");
-              this.props.handleShowIndexPage();
+              message.success("修改商品信息成功");
+              this.props.handleShowDetail(this.props.detailId);
             } else {
               message.error(res.message);
             }
+
           });
 
         }
 
         //如果是通过点击上传本地图片的方式
         if (this.state.uploadMethod == 2) {
+
           this.props.dispatch({
-            type: 'release/releaseProduct',
+            type: 'release/saveModifiedProduct',
             payload: values,
           }).then((res) => {
             this.setState({loading: false});
             if (res.code == 200) {
-              message.success("发布商品成功");
-              this.props.handleShowIndexPage();
+              message.success("修改商品信息成功");
+              this.props.handleShowDetail(this.props.detailId);
             } else {
               message.error(res.message);
             }
@@ -117,7 +121,7 @@ export class EditProduct extends React.Component {
         </div>
         <Spin spinning={this.state.loading}>
 
-          <Form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSave}>
 
             <Form.Item
               {...formItemLayout}

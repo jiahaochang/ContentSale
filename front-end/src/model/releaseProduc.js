@@ -22,6 +22,20 @@ export default {
       return rsp;
     },
 
+    //保存修改过的商品信息,通过上传图片的方式
+    *saveModifiedProduct({ payload }, { call, put }) {
+      console.log(payload);
+      const rsp = yield call(releaseService.postModifiedInfo, payload);
+      return rsp;
+    },
+
+    //保存修改过的商品信息,通过图片url的方式
+    *saveModifiedProductByImgUrl({ payload }, { call, put }) {
+      console.log(payload);
+      const rsp = yield call(releaseService.postModifiedInfoByType1, payload);
+      return rsp;
+    },
+
   },
 
   reducers: {

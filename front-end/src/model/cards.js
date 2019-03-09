@@ -14,7 +14,7 @@ export default {
     *queryList({ _ }, { call, put }) {
       const rsp = yield call(cardsService.queryList);
       console.log('queryList');
-      console.log(rsp);
+      // console.log(rsp);
       yield put({ type: 'saveList', payload: { cardsList: rsp.result } });
       return rsp;
     },

@@ -23,3 +23,25 @@ export function postReleaseInfoByType1(data) {
     body: JSON.stringify(data),
   });
 }
+
+
+export function postModifiedInfo(data) {
+  return request('/login/post/modified/info', {
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+
+export function postModifiedInfoByType1(data) {
+  return request('/login/post/modified/type1', {
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}

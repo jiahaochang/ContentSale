@@ -98,4 +98,31 @@ public class ContentSaleController {
         return ResultUtil.success(productVO);
     }
 
+    //通过上传图片的方式修改商品信息
+    @PostMapping(value = "/post/modified/info")
+    public Result modifyProductInfoByType1(@RequestBody ReleasedProductByType2 releasedProductByType2){
+        //保存新上传的图片
+        Boolean uploadPicRes = uploadFileService.parseAndSaveImage(releasedProductByType2);
+        //删除原来的图片
+        Boolean deleteRes = uploadFileService.deleteOriginPic(releasedProductByType2);
+        //更新数据库中product的信息
+        Boolean saveResult = uploadFileService.saveCommodityToDB(releasedProductByType2);
+        if (saveResult && deleteRes && uploadPicRes){
+            return ResultUtil.success();
+        }
+        return ResultUtil.error(304, "发布失败");
+    }
+
+    //通过上传图片url的方式修改商品信息
+    @PostMapping(value = "/post/modified/type1")
+    public Result modifyProductByUrl(@RequestBody ReleasedProductByType1 releasedProductByType1) throws Exception {
+        //删除原来的图片
+        Boolean deleteRes = uploadFileService.deleteOriginPic(releasedProductByType1);
+        Boolean saveRes = uploadFileService.saveCommodityToDBFromUrl(releasedProductByType1);
+        if (saveRes){
+            return ResultUtil.success();
+        }
+        return ResultUtil.error(304, "发布失败");
+    }
+
 }

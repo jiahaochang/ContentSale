@@ -196,7 +196,10 @@ class BasicLayout extends Component {
               {
                 //显示编辑商品详情页面
                 this.state.showContent === 'editProductPage' &&
-                <EditProduct detailId={this.state.detailId}/>
+                <EditProduct
+                  detailId={this.state.detailId}
+                  handleShowDetail={this.handleShowDetail}
+                />
               }
             </Content>
           }
