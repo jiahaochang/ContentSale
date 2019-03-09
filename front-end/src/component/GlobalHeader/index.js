@@ -75,6 +75,7 @@ export default class GlobalHeader extends PureComponent {
       console.log('click ', e.key);
       localStorage.removeItem("authToken");
       this.props.checkLoginStatus();
+      this.props.handleShowIndexPage();
     }
   };
 

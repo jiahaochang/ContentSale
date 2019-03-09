@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
+import React, {Component} from 'react';
+import {connect} from 'dva';
 // import Link from 'umi/link';
-import { Card, Icon, message, Row, Col } from 'antd';
+import {Card, Icon, message, Row, Col, Spin} from 'antd';
 
-const { Meta } = Card;
+const {Meta} = Card;
 
 export class CardsPage extends Component {
+
+  state = {
+    loading: false,
+  };
+
   componentDidMount() {
     this.queryList();
   }
@@ -13,6 +18,10 @@ export class CardsPage extends Component {
   queryList = () => {
     this.props.dispatch({
       type: 'cards/queryList',
+    }).then((res) => {
+      if (res.code == 200) {
+        this.setState({loading: false});
+      }
     });
   };
 
@@ -35,41 +44,45 @@ export class CardsPage extends Component {
   };
 
   render() {
-    const { cardsList = [] } = this.props;
+    const {cardsList = [], loginStatus} = this.props;
     // console.log('cardsList');
     // console.log(cardsList);
 
     return (
       <div>
-        <Row gutter={24}>
-        {cardsList.map(v =>
-          <Col span={8} key={v.id}>
-            <Card
-              hoverable
-              key={v.id}
-              title={v.name}
-              cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-              style={{ width: 220, marginBottom: '16px' }}
-              extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
-              onClick={()=>this.props.handleShowDetail(v.id)}
-            >{v.desc}
-              {
-                v.purchaseStatus === 'alreadyPurchased' &&
-                <Meta
-                  description="已购买"
-                />
-              }
-              {
-                v.purchaseStatus === 'alreadySold' &&
-                <Meta
-                  description="已出售"
-                />
-              }
-
-              </Card>
-          </Col>
-        )}
-        </Row>
+        <Spin spinning={this.state.loading} delay={5000}>
+          <Row gutter={24}>
+            {cardsList.map(v =>
+              <Col span={8} key={v.id}>
+                <Card
+                  hoverable={true}
+                  key={v.id}
+                  title={v.title}
+                  cover={<img alt="example" src={v.imgUrl} height="220" width="220"/>}
+                  style={{width: 220, marginBottom: '16px'}}
+                  extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
+                  onClick={() => this.props.handleShowDetail(v.id)}
+                >{v.summary}
+                  {
+                    v.saleStatus === 'alreadySold' &&
+                    <Meta
+                      description="已出售"
+                      title={"¥:" + v.price}
+                    />
+                  }
+                  {
+                    //未出售状态
+                    v.saleStatus === 'notYetSold' &&
+                    <Meta
+                      description="."
+                      title={"¥:" + v.price}
+                    />
+                  }
+                </Card>
+              </Col>
+            )}
+          </Row>
+        </Spin>
       </div>
     );
   }

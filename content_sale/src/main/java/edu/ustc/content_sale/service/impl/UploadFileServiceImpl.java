@@ -38,6 +38,7 @@ public class UploadFileServiceImpl implements UploadFileService {
             String imgName = imageInfo.getUid()+ "." +(imageInfo.getType().split("/"))[1];
             String imgFileSavePath = System.getProperty("user.dir") + saveFilePath + imgName;
             //String imgFileSavePath = System.getProperty("user.dir") + saveFilePath + imageInfo.getName();
+            log.info(System.getProperty("user.dir"));
             log.info("imgFileSavePath = "+imgFileSavePath);
             FileUtils.generateImage(imageInfo.getThumbUrl(), imgFileSavePath);
         });

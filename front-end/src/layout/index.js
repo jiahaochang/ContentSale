@@ -12,6 +12,7 @@ import ShoppingCart from '../page/shoppingCart/shoppingCart'
 import UnpurchasedContent from '../page/unpurchasedContent/unpurchasedContent'
 import LoginPage from  '../page/loginPage/loginPage'
 import ReleaseProduct from '../page/releaseProduct/releaseProduct'
+import EditProduct from '../page/editProduct/editProduct'
 
 const { Content, Header } = Layout;
 const TabPane = Tabs.TabPane;
@@ -27,7 +28,7 @@ class BasicLayout extends Component {
       collapsed: false,
       showContent: 'goodsList',
       detailId: '',
-      //loginStatus: 'notLoggedIn',
+      loginStatus: 'notLoggedIn',
     };
   }
 
@@ -39,7 +40,7 @@ class BasicLayout extends Component {
     this.props.dispatch({
       type: 'loginStatus/getLoginStatus',
     });
-    console.log("检查登录状态 "+this.props.loginStatus)
+    // console.log("检查登录状态 "+this.props.loginStatus);
   };
 
   handleMenuCollapse = () => {
@@ -53,6 +54,7 @@ class BasicLayout extends Component {
     this.setState({
       showContent: 'detail',
       detailId: id,
+      loginStatus: this.props.loginStatus,
     });
   };
 
@@ -74,6 +76,7 @@ class BasicLayout extends Component {
     });
   };
 
+  //展示登录界面
   handleShowLoginPage=()=>{
     this.setState({
       showContent: 'loginPage'
@@ -86,16 +89,24 @@ class BasicLayout extends Component {
     });
   };*/
 
+  //展示发布商品页面
   handleRelease=()=>{
     this.setState({
       showContent: 'releasePage'
     });
   };
 
+  //展示编辑商品详情页面
+  handleEditProductPage=()=>{
+    this.setState({
+      showContent: 'editProductPage',
+    });
+  };
+
   render() {
     const { loginStatus, uid } = this.props;
     const { collapsed } = this.state;
-    // console.log('登录状态 = '+this.props.loginStatus);
+    console.log('登录状态 = '+this.props.loginStatus);
     // console.log('显示的内容 = '+this.state.showContent);
 
     return (
@@ -152,14 +163,20 @@ class BasicLayout extends Component {
                 this.state.showContent === 'goodsList' && (loginStatus === 'notLoggedIn'|| loginStatus === 'sellerLoggedIn') &&
                 <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
                   <TabPane tab={"所有内容"} key={1}>
-                    <CardsPage handleShowDetail={this.handleShowDetail}/>
+                    <CardsPage
+                      handleShowDetail={this.handleShowDetail}
+                    />
                   </TabPane>
                 </Tabs>
               }
               {
                 //显示商品详情
                 this.state.showContent === 'detail' &&
-                <CardsPage2 detailId={this.state.detailId}/>
+                <CardsPage2
+                  detailId={this.state.detailId}
+                  loginStatus={this.state.loginStatus}
+                  handleEditProductPage={this.handleEditProductPage}
+                />
               }
               {
                 //显示账单页面
@@ -175,6 +192,11 @@ class BasicLayout extends Component {
                 //显示发布商品页面
                 this.state.showContent === 'releasePage' &&
                 <ReleaseProduct handleShowIndexPage={this.handleShowIndexPage}/>
+              }
+              {
+                //显示编辑商品详情页面
+                this.state.showContent === 'editProductPage' &&
+                <EditProduct detailId={this.state.detailId}/>
               }
             </Content>
           }

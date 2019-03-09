@@ -5,11 +5,25 @@ import {Form, Radio, Button, Upload, Icon, Row, Col, Divider, Input, Card, messa
 const RadioGroup = Radio.Group;
 const {TextArea} = Input;
 
-export class ReleaseProduct extends Component {
+export class EditProduct extends React.Component {
   state = {
     uploadMethod: 1,
     pictureUrl: "",
     loading: false,
+  };
+
+  componentWillMount() {
+    console.log(this.props.detailId);
+    //console.log("详情组件里的登录状态"+this.props.loginStatus);
+    // this.getDetailInfo(this.props.detailId)
+  }
+
+  getDetailInfo = (id) => {
+    console.log(id);
+    this.props.dispatch({
+      type: 'details/getDetail',
+      payload: id,
+    })
   };
 
   inputPictureUrl = (e) => {
@@ -92,13 +106,15 @@ export class ReleaseProduct extends Component {
       wrapperCol: {span: 14},
     };
 
+    const { detail={} } = this.props;
+    // console.log(detail);
+
     return (
       <div style={{padding: '30px'}}>
 
         <div>
-          <Divider type="horizontal" orientation="left">内容发布</Divider>
+          <Divider type="horizontal" orientation="left">内容编辑</Divider>
         </div>
-
         <Spin spinning={this.state.loading}>
 
           <Form onSubmit={this.handleSubmit}>
@@ -109,6 +125,7 @@ export class ReleaseProduct extends Component {
             >
               {getFieldDecorator('title', {
                 rules: [{required: true, message: '请输入标题!'}],
+                initialValue: detail.title,
               })(<Input placeholder="2-80个字符"/>)}
             </Form.Item>
 
@@ -118,6 +135,7 @@ export class ReleaseProduct extends Component {
             >
               {getFieldDecorator('summary', {
                 rules: [{required: true, message: '请输入摘要!'}],
+                initialValue: detail.summary,
               })(<Input placeholder="2-140个字符"/>)}
             </Form.Item>
 
@@ -186,6 +204,7 @@ export class ReleaseProduct extends Component {
             >
               {getFieldDecorator('text', {
                 rules: [{required: true, message: '请输入正文!'}],
+                initialValue: detail.text,
               })(<TextArea rows={4} placeholder="2-500个字符"/>)}
             </Form.Item>
 
@@ -195,13 +214,14 @@ export class ReleaseProduct extends Component {
             >
               {getFieldDecorator('price', {
                 rules: [{required: true, message: '请输入价格!'}],
+                initialValue: detail.price,
               })(<Input placeholder="数字" style={{width: '30%'}}/>)}元
             </Form.Item>
 
             <Form.Item
               wrapperCol={{span: 12, offset: 6}}
             >
-              <Button type="primary" htmlType="submit">Submit</Button>
+              <Button type="primary" htmlType="submit">保存</Button>
             </Form.Item>
           </Form>
 
@@ -220,14 +240,14 @@ export class ReleaseProduct extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state');
-  console.log(state);
+  // console.log('state');
+  // console.log(state.details.data);
   return {
-    // details: state.detail,
+    detail: state.details.data,
   };
 }
 
-export default connect(mapStateToProps)(Form.create()(ReleaseProduct));
+export default connect(mapStateToProps)(Form.create()(EditProduct));
 
 // TODO replace antd Card with own Card.
 

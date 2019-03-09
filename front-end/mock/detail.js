@@ -4,10 +4,11 @@ export default {
     res.json({
       result: {
         title:"书",
-        content:"这是一本书",
-        intro: "介绍的内容",
+        summary:"这是一本书",
+        text: "介绍的内容",
         price: 1000,
-        purchaseStatus: 'notPurchased',
+        saleStatus: 'notPurchased',
+        imgUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
       }
     });
   },

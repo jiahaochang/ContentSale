@@ -1,5 +1,4 @@
 import * as cardsService from '../service/cards';
-import * as billService from "../service/bill";
 
 export default {
 
@@ -17,6 +16,7 @@ export default {
       console.log('queryList');
       console.log(rsp);
       yield put({ type: 'saveList', payload: { cardsList: rsp.result } });
+      return rsp;
     },
 
     *deleteOne({ payload }, { call, put }) {

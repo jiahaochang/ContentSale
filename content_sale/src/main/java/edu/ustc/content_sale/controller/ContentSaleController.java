@@ -3,9 +3,11 @@ package edu.ustc.content_sale.controller;
 import com.nimbusds.jose.JOSEException;
 import edu.ustc.content_sale.common.Result;
 import edu.ustc.content_sale.domain.LoginInfo;
+import edu.ustc.content_sale.domain.ProductVO;
 import edu.ustc.content_sale.domain.ReleasedProductByType1;
 import edu.ustc.content_sale.domain.ReleasedProductByType2;
 import edu.ustc.content_sale.service.CheckLoginService;
+import edu.ustc.content_sale.service.ProductService;
 import edu.ustc.content_sale.service.UploadFileService;
 import edu.ustc.content_sale.util.ResultUtil;
 import edu.ustc.content_sale.util.TokenUtils;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +34,8 @@ public class ContentSaleController {
     private CheckLoginService checkLoginService;
     @Autowired
     private UploadFileService uploadFileService;
+    @Autowired
+    private ProductService productService;
 
     //验证登录页面发过来的账号密码是否正确，返回token
     @PostMapping(value = "/post/userId/and/pwd")
@@ -75,4 +80,22 @@ public class ContentSaleController {
         }
         return ResultUtil.error(304, "发布失败");
     }
+
+    //seller登录获得商品信息列表
+    @GetMapping(value = "/cards")
+    public Result getProductVOList(){
+        List<ProductVO> productVOList = productService.getSellerProductList();
+        return ResultUtil.success(productVOList);
+    }
+
+    //根据商品id获取商品详情
+    @GetMapping(value = "/detail/{id}")
+    public Result getProductDetail(@PathVariable(value = "id") Long id){
+        ProductVO productVO = productService.getProductDetailById(id);
+        if (productVO==null){
+            return ResultUtil.error(500, "该商品不存在");
+        }
+        return ResultUtil.success(productVO);
+    }
+
 }
