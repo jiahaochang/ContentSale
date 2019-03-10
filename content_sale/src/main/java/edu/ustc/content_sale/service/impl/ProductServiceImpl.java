@@ -1,8 +1,10 @@
 package edu.ustc.content_sale.service.impl;
 
 import edu.ustc.content_sale.dao.CommodityDao;
+import edu.ustc.content_sale.dao.ShoppingCartDao;
 import edu.ustc.content_sale.domain.Commodity;
 import edu.ustc.content_sale.domain.ProductVO;
+import edu.ustc.content_sale.domain.ShoppingCart;
 import edu.ustc.content_sale.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +30,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     CommodityDao commodityDao;
+    @Autowired
+    ShoppingCartDao shoppingCartDao;
 
     @Override
     public List<ProductVO> getSellerProductList() {
@@ -53,5 +57,24 @@ public class ProductServiceImpl implements ProductService {
         BeanUtils.copyProperties(commodity, productVO);
         productVO.setImgUrl(serviceAddress + commodity.getImageName());
         return productVO;
+    }
+
+    @Override
+    public Boolean addProductsToShoppingCart(Commodity commodity) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        int count = commodity.getCount();
+        Long id = commodity.getId();
+        //先检查购物车中是否存在此商品
+        ShoppingCart exist = shoppingCartDao.getOne(id);
+        //如果已经存在，则只变更购物车中商品的数量
+        if (exist!=null){
+            int tempNum = exist.getCount();
+            count += tempNum;
+        }
+        Commodity commodityInfo = commodityDao.getOne(id);
+        BeanUtils.copyProperties(commodityInfo, shoppingCart);
+        shoppingCart.setCount(count);
+        shoppingCartDao.save(shoppingCart);
+        return true;
     }
 }

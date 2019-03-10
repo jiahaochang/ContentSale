@@ -27,4 +27,7 @@ public class Product {
     @Column
     private double price;
 
+    @Column(name="count", columnDefinition="int default 0 comment '卖出的数量'")
+    private Integer count;
+
 }

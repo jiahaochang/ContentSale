@@ -2,10 +2,7 @@ package edu.ustc.content_sale.controller;
 
 import com.nimbusds.jose.JOSEException;
 import edu.ustc.content_sale.common.Result;
-import edu.ustc.content_sale.domain.LoginInfo;
-import edu.ustc.content_sale.domain.ProductVO;
-import edu.ustc.content_sale.domain.ReleasedProductByType1;
-import edu.ustc.content_sale.domain.ReleasedProductByType2;
+import edu.ustc.content_sale.domain.*;
 import edu.ustc.content_sale.service.CheckLoginService;
 import edu.ustc.content_sale.service.ProductService;
 import edu.ustc.content_sale.service.UploadFileService;
@@ -123,6 +120,16 @@ public class ContentSaleController {
             return ResultUtil.success();
         }
         return ResultUtil.error(304, "发布失败");
+    }
+
+    //添加商品到购物车
+    @PostMapping(value = "/add/to/shopping/cart")
+    public Result addProductToCart(@RequestBody Commodity commodity) {
+        boolean res = productService.addProductsToShoppingCart(commodity);
+        if (!res){
+            return ResultUtil.error(304, "添加购物车失败");
+        }
+        return ResultUtil.success();
     }
 
 }

@@ -20,6 +20,12 @@ export default {
       });
       return rsp;
     },
+
+    *addToShoppingCart({ payload }, { call, put }) {
+      const rsp = yield call(detailService.addProductToShoppingCart, payload);
+      return rsp;
+    },
+
   },
 
   reducers: {

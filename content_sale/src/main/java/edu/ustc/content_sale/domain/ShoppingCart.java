@@ -8,24 +8,19 @@ import java.io.Serializable;
 
 /**
  * @Author: Jiahao.Zhang
- * @Date: 2019-03-08 10:40
+ * @Date: 2019-03-10 14:26
  * @E-mail jhcheung@mail.ustc.edu.cn
  */
 
 @Data
 @DynamicUpdate
 @Entity
-@Table(name = "commodity")
-public class Commodity extends Product implements Serializable {
-
+@Table(name = "shopping_cart")
+public class ShoppingCart extends Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String imageName;
-
-    @Column
-    private String saleStatus;
-
 }

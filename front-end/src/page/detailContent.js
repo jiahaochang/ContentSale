@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Card, Row, Col, Divider, InputNumber, Button } from 'antd';
+import { Card, Row, Col, Divider, InputNumber, Button, Modal, message } from 'antd';
 
 export class CardsPage2 extends Component {
+
+  state = {
+    visible: false,
+    count: 0,
+  };
+
   componentDidMount() {
-    // console.log(this.props.detailId);
-    // this.getDetailInfo(this.props.detailId)
+
   }
 
   componentWillMount() {
@@ -15,19 +20,71 @@ export class CardsPage2 extends Component {
   }
 
   getDetailInfo = (id) => {
-    console.log(id);
+    // console.log(id);
     this.props.dispatch({
       type: 'details/getDetail',
       payload: id,
-    })
+    }).then((res) => {
+      //console.log(res);
+      if (res.code===200){
+        this.setState({
+          count: res.result.count,
+        })
+      }
+
+    });
+
   };
 
   onChange = (value) => {
     console.log('changed', value);
+    this.setState({
+      count: value
+    });
+  };
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+
+  handleOk = (e) => {
+    // console.log(e);
+
+    var data = {};
+    data.id = this.props.detailId;
+    data.count = this.state.count;
+
+    this.props.dispatch({
+      type: 'details/addToShoppingCart',
+      payload:  data,
+    }).then((res) => {
+      console.log(res);
+      if (res.code===200){
+        //提示登录成功
+        message.success('添加购物车成功');
+      }else {
+        message.error('添加购物车失败');
+      }
+
+    });
+
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = (e) => {
+    //console.log(e);
+    this.setState({
+      visible: false,
+    });
   };
 
   render() {
     const { detail={},loginStatus } = this.props;
+    // console.log(loginStatus);
 
     return (
       <div style={{padding: '30px'}}>
@@ -45,7 +102,7 @@ export class CardsPage2 extends Component {
             <div style={{padding: '30px', margin: 'auto'}}>
               <h3>{detail.title}</h3>
               <h3>¥:{detail.price}</h3>
-              <h3>购买数量:<InputNumber min={1} max={10} onChange={this.onChange} /></h3>
+              <h3>购买数量:<InputNumber min={1} max={10} onChange={this.onChange} value={this.state.count}/></h3>
               {
                 loginStatus != 'notLoggedIn' &&
                 <h3>
@@ -54,8 +111,8 @@ export class CardsPage2 extends Component {
                     <Button type={"primary"} onClick={this.props.handleEditProductPage}>编辑</Button>
                   }
                   {
-                    loginStatus == 'userLogged' && detail.saleStatus === 'notPurchased' &&
-                    <Button type={"primary"}>加入购物车</Button>
+                    loginStatus == 'userLogged' && detail.saleStatus === 'notYetSold' &&
+                    <Button type={"primary"} onClick={this.showModal}>加入购物车</Button>
                   }
                 </h3>
               }
@@ -70,6 +127,19 @@ export class CardsPage2 extends Component {
             {detail.text}
           </p>
         </div>
+
+        <Modal
+          title="提示"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          width={300}
+        >
+          <p>确认加入购物车吗？</p>
+          <p><b>{this.state.count}个</b></p>
+          <p><b>{detail.title}</b></p>
+        </Modal>
+
       </div>
     );
   }

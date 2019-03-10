@@ -11,8 +11,14 @@ export class CardsPage extends Component {
     loading: false,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     this.queryList();
+  }
+
+  componentWillUnmount(){
+    this.setState = (state,callback)=>{
+      return;
+    };
   }
 
   queryList = () => {
@@ -46,7 +52,7 @@ export class CardsPage extends Component {
   render() {
     const {cardsList = [], loginStatus} = this.props;
     // console.log('cardsList');
-    // console.log(cardsList);
+    // console.log(loginStatus);
 
     return (
       <div>
@@ -64,10 +70,19 @@ export class CardsPage extends Component {
                   onClick={() => this.props.handleShowDetail(v.id)}
                 >{v.summary}
                   {
-                    v.saleStatus === 'alreadySold' &&
+                    v.saleStatus === 'alreadySold' && loginStatus === 'sellerLoggedIn' &&
                     <Meta
                       description="已出售"
                       title={"¥:" + v.price}
+                    />
+                  }
+                  {
+                    //如果是普通用户登录，并且是已经出售状态，则显示已经购买
+
+                    v.saleStatus === 'alreadySold' && loginStatus === 'userLogged' &&
+                    <Meta
+                    description="已购买"
+                    title={"¥:" + v.price}
                     />
                   }
                   {

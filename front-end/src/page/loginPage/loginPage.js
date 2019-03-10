@@ -4,6 +4,12 @@ import { Form, Icon, Input, Button, Row, Col, message } from 'antd';
 
 export class NormalLoginForm extends Component {
 
+  componentWillUnmount(){
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {

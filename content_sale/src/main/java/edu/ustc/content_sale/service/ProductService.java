@@ -15,4 +15,6 @@ public interface ProductService {
     List<ProductVO> getSellerProductList();
     //根据商品id获得商品的详情
     ProductVO getProductDetailById(Long id);
+    //将商品加入购物车
+    Boolean addProductsToShoppingCart(Commodity commodity);
 }

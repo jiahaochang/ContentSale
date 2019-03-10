@@ -36,6 +36,12 @@ class BasicLayout extends Component {
     this.checkLoginStatus();
   }
 
+  componentWillUnmount(){
+    this.setState = (state,callback)=>{
+      return;
+    };
+  }
+
   checkLoginStatus =()=>{
     this.props.dispatch({
       type: 'loginStatus/getLoginStatus',
@@ -150,7 +156,10 @@ class BasicLayout extends Component {
                 this.state.showContent === 'goodsList' && loginStatus === 'userLogged' &&
                 <Tabs defaultActiveKey="1" onChange={callback} type={"card"}>
                   <TabPane tab={"所有内容"} key={1}>
-                    <CardsPage handleShowDetail={this.handleShowDetail}/>
+                    <CardsPage
+                      handleShowDetail={this.handleShowDetail}
+                      loginStatus={this.props.loginStatus}
+                    />
                   </TabPane>
                   <TabPane tab={"未购买的内容"} key={2}>
                     {/*children*/}
@@ -165,6 +174,7 @@ class BasicLayout extends Component {
                   <TabPane tab={"所有内容"} key={1}>
                     <CardsPage
                       handleShowDetail={this.handleShowDetail}
+                      loginStatus={this.props.loginStatus}
                     />
                   </TabPane>
                 </Tabs>
@@ -174,7 +184,7 @@ class BasicLayout extends Component {
                 this.state.showContent === 'detail' &&
                 <CardsPage2
                   detailId={this.state.detailId}
-                  loginStatus={this.state.loginStatus}
+                  loginStatus={this.props.loginStatus}
                   handleEditProductPage={this.handleEditProductPage}
                 />
               }

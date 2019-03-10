@@ -13,7 +13,7 @@ export default {
   effects: {
     *queryList({ _ }, { call, put }) {
       const rsp = yield call(cardsService.queryList);
-      console.log('queryList');
+      // console.log('queryList');
       // console.log(rsp);
       yield put({ type: 'saveList', payload: { cardsList: rsp.result } });
       return rsp;
