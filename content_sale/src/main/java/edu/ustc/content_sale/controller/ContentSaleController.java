@@ -132,4 +132,10 @@ public class ContentSaleController {
         return ResultUtil.success();
     }
 
+    @GetMapping(value = "/shoppingCarts")
+    public Result getShoppingCarts(){
+        List<ShoppingCart> shoppingCartList = productService.getShoppingCartList();
+        return ResultUtil.success(shoppingCartList);
+    }
+
 }

@@ -24,23 +24,33 @@ export class ShoppingCartContent extends Component {
   columns = [
     {
       title: '内容名称',
-      dataIndex: 'name',
+      dataIndex: 'title',
     },
     {
       title: '购买数量',
       dataIndex: 'count',
-      render: (text) => <InputNumber min={1} onChange={this.onChange} defaultValue={text} />
+      render: (text,record) => <InputNumber min={1} onChange={this.onChange} value={record.count} />
     },
     {
       title: '购买单价',
-      dataIndex: 'unitPrice',
+      dataIndex: 'price',
+    },
+    {
+      title: '总价格',
+      dataIndex: 'totalPrice'
     },
   ];
 
   render() {
     const { shoppingCartContent = [], total=0 } = this.props;
-    console.log('shoppingCartContent');
-    console.log(shoppingCartContent);
+    // console.log('shoppingCartContent');
+    // console.log(shoppingCartContent);
+    var totalCost = 0;
+    //计算总价格
+    for ( var i = 0; i <shoppingCartContent.length; i++){
+      shoppingCartContent[i].totalPrice = shoppingCartContent[i].count * shoppingCartContent[i].price;
+      totalCost += shoppingCartContent[i].totalPrice;
+    }
 
     return (
       <div>
@@ -50,7 +60,7 @@ export class ShoppingCartContent extends Component {
           dataSource={shoppingCartContent}
           rowKey="id"
           pagination={false}
-          footer={() => '总计:¥'+total}
+          footer={() => '总计:¥'+totalCost}
         />
 
         <Button type={"primary"} onClick={this.buy}>购买</Button>
@@ -60,8 +70,8 @@ export class ShoppingCartContent extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state');
-  console.log(state);
+  // console.log('state');
+  // console.log(state);
   return {
     shoppingCartContent: state.shoppingCartList.shoppingCartContent,
   };

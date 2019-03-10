@@ -10,4 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface ShoppingCartDao extends JpaRepository<ShoppingCart, Long> {
+    Boolean existsByImageName(String imgName);
+    ShoppingCart findByImageName(String imgName);
+
 }

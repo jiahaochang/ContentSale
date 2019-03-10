@@ -64,17 +64,29 @@ public class ProductServiceImpl implements ProductService {
         ShoppingCart shoppingCart = new ShoppingCart();
         int count = commodity.getCount();
         Long id = commodity.getId();
-        //先检查购物车中是否存在此商品
-        ShoppingCart exist = shoppingCartDao.getOne(id);
-        //如果已经存在，则只变更购物车中商品的数量
-        if (exist!=null){
-            int tempNum = exist.getCount();
-            count += tempNum;
-        }
         Commodity commodityInfo = commodityDao.getOne(id);
+        String imgName = commodityInfo.getImageName();
+        //先检查购物车中是否存在此商品
+        boolean exist = shoppingCartDao.existsByImageName(imgName);
+        Long shoppingCardInfoId = null;
+        //如果已经存在，则只变更购物车中商品的数量
+        if (exist){
+            ShoppingCart existInfo = shoppingCartDao.findByImageName(imgName);
+            int tempNum = existInfo.getCount();
+            count += tempNum;
+            shoppingCardInfoId = existInfo.getId();
+        }
         BeanUtils.copyProperties(commodityInfo, shoppingCart);
         shoppingCart.setCount(count);
+        shoppingCart.setId(shoppingCardInfoId);
+        //System.out.println(shoppingCardInfoId);
         shoppingCartDao.save(shoppingCart);
         return true;
+    }
+
+    @Override
+    public List<ShoppingCart> getShoppingCartList() {
+        List<ShoppingCart> shoppingCartList = shoppingCartDao.findAll();
+        return shoppingCartList;
     }
 }

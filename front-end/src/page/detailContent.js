@@ -60,10 +60,11 @@ export class CardsPage2 extends Component {
       type: 'details/addToShoppingCart',
       payload:  data,
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.code===200){
         //提示登录成功
         message.success('添加购物车成功');
+        this.props.handleShowShoppingCart();
       }else {
         message.error('添加购物车失败');
       }

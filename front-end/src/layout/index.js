@@ -186,6 +186,7 @@ class BasicLayout extends Component {
                   detailId={this.state.detailId}
                   loginStatus={this.props.loginStatus}
                   handleEditProductPage={this.handleEditProductPage}
+                  handleShowShoppingCart={this.handleShowShoppingCart}
                 />
               }
               {

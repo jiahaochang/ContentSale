@@ -2,6 +2,7 @@ package edu.ustc.content_sale.service;
 
 import edu.ustc.content_sale.domain.Commodity;
 import edu.ustc.content_sale.domain.ProductVO;
+import edu.ustc.content_sale.domain.ShoppingCart;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ProductService {
     ProductVO getProductDetailById(Long id);
     //将商品加入购物车
     Boolean addProductsToShoppingCart(Commodity commodity);
+    //获取购物车中的内容
+    List<ShoppingCart> getShoppingCartList();
 }
