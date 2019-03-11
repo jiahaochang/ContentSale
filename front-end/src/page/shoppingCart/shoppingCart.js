@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Table, Divider, InputNumber, Button } from 'antd';
+import { Table, Divider, InputNumber, Button, message } from 'antd';
 
 export class ShoppingCartContent extends Component {
   componentDidMount() {
@@ -18,7 +18,18 @@ export class ShoppingCartContent extends Component {
   };
 
   buy = () => {
-    this.props.handleShowBill();
+    this.props.dispatch({
+      type: 'shoppingCartList/buy',
+    }).then((res) => {
+      // console.log(res);
+      if (res.code===200){
+        message.success('购买成功');
+        this.props.handleShowBill();
+      }else {
+        message.error('购买失败');
+      }
+    });
+
   };
 
   columns = [

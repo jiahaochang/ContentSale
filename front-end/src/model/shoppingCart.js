@@ -12,9 +12,12 @@ export default {
     *getContent({ payload }, { call, put }) {
       console.log(payload);
       const rsp = yield call(shoppingCartService.getShoppingCartContent);
-
       yield put({ type: 'saveContent', payload: { shoppingCartContent: rsp.result } });
+      return rsp;
+    },
 
+    *buy({ payload }, { call, put }) {
+      const rsp = yield call(shoppingCartService.buyProducts, payload);
       return rsp;
     },
 

@@ -137,8 +137,8 @@ export class CardsPage2 extends Component {
           width={300}
         >
           <p>确认加入购物车吗？</p>
-          <p><b>{this.state.count}个</b></p>
-          <p><b>{detail.title}</b></p>
+          <p><b>加入购物车的数量：{this.state.count}个</b></p>
+          <p><b>加入购物车的商品：{detail.title}</b></p>
         </Modal>
 
       </div>

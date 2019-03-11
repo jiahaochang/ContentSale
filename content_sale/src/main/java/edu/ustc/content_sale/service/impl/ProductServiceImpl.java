@@ -1,7 +1,9 @@
 package edu.ustc.content_sale.service.impl;
 
+import edu.ustc.content_sale.dao.BillDao;
 import edu.ustc.content_sale.dao.CommodityDao;
 import edu.ustc.content_sale.dao.ShoppingCartDao;
+import edu.ustc.content_sale.domain.Bill;
 import edu.ustc.content_sale.domain.Commodity;
 import edu.ustc.content_sale.domain.ProductVO;
 import edu.ustc.content_sale.domain.ShoppingCart;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +35,8 @@ public class ProductServiceImpl implements ProductService {
     CommodityDao commodityDao;
     @Autowired
     ShoppingCartDao shoppingCartDao;
+    @Autowired
+    BillDao billDao;
 
     @Override
     public List<ProductVO> getSellerProductList() {
@@ -88,5 +93,34 @@ public class ProductServiceImpl implements ProductService {
     public List<ShoppingCart> getShoppingCartList() {
         List<ShoppingCart> shoppingCartList = shoppingCartDao.findAll();
         return shoppingCartList;
+    }
+
+    @Override
+    public Boolean buy() {
+        List<ShoppingCart> shoppingCartList = shoppingCartDao.findAll();
+        shoppingCartList.stream().forEach(shoppingCart -> {
+            String imgName = shoppingCart.getImageName();
+            boolean existInBill = billDao.existsByImageName(imgName);
+            //如果已经购买过该商品，则更新账单里的 购买数量，购买总价 和 购买时间字段
+            if (existInBill){
+                Bill bill = billDao.findByImageName(imgName);
+                Integer count = bill.getCount()+shoppingCart.getCount();
+                double totalPrice = count * shoppingCart.getPrice();
+                bill.setBuyTime(new Date());
+                bill.setCount(count);
+                bill.setTotalPrice((long) totalPrice);
+                billDao.save(bill);
+            }else {
+                //如果没有购买过该商品，则加入账单列表
+                Bill newBill = new Bill();
+                BeanUtils.copyProperties(shoppingCart, newBill);
+                newBill.setId(null);
+                newBill.setTotalPrice((long) (shoppingCart.getPrice() * shoppingCart.getPrice()));
+                newBill.setBuyTime(new Date());
+                billDao.save(newBill);
+            }
+        });
+        shoppingCartDao.deleteAll();
+        return true;
     }
 }

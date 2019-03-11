@@ -20,4 +20,6 @@ public interface ProductService {
     Boolean addProductsToShoppingCart(Commodity commodity);
     //获取购物车中的内容
     List<ShoppingCart> getShoppingCartList();
+    //购买已经添加购物车的商品
+    Boolean buy();
 }
