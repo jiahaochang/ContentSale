@@ -5,7 +5,7 @@ let data = [
     buyTime: 1549201949,
     count: 123,
     price: 1000,
-    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+    imgName: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ let data = [
     buyTime: 1549201949,
     count: 123,
     price: 1000,
-    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+    imgName: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ let data = [
     buyTime: 1549201949,
     count: 123,
     price: 1000,
-    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+    imgName: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ let data = [
     buyTime: 1549201949,
     count: 123,
     price: 1000,
-    contentPicture: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
+    imgName: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
   },
 ];
 

@@ -16,12 +16,12 @@ export class Bills extends Component {
   columns = [
     {
       title: '内容图片',
-      dataIndex: 'contentPicture',
+      dataIndex: 'imgName',
       render: (text, record) => <img src={text} width={60} onClick={()=>this.props.handleShowDetail(record.id)}/>//这里放后台返回的图片的路径或者整个<img/>
     },
     {
       title: '内容名称',
-      dataIndex: 'name',
+      dataIndex: 'title',
     },
     {
       title: '购买时间',

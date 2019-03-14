@@ -1,5 +1,6 @@
 package edu.ustc.content_sale.service;
 
+import edu.ustc.content_sale.domain.Bill;
 import edu.ustc.content_sale.domain.Commodity;
 import edu.ustc.content_sale.domain.ProductVO;
 import edu.ustc.content_sale.domain.ShoppingCart;
@@ -22,4 +23,6 @@ public interface ProductService {
     List<ShoppingCart> getShoppingCartList();
     //购买已经添加购物车的商品
     Boolean buy();
+    //获取账单信息
+    List<Bill> getBillList();
 }

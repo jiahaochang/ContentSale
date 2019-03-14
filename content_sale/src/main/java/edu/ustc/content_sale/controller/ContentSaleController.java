@@ -140,12 +140,17 @@ public class ContentSaleController {
 
     @GetMapping(value = "/buy")
     public Result buyProducts(){
-        System.out.println("前端点击了购买按钮");
         boolean buyRes = productService.buy();
         if (buyRes){
             return ResultUtil.success();
         }
         return ResultUtil.error(304, "购买失败");
+    }
+
+    @GetMapping(value = "/bills")
+    public Result getBills(){
+        List<Bill> billList = productService.getBillList();
+        return ResultUtil.success(billList);
     }
 
 }

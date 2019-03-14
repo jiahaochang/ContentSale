@@ -10,6 +10,7 @@ import edu.ustc.content_sale.domain.ShoppingCart;
 import edu.ustc.content_sale.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,14 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService, InitializingBean {
 
     @Value("${service_address}")
     private String serviceAddress;
+
+    @Value("${web.upload-path}")
+    private String saveFilePath; // 保存上传文件的路径
+
 
     @Autowired
     CommodityDao commodityDao;
@@ -37,6 +42,11 @@ public class ProductServiceImpl implements ProductService {
     ShoppingCartDao shoppingCartDao;
     @Autowired
     BillDao billDao;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        saveFilePath = System.getProperty("user.dir")+saveFilePath;
+    }
 
     @Override
     public List<ProductVO> getSellerProductList() {
@@ -123,4 +133,15 @@ public class ProductServiceImpl implements ProductService {
         shoppingCartDao.deleteAll();
         return true;
     }
+
+    @Override
+    public List<Bill> getBillList() {
+        List<Bill> bills = billDao.findAll();
+        bills.stream().forEach(bill -> {
+            bill.setImageName(serviceAddress + bill.getImageName());
+        });
+        return bills;
+    }
+
+
 }
