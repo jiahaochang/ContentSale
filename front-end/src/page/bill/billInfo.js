@@ -38,9 +38,15 @@ export class Bills extends Component {
   ];
 
   render() {
-    const { billList = [], total=0 } = this.props;
-    console.log('billList');
-    console.log(billList);
+    const { billList = []} = this.props;
+    // console.log('billList');
+    // console.log(billList);
+    var total = 0;
+    //计算总价格
+    for ( var i = 0; i <billList.length; i++){
+      // billList[i].totalPrice = billList[i].count * billList[i].price;
+      total += billList[i].totalPrice;
+    }
 
     return (
       <div>

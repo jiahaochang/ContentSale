@@ -1,7 +1,7 @@
 import request from '../util/request';
 
 export function queryList() {
-  return request('/api/unpurchased');
+  return request('/login/unpurchased');
 }
 
 export function deleteOne(id) {

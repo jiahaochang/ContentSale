@@ -153,4 +153,11 @@ public class ContentSaleController {
         return ResultUtil.success(billList);
     }
 
+    //获取用户未该买的商品列表信息
+    @GetMapping(value = "/unpurchased")
+    public Result getUnpurchasedProducts(){
+        List<ProductVO> productVOList = productService.getUnpurchasedProducts();
+        return ResultUtil.success(productVOList);
+    }
+
 }

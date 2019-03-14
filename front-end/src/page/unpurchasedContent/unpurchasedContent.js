@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Icon, message, Row, Col } from 'antd';
 
+const {Meta} = Card;
+
 export class UnpurchasedContent extends Component {
   componentDidMount() {
     this.queryList();
@@ -42,14 +44,19 @@ export class UnpurchasedContent extends Component {
           {cardsList.map(v =>
             <Col span={8} key={v.id}>
               <Card
-                hoverable
+                hoverable={true}
                 key={v.id}
-                title={v.name}
-                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                style={{ width: 220, marginBottom: '16px' }}
+                title={v.title}
+                cover={<img alt="example" src={v.imgUrl} height="220" width="220"/>}
+                style={{width: 220, marginBottom: '16px'}}
                 extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
-                onClick={()=>this.props.handleShowDetail(v.id)}
-              >{v.desc}</Card>
+                onClick={() => this.props.handleShowDetail(v.id)}
+              >{v.summary}
+                <Meta
+                  description=""
+                  title={"¥:" + v.price}
+                />
+              </Card>
             </Col>
           )}
         </Row>

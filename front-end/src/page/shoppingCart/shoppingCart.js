@@ -53,7 +53,7 @@ export class ShoppingCartContent extends Component {
   ];
 
   render() {
-    const { shoppingCartContent = [], total=0 } = this.props;
+    const { shoppingCartContent = [] } = this.props;
     // console.log('shoppingCartContent');
     // console.log(shoppingCartContent);
     var totalCost = 0;

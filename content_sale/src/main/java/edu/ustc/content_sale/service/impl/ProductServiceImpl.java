@@ -53,11 +53,7 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         List<ProductVO> productVOList = new ArrayList<>();
         List<Commodity> commodities = commodityDao.findAll();
         commodities.stream().forEach(commodity -> {
-            ProductVO productVO = new ProductVO();
-            //log.info(serviceAddress + commodity.getImageName());
-            BeanUtils.copyProperties(commodity, productVO);
-            productVO.setImgUrl(serviceAddress + commodity.getImageName());
-            productVOList.add(productVO);
+            productVOList.add(convertCommodityToProductVO(commodity));
         });
         return productVOList;
     }
@@ -125,10 +121,12 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
                 Bill newBill = new Bill();
                 BeanUtils.copyProperties(shoppingCart, newBill);
                 newBill.setId(null);
-                newBill.setTotalPrice((long) (shoppingCart.getPrice() * shoppingCart.getPrice()));
+                newBill.setTotalPrice((long) (shoppingCart.getCount() * shoppingCart.getPrice()));
                 newBill.setBuyTime(new Date());
                 billDao.save(newBill);
             }
+            //把商品信息更改为已出售状态
+            commodityDao.updateSaleStatusByImgName("alreadySold",imgName);
         });
         shoppingCartDao.deleteAll();
         return true;
@@ -143,5 +141,21 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         return bills;
     }
 
+    @Override
+    public List<ProductVO> getUnpurchasedProducts() {
+        List<Commodity> commodities = commodityDao.findBySaleStatus("notYetSold");
+        List<ProductVO> productVOS = new ArrayList<>();
+        commodities.stream().forEach(commodity -> {
+            productVOS.add(convertCommodityToProductVO(commodity));
+        });
+        return productVOS;
+    }
+
+    public ProductVO convertCommodityToProductVO(Commodity commodity){
+        ProductVO productVO = new ProductVO();
+        BeanUtils.copyProperties(commodity, productVO);
+        productVO.setImgUrl(serviceAddress + commodity.getImageName());
+        return productVO;
+    }
 
 }

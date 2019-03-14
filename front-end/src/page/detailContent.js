@@ -6,7 +6,7 @@ export class CardsPage2 extends Component {
 
   state = {
     visible: false,
-    count: 0,
+    count: 1,
   };
 
   componentDidMount() {
@@ -26,11 +26,11 @@ export class CardsPage2 extends Component {
       payload: id,
     }).then((res) => {
       //console.log(res);
-      if (res.code===200){
+      /*if (res.code===200){
         this.setState({
           count: res.result.count,
         })
-      }
+      }*/
 
     });
 
