@@ -27,4 +27,6 @@ public interface ProductService {
     List<Bill> getBillList();
     //获取用户未购买的商品信息列表
     List<ProductVO> getUnpurchasedProducts();
+    //根据imgName获取Commodity的id
+    Long getIdByImgName(String imgName);
 }

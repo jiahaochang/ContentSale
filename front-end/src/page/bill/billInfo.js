@@ -13,11 +13,26 @@ export class Bills extends Component {
     });
   };
 
+  showDetailByImageName=(imgName)=>{
+    this.props.dispatch({
+      type: 'bills/getIdByImageName',
+      payload:  imgName,
+    }).then((res) => {
+      if (res.code===200){
+        console.log(res.result);
+        this.props.handleShowDetail(res.result.id);
+      }else {
+
+      }
+
+    });
+  };
+
   columns = [
     {
       title: '内容图片',
       dataIndex: 'imageName',
-      render: (text, record) => <img src={text} height="60" width="60" onClick={()=>this.props.handleShowDetail(record.id)}/>//这里放后台返回的图片的路径或者整个<img/>
+      render: (text, record) => <img src={text} height="60" width="60" onClick={()=>this.showDetailByImageName(record.imageName)}/>//这里放后台返回的图片的路径或者整个<img/>
     },
     {
       title: '内容名称',
@@ -62,8 +77,8 @@ export class Bills extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state');
-  console.log(state);
+  // console.log('state');
+  // console.log(state);
   return {
     billList: state.bills.billList,
   };

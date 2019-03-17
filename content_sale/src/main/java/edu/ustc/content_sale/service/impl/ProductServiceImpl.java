@@ -151,6 +151,15 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         return productVOS;
     }
 
+    @Override
+    public Long getIdByImgName(String imgUrl) {
+        String arr[] = imgUrl.split("/");
+        //System.out.println(arr[arr.length-1]);
+        String imgName = arr[arr.length-1];
+        Commodity commodity = commodityDao.findByImageName(imgName);
+        return commodity.getId();
+    }
+
     public ProductVO convertCommodityToProductVO(Commodity commodity){
         ProductVO productVO = new ProductVO();
         BeanUtils.copyProperties(commodity, productVO);

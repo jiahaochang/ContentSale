@@ -17,6 +17,13 @@ export default {
 
       return rsp;
     },
+
+    *getIdByImageName({ payload }, { call, put }) {
+      console.log(payload);
+      var postData = {imgUrl : payload};
+      const rsp = yield call(billService.postImageNameToGetId, postData);
+      return rsp;
+    },
     
   },
 

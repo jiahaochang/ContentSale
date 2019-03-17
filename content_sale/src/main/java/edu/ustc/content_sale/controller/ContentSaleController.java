@@ -1,5 +1,6 @@
 package edu.ustc.content_sale.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nimbusds.jose.JOSEException;
 import edu.ustc.content_sale.common.Result;
 import edu.ustc.content_sale.domain.*;
@@ -166,6 +167,16 @@ public class ContentSaleController {
         log.info("要删除商品的id"+id);
 
         return ResultUtil.success();
+    }
+
+    //根据imgName获取Commodity中的商品id
+    @PostMapping(value = "/post/id/get/imgName")
+    public Result getCommodityIdByImageName(@RequestBody JSONObject jsonObject){
+        String imgUrl = jsonObject.getString("imgUrl");
+        Long id = productService.getIdByImgName(imgUrl);
+        Map<String,Object> res = new HashMap<>();
+        res.put("id", id);
+        return ResultUtil.success(res);
     }
 
 }

@@ -23,4 +23,6 @@ public interface CommodityDao extends JpaRepository<Commodity, Long>{
     int updateSaleStatusByImgName(@Param("status") String status, @Param("imgName") String imgName);
 
     List<Commodity> findBySaleStatus(String saleStatus);
+
+    Commodity findByImageName(String imgName);
 }
