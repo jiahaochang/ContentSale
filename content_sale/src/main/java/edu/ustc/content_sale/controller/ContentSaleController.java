@@ -160,4 +160,12 @@ public class ContentSaleController {
         return ResultUtil.success(productVOList);
     }
 
+    //发布者删除未出售的商品
+    @DeleteMapping(value = "/cards/{id}")
+    public Result deleteProduce(@PathVariable(value = "id") Long id){
+        log.info("要删除商品的id"+id);
+
+        return ResultUtil.success();
+    }
+
 }

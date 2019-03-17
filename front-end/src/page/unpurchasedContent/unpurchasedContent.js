@@ -35,8 +35,8 @@ export class UnpurchasedContent extends Component {
 
   render() {
     const { cardsList = [] } = this.props;
-    console.log('cardsList');
-    console.log(cardsList);
+    // console.log('cardsList');
+    // console.log(cardsList);
 
     return (
       <div>
@@ -49,7 +49,7 @@ export class UnpurchasedContent extends Component {
                 title={v.title}
                 cover={<img alt="example" src={v.imgUrl} height="220" width="220"/>}
                 style={{width: 220, marginBottom: '16px'}}
-                extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
+                // extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
                 onClick={() => this.props.handleShowDetail(v.id)}
               >{v.summary}
                 <Meta
@@ -66,8 +66,8 @@ export class UnpurchasedContent extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state');
-  console.log(state);
+  // console.log('state');
+  // console.log(state);
   return {
     cardsList: state.unpurchased.cardsList,
   };

@@ -1,10 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { Table, Divider, InputNumber, Button, message } from 'antd';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {Table, Divider, InputNumber, Button, message} from 'antd';
 
 export class ShoppingCartContent extends Component {
+
+  state = {
+    countList: [],
+  };
+
   componentDidMount() {
     this.queryContent();
+    /*var shoppingCartContent = this.props.shoppingCartContent;
+    var counts=[];
+    for (var i=0; i<shoppingCartContent.length; i++){
+      counts[shoppingCartContent[i].id] = shoppingCartContent[i].count;
+    }
+    console.log(counts);
+    this.setState({
+      countList: counts,
+    });*/
   }
 
   queryContent = () => {
@@ -13,8 +27,13 @@ export class ShoppingCartContent extends Component {
     });
   };
 
-  onChange = (value) => {
-    console.log('changed', value);
+  onChange = (e) => {
+    console.log('changed', e);
+  };
+
+  changeValue = (record, text) => {
+    console.log(text);
+    console.log("id = " + record);
   };
 
   buy = () => {
@@ -22,10 +41,10 @@ export class ShoppingCartContent extends Component {
       type: 'shoppingCartList/buy',
     }).then((res) => {
       // console.log(res);
-      if (res.code===200){
+      if (res.code === 200) {
         message.success('购买成功');
         this.props.handleShowBill();
-      }else {
+      } else {
         message.error('购买失败');
       }
     });
@@ -40,7 +59,8 @@ export class ShoppingCartContent extends Component {
     {
       title: '购买数量',
       dataIndex: 'count',
-      render: (text,record) => <InputNumber min={1} onChange={this.onChange} value={record.count} />
+      render: (text, record) => <InputNumber min={1} max={10} onChange={this.changeValue(record.id, text)}
+                                             defaultValue={text}/>
     },
     {
       title: '购买单价',
@@ -50,15 +70,24 @@ export class ShoppingCartContent extends Component {
       title: '总价格',
       dataIndex: 'totalPrice'
     },
+    {
+      title: '操作',
+      key: 'action',
+      render: (text, record) => (
+        <span>
+          <a href="javascript:;">Delete</a>
+        </span>
+      ),
+    }
   ];
 
   render() {
-    const { shoppingCartContent = [] } = this.props;
+    const {shoppingCartContent = []} = this.props;
     // console.log('shoppingCartContent');
     // console.log(shoppingCartContent);
     var totalCost = 0;
     //计算总价格
-    for ( var i = 0; i <shoppingCartContent.length; i++){
+    for (var i = 0; i < shoppingCartContent.length; i++) {
       shoppingCartContent[i].totalPrice = shoppingCartContent[i].count * shoppingCartContent[i].price;
       totalCost += shoppingCartContent[i].totalPrice;
     }
@@ -71,7 +100,7 @@ export class ShoppingCartContent extends Component {
           dataSource={shoppingCartContent}
           rowKey="id"
           pagination={false}
-          footer={() => '总计:¥'+totalCost}
+          footer={() => '总计:¥' + totalCost}
         />
 
         <Button type={"primary"} onClick={this.buy}>购买</Button>

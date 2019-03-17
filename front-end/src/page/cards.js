@@ -59,6 +59,7 @@ export class CardsPage extends Component {
         <Spin spinning={this.state.loading} delay={5000}>
           <Row gutter={24}>
             {cardsList.map(v =>
+
               <Col span={8} key={v.id}>
                 <Card
                   hoverable={true}
@@ -66,7 +67,7 @@ export class CardsPage extends Component {
                   title={v.title}
                   cover={<img alt="example" src={v.imgUrl} height="220" width="220"/>}
                   style={{width: 220, marginBottom: '16px'}}
-                  extra={<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>}
+                  extra={v.saleStatus === 'notYetSold'?<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>:''}
                   onClick={() => this.props.handleShowDetail(v.id)}
                 >{v.summary}
                   {
@@ -87,7 +88,14 @@ export class CardsPage extends Component {
                   }
                   {
                     //未出售状态
-                    v.saleStatus === 'notYetSold' &&
+                    v.saleStatus === 'notYetSold' &&loginStatus === ('userLogged'||loginStatus === 'sellerLoggedIn') &&
+                    <Meta
+                      description="."
+                      title={"¥:" + v.price}
+                    />
+                  }
+                  {
+                    loginStatus === 'notLoggedIn' &&
                     <Meta
                       description="."
                       title={"¥:" + v.price}

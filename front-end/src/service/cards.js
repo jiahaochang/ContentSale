@@ -5,7 +5,7 @@ export function queryList() {
 }
 
 export function deleteOne(id) {
-  return request(`/api/cards/${id}`, {
+  return request(`/login/cards/${id}`, {
     method: 'DELETE'
   });
 }
