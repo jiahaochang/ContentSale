@@ -8,3 +8,9 @@ export function getShoppingCartContent() {
 export function buyProducts() {
   return request('/login/buy');
 }
+
+export function deleteOneFromShoppingCart(id) {
+  return request(`/login/delete/shoppingCart/one/${id}`, {
+    method: 'DELETE'
+  });
+}

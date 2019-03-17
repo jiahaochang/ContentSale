@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
-import {Table, Divider, InputNumber, Button, message} from 'antd';
+import {Table, Divider, InputNumber, Button, message, Modal} from 'antd';
 
 export class ShoppingCartContent extends Component {
 
   state = {
     countList: [],
+    deleteConfirmVisible: false,
+    currentProduct:{},
   };
 
   componentDidMount() {
@@ -32,8 +34,8 @@ export class ShoppingCartContent extends Component {
   };
 
   changeValue = (record, text) => {
-    console.log(text);
-    console.log("id = " + record);
+    // console.log(text);
+    // console.log("id = " + record);
   };
 
   buy = () => {
@@ -49,6 +51,39 @@ export class ShoppingCartContent extends Component {
       }
     });
 
+  };
+
+  deleteProduct=(record)=>{
+    console.log(record);
+    this.setState({
+      currentProduct: record,
+      deleteConfirmVisible: true,
+    })
+  };
+
+  handleCancel=()=>{
+    this.setState({
+      deleteConfirmVisible: false,
+    });
+  };
+
+  handleDeleteOk=()=>{
+    // console.log(this.state.currentProduct);
+    this.props.dispatch({
+      type: 'shoppingCartList/deleteProductFromShoppingCart',
+      payload: this.state.currentProduct.id,
+    }).then((res) => {
+      // console.log(res);
+      if (res.code === 200) {
+        message.success('从购物车中删除商品成功！');
+        this.queryContent();
+      } else {
+        message.error('从购物车中删除商品失败');
+      }
+      this.setState({
+        deleteConfirmVisible: false,
+      });
+    });
   };
 
   columns = [
@@ -75,7 +110,7 @@ export class ShoppingCartContent extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="javascript:;">Delete</a>
+          <a href="javascript:void(0);" onClick={()=>{this.deleteProduct(record)}}>Delete</a>
         </span>
       ),
     }
@@ -104,6 +139,18 @@ export class ShoppingCartContent extends Component {
         />
 
         <Button type={"primary"} onClick={this.buy}>购买</Button>
+
+        <Modal
+          title="提示"
+          visible={this.state.deleteConfirmVisible}
+          onOk={this.handleDeleteOk}
+          onCancel={this.handleCancel}
+          width={300}
+        >
+          <p>确认删除此商品吗？</p>
+          <p><b>{this.state.currentProduct.title}</b></p>
+        </Modal>
+
       </div>
     );
   }

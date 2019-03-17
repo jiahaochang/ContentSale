@@ -182,4 +182,12 @@ public class ContentSaleController {
         return ResultUtil.success(res);
     }
 
+    //购物者从购物车中删除商品
+    @DeleteMapping(value = "/delete/shoppingCart/one/{id}")
+    public Result deleteProduceInShoppingCart(@PathVariable(value = "id") Long id){
+        log.info("要从购物车中删除商品的id="+id);
+        Boolean res = productService.deleteProductFromShoppingCart(id);
+        return ResultUtil.success();
+    }
+
 }

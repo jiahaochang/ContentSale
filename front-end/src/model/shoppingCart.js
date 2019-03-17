@@ -21,6 +21,12 @@ export default {
       return rsp;
     },
 
+    *deleteProductFromShoppingCart({ payload }, { call, put }) {
+      console.log(payload);
+      const rsp = yield call(shoppingCartService.deleteOneFromShoppingCart, payload);
+      return rsp;
+    },
+
   },
 
   reducers: {

@@ -31,4 +31,6 @@ public interface ProductService {
     Long getIdByImgName(String imgName);
     //根据id删除商品
     Boolean deleteCommodityById(Long id);
+    //从购物车中根据id删除商品
+    Boolean deleteProductFromShoppingCart(Long id);
 }
