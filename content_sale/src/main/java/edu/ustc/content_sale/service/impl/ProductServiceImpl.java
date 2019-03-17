@@ -172,6 +172,12 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         return true;
     }
 
+    @Override
+    public Boolean changeProductNumInShoppingCart(Long id, Integer count) {
+        shoppingCartDao.updateCountById(count, id);
+        return true;
+    }
+
     public ProductVO convertCommodityToProductVO(Commodity commodity){
         ProductVO productVO = new ProductVO();
         BeanUtils.copyProperties(commodity, productVO);

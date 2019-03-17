@@ -190,4 +190,12 @@ public class ContentSaleController {
         return ResultUtil.success();
     }
 
+    //购买者更改购物车中商品的数量
+    @GetMapping(value = "/change/product/{id}/num/{count}")
+    public Result changeProductNumById(@PathVariable(value = "id") Long id, @PathVariable(value = "count") Integer count){
+        System.out.println("id = "+id+"    数量 = "+count);
+        productService.changeProductNumInShoppingCart(id, count);
+        return ResultUtil.success();
+    }
+
 }

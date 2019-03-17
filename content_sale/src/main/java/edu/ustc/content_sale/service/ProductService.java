@@ -33,4 +33,6 @@ public interface ProductService {
     Boolean deleteCommodityById(Long id);
     //从购物车中根据id删除商品
     Boolean deleteProductFromShoppingCart(Long id);
+    //根据购物车中商品的id更改购物车中商品的数量
+    Boolean changeProductNumInShoppingCart(Long id, Integer count);
 }

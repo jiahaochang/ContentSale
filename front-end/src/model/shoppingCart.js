@@ -10,7 +10,7 @@ export default {
   effects: {
 
     *getContent({ payload }, { call, put }) {
-      console.log(payload);
+      // console.log(payload);
       const rsp = yield call(shoppingCartService.getShoppingCartContent);
       yield put({ type: 'saveContent', payload: { shoppingCartContent: rsp.result } });
       return rsp;
@@ -22,8 +22,13 @@ export default {
     },
 
     *deleteProductFromShoppingCart({ payload }, { call, put }) {
-      console.log(payload);
       const rsp = yield call(shoppingCartService.deleteOneFromShoppingCart, payload);
+      return rsp;
+    },
+
+    *changeProductNumInshoppingCart({ payload }, { call, put }) {
+      console.log(payload);
+      const rsp = yield call(shoppingCartService.changeProductNum, payload);
       return rsp;
     },
 

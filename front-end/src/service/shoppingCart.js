@@ -14,3 +14,7 @@ export function deleteOneFromShoppingCart(id) {
     method: 'DELETE'
   });
 }
+
+export function changeProductNum(data) {
+  return request(`/login/change/product/${data.id}/num/${data.count}`);
+}

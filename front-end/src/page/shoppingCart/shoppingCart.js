@@ -29,13 +29,23 @@ export class ShoppingCartContent extends Component {
     });
   };
 
-  onChange = (e) => {
-    console.log('changed', e);
-  };
+  onChange = (value, record) => {
+    var data={};
+    data.id=record.id;
+    data.count=value;
 
-  changeValue = (record, text) => {
-    // console.log(text);
-    // console.log("id = " + record);
+    this.props.dispatch({
+      type: 'shoppingCartList/changeProductNumInshoppingCart',
+      payload: data,
+    }).then((res) => {
+      if (res.code === 200) {
+        message.success('更改数量成功');
+        //this.props.handleShowBill();
+      } else {
+        message.error('更改数量失败');
+      }
+    });
+
   };
 
   buy = () => {
@@ -94,8 +104,13 @@ export class ShoppingCartContent extends Component {
     {
       title: '购买数量',
       dataIndex: 'count',
-      render: (text, record) => <InputNumber min={1} max={10} onChange={this.changeValue(record.id, text)}
-                                             defaultValue={text}/>
+      render: (text, record) =>
+        <InputNumber
+          min={1}
+          max={10}
+          onChange={(value)=>{this.onChange(value,record)}}
+          defaultValue={text}
+        />
     },
     {
       title: '购买单价',
