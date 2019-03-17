@@ -165,7 +165,10 @@ public class ContentSaleController {
     @DeleteMapping(value = "/cards/{id}")
     public Result deleteProduce(@PathVariable(value = "id") Long id){
         log.info("要删除商品的id"+id);
-
+        boolean res = productService.deleteCommodityById(id);
+        if (!res){
+            return ResultUtil.error(500,"删除商品信息失败");
+        }
         return ResultUtil.success();
     }
 

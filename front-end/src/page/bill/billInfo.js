@@ -19,7 +19,7 @@ export class Bills extends Component {
       payload:  imgName,
     }).then((res) => {
       if (res.code===200){
-        console.log(res.result);
+        //console.log(res.result);
         this.props.handleShowDetail(res.result.id);
       }else {
 

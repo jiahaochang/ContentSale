@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
 // import Link from 'umi/link';
-import {Card, Icon, message, Row, Col, Spin} from 'antd';
+import {Card, Icon, message, Row, Col, Spin, Modal} from 'antd';
 
 const {Meta} = Card;
 
@@ -9,6 +9,8 @@ export class CardsPage extends Component {
 
   state = {
     loading: false,
+    visible: false,
+    deleteProductId: 0,
   };
 
   componentWillMount() {
@@ -31,22 +33,42 @@ export class CardsPage extends Component {
     });
   };
 
-  deleteOne = (id) => {
+  deleteOne = () => {
+    var id = this.state.deleteProductId;
     this.props.dispatch({
       type: 'cards/deleteOne',
       payload: id,
-    }).then(() => {
-      message.success('delete success, refresh');
+    }).then((res) => {
+      if (res.code==200){
+        message.success('商品删除成功');
+        this.setState({
+          visible: false,
+        });
+      }
       this.queryList();
     });
   };
 
-  getDetailInfo = (id) => {
+  /*getDetailInfo = (id) => {
     console.log(id);
     this.props.dispatch({
       type: 'details/getDetail',
       payload: id,
     })
+  };*/
+
+  showModal = (id) => {
+    this.setState({
+      visible: true,
+      deleteProductId: id,
+    });
+  };
+
+  handleCancel = (e) => {
+    //console.log(e);
+    this.setState({
+      visible: false,
+    });
   };
 
   render() {
@@ -65,10 +87,10 @@ export class CardsPage extends Component {
                   hoverable={true}
                   key={v.id}
                   title={v.title}
-                  cover={<img alt="example" src={v.imgUrl} height="220" width="220"/>}
+                  cover={<img alt="example" src={v.imgUrl} height="220" width="220" onClick={() => this.props.handleShowDetail(v.id)}/>}
                   style={{width: 220, marginBottom: '16px'}}
-                  extra={v.saleStatus === 'notYetSold'?<Icon type={'delete'} onClick={() => this.deleteOne(v.id)}/>:''}
-                  onClick={() => this.props.handleShowDetail(v.id)}
+                  extra={(v.saleStatus === 'notYetSold' && loginStatus === 'sellerLoggedIn')?<Icon type={'delete'} onClick={() => this.showModal(v.id)}/>:''}
+
                 >{v.summary}
                   {
                     v.saleStatus === 'alreadySold' && loginStatus === 'sellerLoggedIn' &&
@@ -88,7 +110,7 @@ export class CardsPage extends Component {
                   }
                   {
                     //未出售状态
-                    v.saleStatus === 'notYetSold' &&loginStatus === ('userLogged'||loginStatus === 'sellerLoggedIn') &&
+                    v.saleStatus === 'notYetSold' && (loginStatus === 'userLogged'||loginStatus === 'sellerLoggedIn') &&
                     <Meta
                       description="."
                       title={"¥:" + v.price}
@@ -106,6 +128,17 @@ export class CardsPage extends Component {
             )}
           </Row>
         </Spin>
+
+        <Modal
+          title="提示"
+          visible={this.state.visible}
+          onOk={this.deleteOne}
+          onCancel={this.handleCancel}
+          width={300}
+        >
+          <p>确认删除此商品？</p>
+        </Modal>
+
       </div>
     );
   }

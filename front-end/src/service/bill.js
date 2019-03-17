@@ -6,7 +6,7 @@ export function getBillList() {
 
 
 export function postImageNameToGetId(data) {
-  console.log(JSON.stringify(data));
+  //console.log(JSON.stringify(data));
   return request('/login/post/id/get/imgName', {
     headers: {
       'content-type': 'application/json',

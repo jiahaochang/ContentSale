@@ -29,4 +29,6 @@ public interface ProductService {
     List<ProductVO> getUnpurchasedProducts();
     //根据imgName获取Commodity的id
     Long getIdByImgName(String imgName);
+    //根据id删除商品
+    Boolean deleteCommodityById(Long id);
 }

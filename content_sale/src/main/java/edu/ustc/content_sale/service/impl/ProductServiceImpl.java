@@ -160,6 +160,12 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         return commodity.getId();
     }
 
+    @Override
+    public Boolean deleteCommodityById(Long id) {
+        commodityDao.deleteById(id);
+        return true;
+    }
+
     public ProductVO convertCommodityToProductVO(Commodity commodity){
         ProductVO productVO = new ProductVO();
         BeanUtils.copyProperties(commodity, productVO);

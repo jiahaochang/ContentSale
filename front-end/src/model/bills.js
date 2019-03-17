@@ -10,7 +10,7 @@ export default {
   effects: {
 
     *getBillList({ payload }, { call, put }) {
-      console.log(payload);
+      //console.log(payload);
       const rsp = yield call(billService.getBillList);
 
       yield put({ type: 'saveBill', payload: { billList: rsp.result } });
@@ -19,7 +19,7 @@ export default {
     },
 
     *getIdByImageName({ payload }, { call, put }) {
-      console.log(payload);
+      //console.log(payload);
       var postData = {imgUrl : payload};
       const rsp = yield call(billService.postImageNameToGetId, postData);
       return rsp;
