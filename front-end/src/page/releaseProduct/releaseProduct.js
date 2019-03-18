@@ -219,7 +219,14 @@ export class ReleaseProduct extends Component {
               label="价格"
             >
               {getFieldDecorator('price', {
-                rules: [{required: true, message: '请输入价格!'}],
+                rules: [
+                  {required: true, message: '请输入价格!'},
+                  {
+                    type: 'number',
+                    message: '请输入数字',
+                    transform:(value)=> {return Number(value)}
+                  },
+                ],
               })(<Input placeholder="数字" style={{width: '30%'}}/>)}元
             </Form.Item>
 
