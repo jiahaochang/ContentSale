@@ -31,4 +31,7 @@ public class Bill extends Product{
     @Column
     private String imageName;
 
+    @Column
+    private Long commodityId;
+
 }

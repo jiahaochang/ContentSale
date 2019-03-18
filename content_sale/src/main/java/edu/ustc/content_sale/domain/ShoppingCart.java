@@ -23,4 +23,7 @@ public class ShoppingCart extends Product implements Serializable {
 
     @Column
     private String imageName;
+
+    @Column
+    private Long commodityId;
 }

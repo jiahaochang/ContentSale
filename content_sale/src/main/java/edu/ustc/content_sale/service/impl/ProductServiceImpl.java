@@ -78,7 +78,8 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         Commodity commodityInfo = commodityDao.getOne(id);
         String imgName = commodityInfo.getImageName();
         //先检查购物车中是否存在此商品
-        boolean exist = shoppingCartDao.existsByImageName(imgName);
+        //boolean exist = shoppingCartDao.existsByImageName(imgName);
+        boolean exist = shoppingCartDao.existsByCommodityId(id);
         Long shoppingCardInfoId = null;
         //如果已经存在，则只变更购物车中商品的数量
         if (exist){
@@ -90,6 +91,7 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         BeanUtils.copyProperties(commodityInfo, shoppingCart);
         shoppingCart.setCount(count);
         shoppingCart.setId(shoppingCardInfoId);
+        shoppingCart.setCommodityId(id);
         //System.out.println(shoppingCardInfoId);
         shoppingCartDao.save(shoppingCart);
         return true;
@@ -107,10 +109,11 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
         shoppingCartList.stream().forEach(shoppingCart -> {
             String imgName = shoppingCart.getImageName();
             boolean existInBill = billDao.existsByImageName(imgName);
+            Integer count = 0;
             //如果已经购买过该商品，则更新账单里的 购买数量，购买总价 和 购买时间字段
             if (existInBill){
                 Bill bill = billDao.findByImageName(imgName);
-                Integer count = bill.getCount()+shoppingCart.getCount();
+                count = bill.getCount()+shoppingCart.getCount();
                 double totalPrice = count * shoppingCart.getPrice();
                 bill.setBuyTime(new Date());
                 bill.setCount(count);
@@ -120,13 +123,17 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
                 //如果没有购买过该商品，则加入账单列表
                 Bill newBill = new Bill();
                 BeanUtils.copyProperties(shoppingCart, newBill);
+                count = shoppingCart.getCount();
                 newBill.setId(null);
                 newBill.setTotalPrice((long) (shoppingCart.getCount() * shoppingCart.getPrice()));
                 newBill.setBuyTime(new Date());
+                newBill.setCommodityId(shoppingCart.getCommodityId());
                 billDao.save(newBill);
             }
             //把商品信息更改为已出售状态
-            commodityDao.updateSaleStatusByImgName("alreadySold",imgName);
+            commodityDao.updateSaleStatusById("alreadySold", shoppingCart.getCommodityId());
+            //更新商品信息的出售数量字段
+            commodityDao.updateCountById(count, shoppingCart.getCommodityId());
         });
         shoppingCartDao.deleteAll();
         return true;

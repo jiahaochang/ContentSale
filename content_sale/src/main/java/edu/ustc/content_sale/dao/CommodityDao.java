@@ -22,6 +22,16 @@ public interface CommodityDao extends JpaRepository<Commodity, Long>{
     @Query(value = "update commodity as c set c.sale_status =:status where c.image_name = :imgName",nativeQuery = true)
     int updateSaleStatusByImgName(@Param("status") String status, @Param("imgName") String imgName);
 
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update commodity as c set c.sale_status =:status where c.id = :id",nativeQuery = true)
+    int updateSaleStatusById(@Param("status") String status, @Param("id") Long id);
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update commodity as c set c.count =:num where c.id = :id",nativeQuery = true)
+    int updateCountById(@Param("num") Integer num, @Param("id") Long id);
+
     List<Commodity> findBySaleStatus(String saleStatus);
 
     Commodity findByImageName(String imgName);

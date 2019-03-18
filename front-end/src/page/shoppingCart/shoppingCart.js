@@ -7,6 +7,7 @@ export class ShoppingCartContent extends Component {
   state = {
     countList: [],
     deleteConfirmVisible: false,
+    buyConfirmVisible: false,
     currentProduct:{},
   };
 
@@ -54,7 +55,13 @@ export class ShoppingCartContent extends Component {
     }).then((res) => {
       // console.log(res);
       if (res.code === 200) {
+        //给出购买成功的提示
         message.success('购买成功');
+        //关闭购买确认提示框
+        this.setState({
+          buyConfirmVisible: false,
+        });
+        //跳转到账单页面
         this.props.handleShowBill();
       } else {
         message.error('购买失败');
@@ -75,6 +82,23 @@ export class ShoppingCartContent extends Component {
     this.setState({
       deleteConfirmVisible: false,
     });
+  };
+
+  clickToBuy=()=>{
+    this.setState({
+      buyConfirmVisible: true,
+    })
+  };
+
+  handleBuyCancel=()=>{
+    this.setState({
+      buyConfirmVisible: false,
+    });
+  };
+
+  handleBuyOk=()=>{
+    this.buy();
+
   };
 
   handleDeleteOk=()=>{
@@ -153,7 +177,7 @@ export class ShoppingCartContent extends Component {
           footer={() => '总计:¥' + totalCost}
         />
 
-        <Button type={"primary"} onClick={this.buy}>购买</Button>
+        <Button type={"primary"} onClick={this.clickToBuy}>购买</Button>
 
         <Modal
           title="提示"
@@ -164,6 +188,16 @@ export class ShoppingCartContent extends Component {
         >
           <p>确认删除此商品吗？</p>
           <p><b>{this.state.currentProduct.title}</b></p>
+        </Modal>
+
+        <Modal
+          title="提示"
+          visible={this.state.buyConfirmVisible}
+          onOk={this.handleBuyOk}
+          onCancel={this.handleBuyCancel}
+          width={300}
+        >
+          <p>确认购买购物车中的商品吗？</p>
         </Modal>
 
       </div>

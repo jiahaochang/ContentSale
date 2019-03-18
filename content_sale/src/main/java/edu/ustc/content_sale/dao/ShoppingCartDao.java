@@ -16,6 +16,8 @@ import javax.transaction.Transactional;
 
 public interface ShoppingCartDao extends JpaRepository<ShoppingCart, Long> {
 
+    Boolean existsByCommodityId(Long commodityId);
+
     Boolean existsByImageName(String imgName);
 
     ShoppingCart findByImageName(String imgName);
