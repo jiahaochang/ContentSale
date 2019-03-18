@@ -50,7 +50,15 @@ public class UploadFileServiceImpl implements UploadFileService {
         Commodity commodity = new Commodity();
         BeanUtils.copyProperties(releasedProduct, commodity);
         ImageInfo imageInfo = releasedProduct.getUpload().get(0);
-        commodity.setSaleStatus("notYetSold");
+        //根据id是否为空来判断是第一次发布商品还是修改商品的信息
+        Long productId = releasedProduct.getId();
+        if (productId==null){//如果是第一次发布商品，则默认为是未出售状态
+            commodity.setSaleStatus("notYetSold");
+        }else {//若是修改商品信息，则出售状态保持不变
+            Commodity exitCommodity = commodityDao.getOne(productId);
+            commodity.setSaleStatus(exitCommodity.getSaleStatus());
+        }
+
         String imgSuffix = imageInfo.getType().split("/")[1];
         commodity.setImageName(imageInfo.getUid()+"."+imgSuffix);
         commodityDao.save(commodity);
@@ -89,7 +97,8 @@ public class UploadFileServiceImpl implements UploadFileService {
             String imgName = commodity.getImageName();
             log.info("删除图片的名字 = "+imgName);
             String imgPath = System.getProperty("user.dir") + saveFilePath + imgName;
-            return FileUtils.deleteFile(imgPath);
+            //return FileUtils.deleteFile(imgPath);
+            return true;
         }
         return false;
     }

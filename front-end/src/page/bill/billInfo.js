@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Table } from 'antd';
+import moment from "moment";
 
 export class Bills extends Component {
   componentDidMount() {
@@ -41,6 +42,7 @@ export class Bills extends Component {
     {
       title: '购买时间',
       dataIndex: 'buyTime',
+      render: (value) => <span>{moment(value).format('YYYY-MM-DD HH:mm:ss')}</span>,
     },
     {
       title: '购买数量',
