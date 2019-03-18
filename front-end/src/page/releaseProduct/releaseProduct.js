@@ -10,6 +10,16 @@ export class ReleaseProduct extends Component {
     uploadMethod: 1,
     pictureUrl: "",
     loading: false,
+    fileList: [],
+  };
+
+  handleChange = ( e ) => {
+    console.log(e.fileList);
+
+    this.setState({
+      fileList: e.fileList
+    });
+    console.log(this.state.fileList.length>=1);
   };
 
   inputPictureUrl = (e) => {
@@ -92,6 +102,13 @@ export class ReleaseProduct extends Component {
       wrapperCol: {span: 14},
     };
 
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+
     return (
       <div style={{padding: '30px'}}>
 
@@ -143,10 +160,18 @@ export class ReleaseProduct extends Component {
                   getValueFromEvent: this.normFile,
                   rules: [{required: true, message: '请上传图片!'}]
                 })(
-                  <Upload name="logo" action="/upload.do" listType="picture" accept=".png,.gif,.jpg,.jpeg">
-                    <Button>
+                  <Upload
+                    name="logo"
+                    action="/upload.do"
+                    listType="picture-card"
+                    accept=".png,.gif,.jpg,.jpeg"
+                    onChange={this.handleChange}
+
+                  >
+                    {this.state.fileList.length>=1 ? null : uploadButton}
+                    {/*<Button disabled={this.state.fileList.length>=1}>
                       <Icon type="upload"/> Click to upload
-                    </Button>
+                    </Button>*/}
                   </Upload>
                 )}
               </Form.Item>
