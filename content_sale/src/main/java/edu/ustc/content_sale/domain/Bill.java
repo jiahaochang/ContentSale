@@ -26,7 +26,7 @@ public class Bill extends Product{
     private Date buyTime;
 
     @Column
-    private Long totalPrice;
+    private Double totalPrice;
 
     @Column
     private String imageName;

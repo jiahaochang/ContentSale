@@ -26,6 +26,18 @@ export default {
       return rsp;
     },
 
+    /**getOriginPrice({ payload }, { call, put }) {
+      const rsp = yield call(detailService.getOriginPriceById, payload);
+      yield put({
+        type: 'saveOriginPrice',
+        payload: {
+          id: payload,
+          originPrice: rsp.result,
+        },
+      });
+      return rsp;
+    },*/
+
   },
 
   reducers: {
@@ -35,6 +47,13 @@ export default {
         data,
       }
     },
+
+    /*saveOriginPrice(state, { payload: { id, originPrice } }) {
+      return {
+        ...state,
+        originPrice,
+      }
+    },*/
 
   },
 };

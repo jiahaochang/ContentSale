@@ -90,10 +90,14 @@ public class ContentSaleController {
     @GetMapping(value = "/detail/{id}")
     public Result getProductDetail(@PathVariable(value = "id") Long id){
         ProductVO productVO = productService.getProductDetailById(id);
+        Double originPrice = productService.getOriginPriceByProductId(id);
+        Map<String, Object> result = new HashMap<>();
+        result.put("originPrice", originPrice);
+        result.put("product", productVO);
         if (productVO==null){
             return ResultUtil.error(500, "该商品不存在");
         }
-        return ResultUtil.success(productVO);
+        return ResultUtil.success(result);
     }
 
     //通过上传图片的方式修改商品信息
@@ -196,6 +200,19 @@ public class ContentSaleController {
         System.out.println("id = "+id+"    数量 = "+count);
         productService.changeProductNumInShoppingCart(id, count);
         return ResultUtil.success();
+    }
+
+    //根据CommodityId获取商品购买时候的价格
+    @GetMapping(value = "/get/origin/price/{id}")
+    public Result getOriginPrice(@PathVariable(value = "id") Long id){
+        System.out.println(id);
+        Double originPrice = productService.getOriginPriceByProductId(id);
+        if (originPrice!=null){
+            Map<String, Object> res = new HashMap<>();
+            res.put("originPrice", originPrice);
+            return ResultUtil.success(originPrice);
+        }
+        return ResultUtil.error(500,"未找到原价");
     }
 
 }

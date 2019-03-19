@@ -117,7 +117,7 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
                 double totalPrice = count * shoppingCart.getPrice();
                 bill.setBuyTime(new Date());
                 bill.setCount(count);
-                bill.setTotalPrice((long) totalPrice);
+                bill.setTotalPrice(totalPrice);
                 billDao.save(bill);
             }else {
                 //如果没有购买过该商品，则加入账单列表
@@ -125,7 +125,7 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
                 BeanUtils.copyProperties(shoppingCart, newBill);
                 count = shoppingCart.getCount();
                 newBill.setId(null);
-                newBill.setTotalPrice((long) (shoppingCart.getCount() * shoppingCart.getPrice()));
+                newBill.setTotalPrice((shoppingCart.getCount() * shoppingCart.getPrice()));
                 newBill.setBuyTime(new Date());
                 newBill.setCommodityId(shoppingCart.getCommodityId());
                 billDao.save(newBill);
@@ -183,6 +183,16 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
     public Boolean changeProductNumInShoppingCart(Long id, Integer count) {
         shoppingCartDao.updateCountById(count, id);
         return true;
+    }
+
+    @Override
+    public Double getOriginPriceByProductId(Long id) {
+        boolean exist = billDao.existsByCommodityId(id);
+        if (exist){
+            Bill bill = billDao.findByCommodityId(id);
+            return bill.getPrice();
+        }
+        return null;
     }
 
     public ProductVO convertCommodityToProductVO(Commodity commodity){

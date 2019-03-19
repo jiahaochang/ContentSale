@@ -6,6 +6,7 @@ import edu.ustc.content_sale.domain.ProductVO;
 import edu.ustc.content_sale.domain.ShoppingCart;
 
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 /**
  * @Author: Jiahao.Zhang
@@ -35,4 +36,6 @@ public interface ProductService {
     Boolean deleteProductFromShoppingCart(Long id);
     //根据购物车中商品的id更改购物车中商品的数量
     Boolean changeProductNumInShoppingCart(Long id, Integer count);
+    //根据商品id获取购买时的原价
+    Double getOriginPriceByProductId(Long id);
 }

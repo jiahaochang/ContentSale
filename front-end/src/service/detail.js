@@ -13,3 +13,7 @@ export function addProductToShoppingCart(data) {
     body: JSON.stringify(data),
   });
 }
+
+export function getOriginPriceById(id) {
+  return request(`/login/get/origin/price/${id}`);
+}

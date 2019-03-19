@@ -11,5 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BillDao extends JpaRepository<Bill, Long> {
     Boolean existsByImageName(String imgName);
+    Boolean existsByCommodityId(Long commodityId);
     Bill findByImageName(String imgName);
+    Bill findByCommodityId(Long commodityId);
 }

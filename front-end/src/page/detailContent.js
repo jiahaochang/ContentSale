@@ -25,14 +25,15 @@ export class CardsPage2 extends Component {
       type: 'details/getDetail',
       payload: id,
     }).then((res) => {
-      //console.log(res);
-      /*if (res.code===200){
-        this.setState({
-          count: res.result.count,
-        })
-      }*/
 
     });
+
+    /*this.props.dispatch({
+      type: 'details/getOriginPrice',
+      payload: id,
+    }).then((res) => {
+
+    });*/
 
   };
 
@@ -84,8 +85,8 @@ export class CardsPage2 extends Component {
   };
 
   render() {
-    const { detail={},loginStatus } = this.props;
-    // console.log(loginStatus);
+    const { detail={}, loginStatus } = this.props;
+    console.log(detail);
 
     return (
       <div style={{padding: '30px'}}>
@@ -94,16 +95,19 @@ export class CardsPage2 extends Component {
             <Card
               hoverable
               key={1}
-              title={detail.title}
-              cover={<img alt="example" src={detail.imgUrl} />}
+              title={detail.product.title}
+              cover={<img alt="example" src={detail.product.imgUrl} />}
               style={{ width: 220, marginBottom: '16px' }}
-            >{detail.summary}</Card>
+            >{detail.product.summary}</Card>
           </Col>
           <Col span={8}>
             <div style={{padding: '30px', margin: 'auto'}}>
-              <h3>{detail.title}</h3>
-              <h3>¥:{detail.price}</h3>
-              <h3>购买数量:<InputNumber min={1} max={10} onChange={this.onChange} value={this.state.count}/></h3>
+              <h3>{detail.product.title}</h3>
+              <h3>¥:{detail.product.price}</h3>
+              {
+                loginStatus == 'userLogged' && detail.product.saleStatus === 'notYetSold' &&
+                <h3>购买数量:<InputNumber min={1} max={10} onChange={this.onChange} value={this.state.count}/></h3>
+              }
               {
                 loginStatus != 'notLoggedIn' &&
                 <h3>
@@ -112,8 +116,15 @@ export class CardsPage2 extends Component {
                     <Button type={"primary"} onClick={this.props.handleEditProductPage}>编辑</Button>
                   }
                   {
-                    loginStatus == 'userLogged' && detail.saleStatus === 'notYetSold' &&
+                    loginStatus == 'userLogged' && detail.product.saleStatus === 'notYetSold' &&
                     <Button type={"primary"} onClick={this.showModal}>加入购物车</Button>
+                  }
+                  {
+                    loginStatus == 'userLogged' && detail.product.saleStatus === 'alreadySold' &&
+                    <div>
+                      <Button type={"primary"} disabled={true}>已购买</Button>
+                      <p>当时购买的价格:¥{detail.originPrice}</p>
+                    </div>
                   }
                 </h3>
               }
@@ -125,7 +136,7 @@ export class CardsPage2 extends Component {
         <div>
           <Divider type="horizontal" orientation="left">详细信息</Divider>
           <p>
-            {detail.text}
+            {detail.product.text}
           </p>
         </div>
 
@@ -138,7 +149,7 @@ export class CardsPage2 extends Component {
         >
           <p>确认加入购物车吗？</p>
           <p><b>加入购物车的数量：{this.state.count}个</b></p>
-          <p><b>加入购物车的商品：{detail.title}</b></p>
+          <p><b>加入购物车的商品：{detail.product.title}</b></p>
         </Modal>
 
       </div>
