@@ -177,7 +177,11 @@ export class ShoppingCartContent extends Component {
           footer={() => '总计:¥' + totalCost}
         />
 
-        <Button type={"primary"} onClick={this.clickToBuy}>购买</Button>
+        <div>
+          <Button type={"primary"} onClick={this.clickToBuy}>购买</Button>
+          <Divider type="vertical" />
+          <Button type={"primary"} onClick={this.props.handleShowIndexPage}>返回首页</Button>
+        </div>
 
         <Modal
           title="提示"

@@ -199,7 +199,10 @@ class BasicLayout extends Component {
               {
                 //显示购物车页面
                 this.state.showContent === 'shoppingCart' &&
-                <ShoppingCart handleShowBill={this.handleShowBill}/>
+                <ShoppingCart
+                  handleShowBill={this.handleShowBill}
+                  handleShowIndexPage={this.handleShowIndexPage}
+                />
               }
               {
                 //显示发布商品页面
