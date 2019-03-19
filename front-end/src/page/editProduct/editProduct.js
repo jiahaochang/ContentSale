@@ -111,7 +111,7 @@ export class EditProduct extends React.Component {
     };
 
     const { detail={} } = this.props;
-    // console.log(detail);
+    console.log(detail);
 
     return (
       <div style={{padding: '30px'}}>
@@ -247,7 +247,8 @@ function mapStateToProps(state) {
   // console.log('state');
   // console.log(state.details.data);
   return {
-    detail: state.details.data,
+    detail: state.details.product,
+    originPrice: state.details.originPrice,
   };
 }
 

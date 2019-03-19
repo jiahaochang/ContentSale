@@ -57,6 +57,8 @@ public class UploadFileServiceImpl implements UploadFileService {
         }else {//若是修改商品信息，则出售状态保持不变
             Commodity exitCommodity = commodityDao.getOne(productId);
             commodity.setSaleStatus(exitCommodity.getSaleStatus());
+            //已出售商品的数量保持不变
+            commodity.setCount(exitCommodity.getCount());
         }
 
         String imgSuffix = imageInfo.getType().split("/")[1];
@@ -76,8 +78,20 @@ public class UploadFileServiceImpl implements UploadFileService {
         if (saveRes){
             Commodity commodity = new Commodity();
             BeanUtils.copyProperties(releasedProductByType1, commodity);
+
+            Long productId = releasedProductByType1.getId();
+            //根据id是否为空来判断是第一次发布商品还是修改商品的信息
+            if (productId!=null){
+                //若是修改商品信息，则出售状态保持不变
+                Commodity exitCommodity = commodityDao.getOne(productId);
+                commodity.setSaleStatus(exitCommodity.getSaleStatus());
+                //已出售商品的数量保持不变
+                commodity.setCount(exitCommodity.getCount());
+            }else {
+                //如果是第一次发布商品，则默认为是未出售状态
+                commodity.setSaleStatus("notYetSold");
+            }
             commodity.setImageName(imgName);
-            commodity.setSaleStatus("notYetSold");
             commodityDao.save(commodity);
             return true;
         }
