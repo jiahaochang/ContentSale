@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Form, Icon, Input, Button, Row, Col, message } from 'antd';
+import md5 from 'md5'
 
 export class NormalLoginForm extends Component {
 
@@ -13,15 +14,15 @@ export class NormalLoginForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      values.password = md5(values.password);
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
 
         this.props.dispatch({
           type: 'loginStatus/loginIn',
           payload:  values,
         }).then((res) => {
           console.log(res.code);
-
 
           if (res.code===200){
             //提示登录成功

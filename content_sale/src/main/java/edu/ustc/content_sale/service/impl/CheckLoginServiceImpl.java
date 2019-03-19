@@ -5,10 +5,12 @@ import edu.ustc.content_sale.domain.LoginInfo;
 import edu.ustc.content_sale.service.CheckLoginService;
 import edu.ustc.content_sale.util.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import net.minidev.json.JSONObject;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
@@ -23,7 +25,7 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class CheckLoginServiceImpl implements CheckLoginService {
+public class CheckLoginServiceImpl implements CheckLoginService, InitializingBean {
 
     @Value("${seller.userName}")
     private String sellerName;
@@ -34,14 +36,23 @@ public class CheckLoginServiceImpl implements CheckLoginService {
     @Value("${buyer.password}")
     private String buyerPwd;
 
+    private String md5SellerPwd = "";
+    private String md5BuyerPwd = "";
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        md5SellerPwd = DigestUtils.md5DigestAsHex(sellerPwd.getBytes());
+        md5BuyerPwd = DigestUtils.md5DigestAsHex(buyerPwd.getBytes());
+    }
+
     @Override
     public Map<String, Object> checkLogin(LoginInfo loginInfo) {
         Map<String, Object> tokenMap = new HashMap<>();
 
-        if (loginInfo.getUserName().equals(sellerName) && loginInfo.getPassword().equals(sellerPwd)){
+        if (loginInfo.getUserName().equals(sellerName) && loginInfo.getPassword().equals(md5SellerPwd)){
             tokenMap.put("uid", sellerName);
         }
-        if (loginInfo.getUserName().equals(buyerName) && loginInfo.getPassword().equals(buyerPwd)){
+        if (loginInfo.getUserName().equals(buyerName) && loginInfo.getPassword().equals(md5BuyerPwd)){
             //System.out.println(loginInfo.getUserName()+"  "+buyerName);
             tokenMap.put("uid", buyerName);
         }
@@ -97,10 +108,10 @@ public class CheckLoginServiceImpl implements CheckLoginService {
 
     @Override
     public Boolean verifyAccountAndPassword(LoginInfo loginInfo) {
-        if (loginInfo.getUserName().equals(sellerName) && loginInfo.getPassword().equals(sellerPwd)){
+        if (loginInfo.getUserName().equals(sellerName) && loginInfo.getPassword().equals(md5SellerPwd)){
             return true;
         }
-        if (loginInfo.getUserName().equals(buyerName) && loginInfo.getPassword().equals(buyerPwd)){
+        if (loginInfo.getUserName().equals(buyerName) && loginInfo.getPassword().equals(md5BuyerPwd)){
             return true;
         }
         return false;

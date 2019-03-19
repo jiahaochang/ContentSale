@@ -14,9 +14,7 @@ export class CardsPage2 extends Component {
   }
 
   componentWillMount() {
-    // console.log(this.props.detailId);
-    // console.log("详情组件里的登录状态"+this.props.loginStatus);
-    this.getDetailInfo(this.props.detailId)
+    this.getDetailInfo(this.props.detailId);
   }
 
   getDetailInfo = (id) => {
@@ -25,7 +23,7 @@ export class CardsPage2 extends Component {
       type: 'details/getDetail',
       payload: id,
     }).then((res) => {
-
+      console.log(res);
     });
 
     /*this.props.dispatch({
@@ -85,8 +83,8 @@ export class CardsPage2 extends Component {
   };
 
   render() {
-    const { detail={}, loginStatus } = this.props;
-    console.log(detail);
+    const { product={}, loginStatus,originPrice } = this.props;
+    //console.log(detail);
 
     return (
       <div style={{padding: '30px'}}>
@@ -95,17 +93,17 @@ export class CardsPage2 extends Component {
             <Card
               hoverable
               key={1}
-              title={detail.product.title}
-              cover={<img alt="example" src={detail.product.imgUrl} />}
+              title={product.title}
+              cover={<img alt="example" src={product.imgUrl} />}
               style={{ width: 220, marginBottom: '16px' }}
-            >{detail.product.summary}</Card>
+            >{product.summary}</Card>
           </Col>
           <Col span={8}>
             <div style={{padding: '30px', margin: 'auto'}}>
-              <h3>{detail.product.title}</h3>
-              <h3>¥:{detail.product.price}</h3>
+              <h3>{product.title}</h3>
+              <h3>¥:{product.price}</h3>
               {
-                loginStatus == 'userLogged' && detail.product.saleStatus === 'notYetSold' &&
+                loginStatus == 'userLogged' && product.saleStatus === 'notYetSold' &&
                 <h3>购买数量:<InputNumber min={1} max={10} onChange={this.onChange} value={this.state.count}/></h3>
               }
               {
@@ -116,14 +114,14 @@ export class CardsPage2 extends Component {
                     <Button type={"primary"} onClick={this.props.handleEditProductPage}>编辑</Button>
                   }
                   {
-                    loginStatus == 'userLogged' && detail.product.saleStatus === 'notYetSold' &&
+                    loginStatus == 'userLogged' && product.saleStatus === 'notYetSold' &&
                     <Button type={"primary"} onClick={this.showModal}>加入购物车</Button>
                   }
                   {
-                    loginStatus == 'userLogged' && detail.product.saleStatus === 'alreadySold' &&
+                    loginStatus == 'userLogged' && product.saleStatus === 'alreadySold' &&
                     <div>
                       <Button type={"primary"} disabled={true}>已购买</Button>
-                      <p>当时购买的价格:¥{detail.originPrice}</p>
+                      <p>当时购买的价格:¥{originPrice}</p>
                     </div>
                   }
                 </h3>
@@ -136,7 +134,7 @@ export class CardsPage2 extends Component {
         <div>
           <Divider type="horizontal" orientation="left">详细信息</Divider>
           <p>
-            {detail.product.text}
+            {product.text}
           </p>
         </div>
 
@@ -149,7 +147,7 @@ export class CardsPage2 extends Component {
         >
           <p>确认加入购物车吗？</p>
           <p><b>加入购物车的数量：{this.state.count}个</b></p>
-          <p><b>加入购物车的商品：{detail.product.title}</b></p>
+          <p><b>加入购物车的商品：{product.title}</b></p>
         </Modal>
 
       </div>
@@ -159,9 +157,10 @@ export class CardsPage2 extends Component {
 
 function mapStateToProps(state) {
   // console.log('state');
-  // console.log(state.details.data);
+  // console.log(state);
   return {
-    detail: state.details.data,
+    product: state.details.product,
+    originPrice: state.details.originPrice,
   };
 }
 

@@ -13,7 +13,7 @@ export default {
 
     *getLoginStatus({ payload }, { call, put }) {
       const rsp = yield call(loginService.getLoginStatus);
-      console.log(rsp);
+      // console.log(rsp);
       yield put({ type: 'saveLoginStatus', payload: { loginStatus: rsp.result } });
       return rsp;
     },

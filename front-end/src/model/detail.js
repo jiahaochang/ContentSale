@@ -11,11 +11,13 @@ export default {
   effects: {
     *getDetail({ payload }, { call, put }) {
       const rsp = yield call(detailService.getDetailById, payload);
+      console.log(rsp.result);
       yield put({
         type: 'saveDetail',
         payload: {
           id: payload,
-          data: rsp.result,
+          product: rsp.result.product,
+          originPrice: rsp.result.originPrice,
         },
       });
       return rsp;
@@ -41,10 +43,11 @@ export default {
   },
 
   reducers: {
-    saveDetail(state, { payload: { id, data } }) {
+    saveDetail(state, { payload: { id, product, originPrice } }) {
       return {
         ...state,
-        data,
+        product,
+        originPrice
       }
     },
 
