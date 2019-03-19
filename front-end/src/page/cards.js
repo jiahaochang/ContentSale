@@ -81,7 +81,6 @@ export class CardsPage extends Component {
         <Spin spinning={this.state.loading} delay={5000}>
           <Row gutter={24}>
             {cardsList.map(v =>
-
               <Col span={8} key={v.id}>
                 <Card
                   hoverable={true}
@@ -95,7 +94,7 @@ export class CardsPage extends Component {
                   {
                     v.saleStatus === 'alreadySold' && loginStatus === 'sellerLoggedIn' &&
                     <Meta
-                      description="已出售"
+                      description={"已出售"+v.count+"件"}
                       title={"¥:" + v.price}
                     />
                   }

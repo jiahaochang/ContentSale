@@ -11,7 +11,7 @@ export function getLoginStatus() {
 }
 
 export function postUserIdAndPwd(data) {
-  console.log(JSON.stringify(data));
+  // console.log(JSON.stringify(data));
   return request('/login/post/userId/and/pwd', {
     headers: {
       'content-type': 'application/json',

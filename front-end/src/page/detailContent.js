@@ -23,7 +23,7 @@ export class CardsPage2 extends Component {
       type: 'details/getDetail',
       payload: id,
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
     });
 
     /*this.props.dispatch({
