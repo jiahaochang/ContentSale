@@ -43,5 +43,5 @@ logging:
       hibernate:
         SQL: DEBUG
 
-#后端服务的地址
+#后端存储图片的地址
 service_address: http://localhost:8080/imgs/
