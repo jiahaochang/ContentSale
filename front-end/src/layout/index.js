@@ -45,8 +45,14 @@ class BasicLayout extends Component {
   checkLoginStatus =()=>{
     this.props.dispatch({
       type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+      }
     });
-    // console.log("检查登录状态 "+this.props.loginStatus);
   };
 
   handleMenuCollapse = () => {
@@ -132,7 +138,7 @@ class BasicLayout extends Component {
               handleShowIndexPage={this.handleShowIndexPage}
               handleShowBill={this.handleShowBill}
               handleShowShoppingCart={this.handleShowShoppingCart}
-              loginStatus={loginStatus}
+              loginStatus={this.state.loginStatus}
               handleShowLoginPage={this.handleShowLoginPage}
               handleRelease={this.handleRelease}
               checkLoginStatus={this.checkLoginStatus}
