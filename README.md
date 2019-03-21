@@ -41,3 +41,24 @@ routes: [
 /dev/random_joke 就会被转发到 https://*****.com/dev/random_joke。
 
 ## content-sale文件夹内的是后端代码
+### 数据库配置
+找到配置文件application.yml 里面有数据库连接的相关配置
+```
+#数据库配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/content_sale?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123
+  #配置自动建表：updata:没有表新建，有表更新操作,控制台显示建表语句
+  jpa:
+    hibernate:
+      ddl-auto: update
+#    show-sql: true
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        dialect: edu.ustc.content_sale.config.MysqlConfig
+```
+后端使用spring-data-jpa完成数据持久化，数据库的连接配置无误，启动项目时会自动创建表
