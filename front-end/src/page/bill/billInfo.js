@@ -29,11 +29,15 @@ export class Bills extends Component {
     });
   };
 
+  showDetailByCommodityId=(record)=>{
+    this.props.handleShowDetail(record.commodityId);
+  };
+
   columns = [
     {
       title: '内容图片',
       dataIndex: 'imageName',
-      render: (text, record) => <img src={text} height="60" width="60" onClick={()=>this.showDetailByImageName(record.imageName)}/>//这里放后台返回的图片的路径或者整个<img/>
+      render: (text, record) => <img src={text} height="60" width="60" onClick={()=>this.showDetailByCommodityId(record)}/>//这里放后台返回的图片的路径或者整个<img/>
     },
     {
       title: '内容名称',
@@ -80,7 +84,7 @@ export class Bills extends Component {
 
 function mapStateToProps(state) {
   // console.log('state');
-  // console.log(state);
+  //  console.log(state);
   return {
     billList: state.bills.billList,
   };

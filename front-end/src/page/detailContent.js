@@ -120,8 +120,8 @@ export class CardsPage2 extends Component {
                   {
                     loginStatus == 'userLogged' && product.saleStatus === 'alreadySold' &&
                     <div>
+                      <p>购买时的价格:¥{originPrice}</p>
                       <Button type={"primary"} disabled={true}>已购买</Button>
-                      <p>当时购买的价格:¥{originPrice}</p>
                     </div>
                   }
                 </h3>

@@ -56,7 +56,7 @@ class BasicLayout extends Component {
   };
 
   handleShowDetail = (id) => {
-    console.log(id);
+    // console.log(id);
     this.setState({
       showContent: 'detail',
       detailId: id,

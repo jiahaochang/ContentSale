@@ -11,7 +11,7 @@ export default {
   effects: {
     *getDetail({ payload }, { call, put }) {
       const rsp = yield call(detailService.getDetailById, payload);
-      console.log(rsp.result);
+      // console.log(rsp.result);
       yield put({
         type: 'saveDetail',
         payload: {

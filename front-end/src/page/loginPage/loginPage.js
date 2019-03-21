@@ -22,7 +22,7 @@ export class NormalLoginForm extends Component {
           type: 'loginStatus/loginIn',
           payload:  values,
         }).then((res) => {
-          console.log(res.code);
+          // console.log(res.code);
 
           if (res.code===200){
             //提示登录成功
@@ -55,14 +55,14 @@ export class NormalLoginForm extends Component {
               {getFieldDecorator('userName', {
                 rules: [{ required: true, message: 'Please input your username!' }],
               })(
-                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="seller或buyer" />
               )}
             </Form.Item>
             <Form.Item>
               {getFieldDecorator('password', {
                 rules: [{ required: true, message: 'Please input your Password!' }],
               })(
-                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="relles或reyub" />
               )}
             </Form.Item>
             <Form.Item>
