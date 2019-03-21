@@ -21,4 +21,23 @@ $ cnpm install
 ```
 $ cnpm run dev
 ```
+### 前端配置跨域请求后端接口
+配置代理也很简单，只需要您在配置文件 config/config.js 中与 routes 同级处增加 proxy 字段，代码如下，
+```
+routes: [
+   // ...
+   ],
+
++  proxy: {
++    '/dev': {
++      target: 'https://*****.com',
++      changeOrigin: true,
++    },
++  },
+```
+配置的含义是：去往本地服务器 localhost:8000 的 ajax 调用中，如果是以 /dev 开头的，那么就转发到远端的 https://*****.com 服务器当中，/dev 也会保留在转发地址中。
+
+比如：
+/dev/random_joke 就会被转发到 https://*****.com/dev/random_joke。
+
 ## content-sale文件夹内的是后端代码
