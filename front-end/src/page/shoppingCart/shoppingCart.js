@@ -64,7 +64,7 @@ export class ShoppingCartContent extends Component {
         //跳转到账单页面
         this.props.handleShowBill();
       } else {
-        message.error('购买失败');
+        message.error(res.message);
       }
     });
 

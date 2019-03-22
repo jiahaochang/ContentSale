@@ -6,7 +6,13 @@ export function getShoppingCartContent() {
 
 
 export function buyProducts() {
-  return request('/login/buy');
+  var token = localStorage.getItem('authToken');
+  return request('/login/buy', {
+    headers: {
+      'authToken': token,
+    },
+    method: 'GET',
+  });
 }
 
 export function deleteOneFromShoppingCart(id) {

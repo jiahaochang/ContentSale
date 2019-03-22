@@ -55,37 +55,117 @@ class BasicLayout extends Component {
     });
   };
 
+
   handleMenuCollapse = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
+
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+        //如果状态为未登录，则跳转到登录页面
+        if (res.result.loginStatus==="notLoggedIn"){
+          this.handleShowLoginPage();
+        }else {
+          this.setState({
+            collapsed: !this.state.collapsed,
+          });
+        }
+      }
     });
+
   };
 
   handleShowDetail = (id) => {
-    // console.log(id);
-    this.setState({
-      showContent: 'detail',
-      detailId: id,
-      loginStatus: this.props.loginStatus,
+
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+
+        this.setState({
+          showContent: 'detail',
+          detailId: id,
+        });
+
+      }
     });
+
   };
 
   handleShowIndexPage=()=>{
-    this.setState({
-      showContent: 'goodsList',
+
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+
+        this.setState({
+          showContent: 'goodsList',
+        });
+
+      }
     });
+
   };
 
   handleShowBill=()=>{
-    this.setState({
-      showContent: 'bill'
+
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+        //如果是购买者登录则跳转到账单页面
+        if (res.result.loginStatus==="userLogged"){
+          this.setState({
+            showContent: 'bill'
+          });
+        }else if (res.result.loginStatus==="notLoggedIn") {
+          this.handleShowLoginPage();
+        }
+
+      }
     });
+
   };
 
   handleShowShoppingCart=()=>{
-    this.setState({
-      showContent: 'shoppingCart'
+
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+        //如果是购买者登录则跳转到购物车页面
+        if (res.result.loginStatus==="userLogged"){
+          this.setState({
+            showContent: 'shoppingCart'
+          });
+        }else if (res.result.loginStatus==="notLoggedIn") {
+          this.handleShowLoginPage();
+        }
+
+      }
     });
+
   };
 
   //展示登录界面
@@ -103,22 +183,58 @@ class BasicLayout extends Component {
 
   //展示发布商品页面
   handleRelease=()=>{
-    this.setState({
-      showContent: 'releasePage'
+
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+        
+        if (res.result.loginStatus==="sellerLoggedIn"){
+          this.setState({
+            showContent: 'releasePage'
+          });
+        }else if (res.result.loginStatus==="notLoggedIn") {
+          this.handleShowLoginPage();
+        }
+
+      }
     });
+
   };
 
   //展示编辑商品详情页面
   handleEditProductPage=()=>{
-    this.setState({
-      showContent: 'editProductPage',
+    this.props.dispatch({
+      type: 'loginStatus/getLoginStatus',
+    }).then((res) => {
+      if (res.code===200){
+        // console.log(res.result);
+        this.setState({
+          loginStatus: res.result.loginStatus,
+        });
+
+        if (res.result.loginStatus==="sellerLoggedIn"){
+          this.setState({
+            showContent: 'editProductPage',
+          });
+        }else {
+          this.handleShowLoginPage();
+        }
+
+      }
     });
+
   };
 
   render() {
-    const { loginStatus, uid } = this.props;
+    const { uid } = this.props;
     const { collapsed } = this.state;
-    console.log('登录状态 = '+this.props.loginStatus);
+    const loginStatus = this.state.loginStatus;
+    console.log('登录状态 = '+loginStatus);
     // console.log('显示的内容 = '+this.state.showContent);
 
     return (
@@ -164,7 +280,7 @@ class BasicLayout extends Component {
                   <TabPane tab={"所有内容"} key={1}>
                     <CardsPage
                       handleShowDetail={this.handleShowDetail}
-                      loginStatus={this.props.loginStatus}
+                      loginStatus={this.state.loginStatus}
                     />
                   </TabPane>
                   <TabPane tab={"未购买的内容"} key={2}>

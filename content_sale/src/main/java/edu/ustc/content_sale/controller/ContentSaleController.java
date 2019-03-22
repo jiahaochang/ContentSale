@@ -144,7 +144,11 @@ public class ContentSaleController {
     }
 
     @GetMapping(value = "/buy")
-    public Result buyProducts(){
+    public Result buyProducts(@RequestHeader(name = "authToken") String authToken){
+        Map<String, Object> loginStatus = checkLoginService.validToken(authToken);
+        if (loginStatus.get("loginStatus").equals("notLoggedIn")){
+            return ResultUtil.error(401,"请进行登录再购买");
+        }
         boolean buyRes = productService.buy();
         if (buyRes){
             return ResultUtil.success();
