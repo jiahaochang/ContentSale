@@ -296,7 +296,7 @@ class BasicLayout extends Component {
                   <TabPane tab={"所有内容"} key={1}>
                     <CardsPage
                       handleShowDetail={this.handleShowDetail}
-                      loginStatus={this.props.loginStatus}
+                      loginStatus={this.state.loginStatus}
                     />
                   </TabPane>
                 </Tabs>
@@ -306,7 +306,7 @@ class BasicLayout extends Component {
                 this.state.showContent === 'detail' &&
                 <CardsPage2
                   detailId={this.state.detailId}
-                  loginStatus={this.props.loginStatus}
+                  loginStatus={this.state.loginStatus}
                   handleEditProductPage={this.handleEditProductPage}
                   handleShowShoppingCart={this.handleShowShoppingCart}
                 />

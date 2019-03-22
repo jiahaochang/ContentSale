@@ -94,7 +94,7 @@ export class CardsPage2 extends Component {
               hoverable
               key={1}
               title={product.title}
-              cover={<img alt="example" src={product.imgUrl} />}
+              cover={<img alt="example" height="220" width="220" src={product.imgUrl} />}
               style={{ width: 220, marginBottom: '16px' }}
             >{product.summary}</Card>
           </Col>
