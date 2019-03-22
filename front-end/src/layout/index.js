@@ -1,3 +1,5 @@
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import { Component } from 'react';
 import { Layout, Tabs } from 'antd';
 import { connect } from 'dva';
