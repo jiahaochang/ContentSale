@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,7 +52,8 @@ public class ProductServiceImpl implements ProductService, InitializingBean {
     @Override
     public List<ProductVO> getSellerProductList() {
         List<ProductVO> productVOList = new ArrayList<>();
-        List<Commodity> commodities = commodityDao.findAll();
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        List<Commodity> commodities = commodityDao.findAll(sort);
         commodities.stream().forEach(commodity -> {
             productVOList.add(convertCommodityToProductVO(commodity));
         });
