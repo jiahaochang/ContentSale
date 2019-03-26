@@ -44,5 +44,5 @@ logging:
         SQL: DEBUG
 
 #后端存储图片的地址
-#service_address: http://localhost:8080/imgs/
-service_address: http://contentsale-imgs.ngrok.xiaomiqiu.cn/imgs/
+service_address: http://localhost:8080/imgs/
+#service_address: http://contentsale-imgs.ngrok.xiaomiqiu.cn/imgs/
